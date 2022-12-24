@@ -12,7 +12,7 @@ const {devices} = require('@playwright/test')
  * @type {import('@playwright/test').PlaywrightTestConfig}
  */
 const config = {
-	// globalSetup: require.resolve('./global-setup'),
+	globalSetup: require.resolve('./global-setup'),
 	testDir: './tests',
 	/* Maximum time one test can run for. */
 	timeout: 30 * 1000,
@@ -32,7 +32,11 @@ const config = {
 	/* Opt out of parallel tests on CI. */
 	workers: process.env.CI ? 1 : undefined,
 	/* Reporter to use. See https://playwright.dev/docs/test-reporters */
-	reporter: 'html',
+	reporter: [
+		['html', { outputFolder: 'playwright-report' }], 
+		['json', { outputFolder: 'test-results', outputFile: 'test-results/report.json' }],
+		['junit', {outputFolder: 'test-results', outputFile: 'test-results/importer-report.xml'}]
+	],
 	/* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
 	use: {
 		// baseURL: '',
@@ -52,6 +56,7 @@ const config = {
 			name: 'chromium',
 			use: {
 				...devices['Desktop Chrome'],
+				colorScheme: 'dark'
 			},
 		},
 
