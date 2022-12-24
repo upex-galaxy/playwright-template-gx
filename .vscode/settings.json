@@ -1,0 +1,126 @@
+{
+	"cucumberautocomplete.strictGherkinCompletion": true,
+	"cucumberautocomplete.strictGherkinValidation": false,
+	"cucumberautocomplete.customParameters": [
+		{
+			"parameter": "{ab}",
+			"value": "(a|b)"
+		}
+	],
+	"cucumberautocomplete.skipDocStringsFormat": true,
+	"cucumberautocomplete.formatConfOverride": {
+		"But": "relative"
+	},
+	"cucumberautocomplete.onTypeFormat": true,
+	"editor.quickSuggestions": {
+		"comments": false,
+		"strings": true,
+		"other": true
+	},
+	"cucumberautocomplete.gherkinDefinitionPart": "(Given|When|Then)\\(",
+	"cucumberautocomplete.stepRegExSymbol": "'",
+	"workbench.colorTheme": "Andromeda Italic",
+	"cSpell.language": "en,es",
+	"terminal.integrated.defaultProfile.windows": "Git Bash",
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"[html]": {
+		"editor.defaultFormatter": "vscode.html-language-features"
+	},
+	"[javascript]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"[Typescript]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"[python]": {
+		"editor.defaultFormatter": "ms-python.python"
+	},
+	"[feature]": {
+		"editor.defaultFormatter": "alexkrechik.cucumberautocomplete"
+	},
+	"editor.formatOnType": false,
+	"editor.formatOnPaste": false,
+	"editor.formatOnSave": false,
+	"editor.wordWrap": "on",
+	"editor.accessibilitySupport": "off",
+	"editor.bracketPairColorization.independentColorPoolPerBracketType": true,
+	"python.formatting.provider": "autopep8",
+	"javascript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets": true,
+	"typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets": true,
+	"html.format.wrapLineLength": 150,
+	"prettier.singleQuote": true,
+	"prettier.semi": false,
+	"prettier.useTabs": true,
+	"prettier.arrowParens": "avoid",
+	"workbench.settings.editor": "json",
+	"git.enableSmartCommit": true,
+	"editor.tabCompletion": "on",
+	"editor.lineHeight": 20,
+	"editor.cursorBlinking": "expand",
+	"cSpell.enableFiletypes": ["cucumber"],
+	"workbench.iconTheme": "material-icon-theme",
+	"material-icon-theme.folders.color": "#7cb342",
+	"material-icon-theme.files.associations": {
+		"*.spec.js": "Test-ts",
+		"*.cy.js": "Test-js",
+		"*.Page.json": "3d",
+		"*.Page.js": "3d",
+		"*.js": "Playwright",
+		"commands.js": "webpack",
+		"*.yml": "todo",
+		"*.json": "Playwright",
+		"scripts.js": "console",
+		".cypress-cucumber-preprocessorrc.json": "cucumber",
+		"cucumber-report.json": "cucumber",
+		"cucumber-json-formatter.exe": "cucumber",
+		"cucumber-html-report.cjs": "cucumber",
+		"settings.json": "Vscode",
+		"launch.json": "http",
+		"package-lock.json": "npm",
+		"package.json": "npm",
+		"jsconfig.json": "conduct",
+		"jsregression.json": "conduct"
+	},
+	"material-icon-theme.folders.associations": {
+		"api-testing": "api",
+		"db-testing": "database",
+		"ui-testing": "app",
+		"BDD Stories": "rules",
+		"feature-example": "rules",
+		"Step-Definitions": "test",
+		"suites": "test",
+		"cucumber-json": "Resolver",
+		"DOM": "class",
+		"POM": "context",
+		"Pages": "context",
+		"How-to": "content",
+		"US": "Storybook",
+		"test-plan": "meta",
+		"mochawesome-report": "log",
+		"smoke": "rules",
+		"sanity": "rules",
+		"regression": "rules",
+		"in-sprint": "rules",
+		"cucumber-test": "Resolver",
+		"fixtures": "container",
+		"support": "Helper",
+		"xhr-fetch": "batch",
+		"material-icons": "examples",
+		"workflows": "github"
+	},
+	"cypressHelper.menuItems": {
+		"OpenCypress": false,
+		"RunCypress": false,
+		"GenerateCustomCommandTypes": true,
+		"GoToCustomCommand": false,
+		"FindCustomCommandReferences": true,
+		"FindStepDefinitionReferences": true,
+		"SchemaGenerator": false,
+		"ParseHAR": false,
+		"mockAutocomplete": false
+	},
+	"cSpell.autoFormatConfigFile": true,
+	"githubPullRequests.ignoredPullRequestBranches": [
+		"cypex"
+	]
+}

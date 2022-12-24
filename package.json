@@ -1,0 +1,18 @@
+{
+  "name": "playwright-cucumber",
+  "version": "1.29",
+  "description": "Playwright Automation",
+  "main": "index.js",
+  "scripts": {},
+  "keywords": [
+    "playwright",
+    "automation",
+    "testing"
+  ],
+  "author": "Uper",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "1.29.1",
+    "lariat": "^1.4.1"
+  }
+}
