@@ -1,0 +1,11 @@
+{
+	"compilerOptions": {
+		"types": ["@playwright/test","lariat"],
+		"baseUrl": ".",
+		"paths": {
+			"@pages/*": ["./pages/*"]
+		}
+	},
+	"include": ["**/*.spec.js", "**/*.js", "**/*.spec.ts", "**/*.ts"],
+	"exclude": ["node_modules"]
+}

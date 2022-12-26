@@ -18,4 +18,4 @@ class LoginPage {
 	}
 }
 
-export { LoginPage }
+export { LoginPage };
