@@ -1,5 +1,5 @@
-const { test, expect } = require('@playwright/test')
-const { LoginPage } = require('@pages/Login.Page')
+import { test, expect } from '@playwright/test'
+import { LoginPage } from '@pages/Login.Page.js'
 
 test.describe('Test Suite', () => {
 

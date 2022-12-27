@@ -1,18 +1,27 @@
 {
-  "name": "playwright-cucumber",
-  "version": "1.29",
-  "description": "Playwright Automation",
-  "main": "index.js",
-  "scripts": {},
-  "keywords": [
-    "playwright",
-    "automation",
-    "testing"
-  ],
-  "author": "Uper",
-  "license": "ISC",
-  "devDependencies": {
-    "@playwright/test": "1.29.1",
-    "lariat": "1.4.1"
-  }
+	"name": "playwright-cucumber",
+	"version": "1.29",
+	"description": "Playwright Automation",
+	"exports": "./index.js",
+	"engines": {
+		"node": ">=14.16"
+	},
+	"scripts": {
+		"test": "npx playwright test example",
+		"regression": "npx playwright test",
+		"feat": "cucumber-js --require cucumber.conf.js --require tests/acceptance/stepDefinitions/**/*.js --format @cucumber/pretty-formatter"
+	},
+	"keywords": [
+		"upex"
+	],
+	"author": "Uper",
+	"license": "ISC",
+	"type": "module",
+	"devDependencies": {
+		"@cucumber/cucumber": "^7.3.1",
+		"@cucumber/pretty-formatter": "1.0.0",
+		"@faker-js/faker": "7.6.0",
+		"@playwright/test": "1.29.1",
+		"lariat": "1.4.1"
+	}
 }

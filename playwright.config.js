@@ -1,5 +1,5 @@
 // @ts-check
-const {devices} = require('@playwright/test')
+import { devices } from '@playwright/test';
 
 /**
  * Read environment variables from file.
@@ -12,7 +12,7 @@ const {devices} = require('@playwright/test')
  * @type {import('@playwright/test').PlaywrightTestConfig}
  */
 const config = {
-	globalSetup: require.resolve('./global-setup'),
+	globalSetup: './global-setup.js',
 	testDir: './tests',
 	/* Maximum time one test can run for. */
 	timeout: 30 * 1000,
@@ -113,4 +113,4 @@ const config = {
 	// },
 }
 
-module.exports = config
+export default config;

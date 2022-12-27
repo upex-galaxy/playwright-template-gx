@@ -1,6 +1,6 @@
 {
 	"compilerOptions": {
-		"types": ["@playwright/test","lariat"],
+		"types": ["@playwright/test","lariat", "@faker-js/faker"],
 		"baseUrl": ".",
 		"paths": {
 			"@pages/*": ["./pages/*"]
