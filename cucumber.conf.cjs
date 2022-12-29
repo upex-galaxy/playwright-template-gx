@@ -1,6 +1,5 @@
-import { Before, BeforeAll, AfterAll, After, setDefaultTimeout } from "@cucumber/cucumber";
-
-import { chromium } from "@playwright/test";
+const { Before, BeforeAll, AfterAll, After, setDefaultTimeout } = require("@cucumber/cucumber");
+const { chromium } = require("@playwright/test");
 
 setDefaultTimeout(60000)
 

@@ -66,6 +66,7 @@
 		"*.Page.json": "3d",
 		"*.Page.js": "3d",
 		"*.js": "Playwright",
+		"*.cjs": "Test-ts",
 		"commands.js": "webpack",
 		"*.yml": "todo",
 		"*.json": "Playwright",
@@ -79,7 +80,8 @@
 		"package-lock.json": "npm",
 		"package.json": "npm",
 		"jsconfig.json": "conduct",
-		"jsregression.json": "conduct"
+		"jsregression.json": "conduct",
+		"cucumber.conf.cjs": "Playwright",
 	},
 	"material-icon-theme.folders.associations": {
 		"api-testing": "api",

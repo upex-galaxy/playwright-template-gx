@@ -9,7 +9,7 @@
 	"scripts": {
 		"test": "npx playwright test example",
 		"regression": "npx playwright test",
-		"feat": "cucumber-js --require cucumber.conf.js --require tests/acceptance/stepDefinitions/**/*.js --format @cucumber/pretty-formatter"
+		"feat": "cucumber-js --require cucumber.conf.cjs --require tests/acceptance/stepDefinitions/**/*.cjs --format @cucumber/pretty-formatter"
 	},
 	"keywords": [
 		"upex"

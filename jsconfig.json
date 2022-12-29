@@ -1,11 +1,11 @@
 {
 	"compilerOptions": {
-		"types": ["@playwright/test","lariat", "@faker-js/faker"],
+		"types": ["@playwright/test","lariat", "@faker-js/faker", "@cucumber/cucumber"],
 		"baseUrl": ".",
 		"paths": {
 			"@pages/*": ["./pages/*"]
 		}
 	},
-	"include": ["**/*.spec.js", "**/*.js", "**/*.spec.ts", "**/*.ts"],
+	"include": ["**/*.spec.js", "**/*.js", "**/*.spec.ts", "**/*.ts", "cucumber.conf.cjs", "tests/acceptance/stepDefinitions/featureExample.step.cjs"],
 	"exclude": ["node_modules"]
 }
