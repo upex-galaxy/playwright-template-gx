@@ -6,6 +6,6 @@
 			"@pages/*": ["./pages/*"]
 		}
 	},
-	"include": ["**/*.spec.js", "**/*.js", "**/*.spec.ts", "**/*.ts", "cucumber.conf.cjs", "tests/acceptance/stepDefinitions/featureExample.step.cjs"],
+	"include": ["**/*.spec.js", "**/*.js", "**/*.spec.ts", "**/*.ts", "cucumber.conf.cjs", "tests/cucumber/stepDefinitions/featureExample.step.cjs"],
 	"exclude": ["node_modules"]
 }
