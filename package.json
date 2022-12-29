@@ -18,7 +18,7 @@
 	"license": "ISC",
 	"type": "module",
 	"devDependencies": {
-		"@cucumber/cucumber": "^7.3.1",
+		"@cucumber/cucumber": "7.3.1",
 		"@cucumber/pretty-formatter": "1.0.0",
 		"@faker-js/faker": "7.6.0",
 		"@playwright/test": "1.29.1",
