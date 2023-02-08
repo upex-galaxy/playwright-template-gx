@@ -1,9 +1,9 @@
 .DS_Store
-**/.DS_Store
 node_modules/
-/test-results/
-/playwright-report/
+test-results/
+playwright-report/
 /playwright/.cache/
 .pytest-cache
 importer-report.xml
+package-lock.json
 report.json
