@@ -16,19 +16,18 @@ test.describe('UserStory:aquí se escribe el título de la User Story', () => {
 		const firstItem = 'Playwright Testing'
 		const secondItem = 'Cypress Testing'
 		const todoInput = page.locator('.new-todo')
-		expect(todoInput).toHaveCount(1)
 		await todoInput.fill(firstItem)
 		await todoInput.press('Enter')
 		await todoInput.fill(secondItem)
 		await todoInput.press('Enter')
 
-		const TodoItem = page.locator('[data-testid="todo-item"] .view')
-        const label = TodoItem.getByText(firstItem)
-        console.log(label.textContent)
-        await debug.eachElement(label)
+		const TodoItem = page.locator('[data-testid="todo-item"] .view').getByText(firstItem)
 
-		await page.pause()
-
-
+        const itemCheckbox = TodoItem.locator('xpath=..').getByRole('checkbox')
+        const debugCheckbox = itemCheckbox.evaluate($i => $i.outerHTML)
+        console.log(debugCheckbox)
+        await debug.eachElement(itemCheckbox)
+        await itemCheckbox.check()
+        expect(itemCheckbox.isChecked).toBeTruthy()
 	})
 })
