@@ -5,7 +5,8 @@
 		"types": ["node","@playwright/test"],
 		"baseUrl": ".",
 		"paths": {
-			"@pages/*": ["./tests/pages/*"]
+			"@pages/*": ["./tests/pages/*"],
+			"@helper/*": ["./tests/helper/*"]
 		}
 	},
     "exclude": ["node_modules"]

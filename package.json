@@ -6,8 +6,8 @@
 	"scripts": {
 		"plan": "npx playwright test --project=chromium --list",
 		"test": "npx playwright test --project=chromium --headed",
-		"grep": "npx playwright test --project=chromium --headed -g",
-		"debug": "npx playwright test --project=chromium  --debug",
+		"debug": "npx playwright test --project=chromium --headed --reporter=list",
+		"inspect": "npx playwright test --project=chromium --debug --reporter=list",
 		"headless": "npx playwright test --project=chromium",
 		"test:firefox": "npx playwright test --project=firefox --headed",
 		"test:webkit": "npx playwright test --project=webkit --headed",
@@ -23,7 +23,7 @@
 	"type": "module",
 	"devDependencies": {
 		"@playwright/test": "1.30.0",
-		"allure-playwright": "^2.0.0-beta.26",
+		"allure-playwright": "2.0.0-beta.26",
 		"typescript": "4.9.5"
 	}
 }

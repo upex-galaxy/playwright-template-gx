@@ -1,21 +1,28 @@
-# Node.js
-# Build a general Node.js project with npm.
-# Add steps that analyze code, save build artifacts, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
-
 trigger:
-- master
+  branches:
+    exclude:
+      - main
+      - QA
 
-pool:
-  vmImage: ubuntu-latest
+resources:
+  repositories:
+    - repository: self
+      ref: main
+      pipeline: CI-storyTest.yml
+      source: azure/CI-storyTest.yml
 
-steps:
-- task: NodeTool@0
-  inputs:
-    versionSpec: '10.x'
-  displayName: 'Install Node.js'
+stages:
+  - stage: StoryTest
+    jobs:
+      - job: Run_Story_Test
+        displayName: 'Run Story Test'
+        steps:
+          - template: azure/CI-storyTest.yml
 
-- script: |
-    npm install
-    npm run build
-  displayName: 'npm install and build'
+  - stage: RegressionTest
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/QA'))
+    jobs:
+      - job: Run_Regression_Test
+        displayName: 'Run Regression Test'
+        steps:
+          - template: azure/CI-regressionTest.yml
