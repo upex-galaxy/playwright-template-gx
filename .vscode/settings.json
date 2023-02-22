@@ -19,7 +19,7 @@
 	},
 	"cucumberautocomplete.gherkinDefinitionPart": "(Given|When|Then)\\(",
 	"cucumberautocomplete.stepRegExSymbol": "'",
-	"workbench.colorTheme": "Winter is Coming (Dark Blue)",
+	"workbench.colorTheme": "Night Owl",
 	"cSpell.language": "en,es",
 	"terminal.integrated.defaultProfile.windows": "Git Bash",
 	"editor.defaultFormatter": "esbenp.prettier-vscode",
@@ -54,7 +54,7 @@
 	"editor.lineHeight": 20,
 	"editor.cursorBlinking": "expand",
 	"cSpell.enableFiletypes": ["cucumber"],
-	"workbench.iconTheme": "material-icon-theme",
+	"workbench.iconTheme": "vscode-icons",
 	"material-icon-theme.folders.color": "#7cb342",
 	"material-icon-theme.files.associations": {
 		"*.spec.ts": "Test-ts",
