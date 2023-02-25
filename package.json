@@ -5,7 +5,7 @@
 	"main": "index.js",
 	"scripts": {
 		"plan": "npx playwright test --project=chromium --list",
-		"test": "npx playwright test --project=chromium --headed",
+		"test": "npx playwright test --project=chromium --reporter=list",
 		"debug": "npx playwright test --project=chromium --headed --reporter=list",
 		"inspect": "npx playwright test --project=chromium --debug --reporter=list",
 		"headless": "npx playwright test --project=chromium",
@@ -26,12 +26,9 @@
 		"@typescript-eslint/eslint-plugin": "^5.53.0",
 		"@typescript-eslint/parser": "^5.53.0",
 		"allure-playwright": "2.0.0-beta.26",
-		"eslint": "8.34.0",
-		"eslint-config-standard-with-typescript": "34.0.0",
-		"eslint-plugin-import": "2.27.5",
-		"eslint-plugin-n": "15.6.1",
-		"eslint-plugin-promise": "6.1.1",
-		"prettier": "^2.8.4",
+		"eslint": "^8.34.0",
+		"eslint-plugin-only-warn": "^1.1.0",
+		"prettier": "2.8.4",
 		"typescript": "4.9.5"
 	}
 }
