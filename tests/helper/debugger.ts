@@ -10,7 +10,7 @@ class Debugger {
 		await this.page.evaluate(() => console.log('Start Debugging in DevTool!'))
 		// Imprimir TODOS los WebElement HTML en Array, por la Consola de la DevTool:
 		await pageLocator.evaluateAll((elements) => {
-			console.log(elements)
+      console.log(elements)
 		})
 	}
 	async eachElement(pageLocator: Locator) {
