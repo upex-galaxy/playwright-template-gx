@@ -6,12 +6,12 @@ test.describe('UserStory:aquí se escribe el título de la User Story', () => {
 		await page.goto('https://demo.playwright.dev/todomvc')
 	})
 
-	test('<testSuiteID> | TC#1: <Aquí puedes escribir un Caso de Prueba>', async ({ page }) => {
+	test('[testSuiteID] | TC#1: [Aquí puedes escribir un Caso de Prueba]', async ({ page }) => {
 		const todoInput = page.locator('.new-todo')
 		await todoInput.fill('Playwright Testing')
 		await todoInput.press('Enter')
 	})
-	test.only('testSuiteID | TC#2: otro Caso de Prueba', async ({ page }) => {
+	test.only('[testSuiteID] | TC#2: [otro Caso de Prueba]', async ({ page }) => {
         const debug = new Debugger(page);
 		const firstItem = 'Playwright Testing'
 		const secondItem = 'Cypress Testing'
