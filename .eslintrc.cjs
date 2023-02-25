@@ -16,7 +16,8 @@ module.exports = {
 		'sourceType': 'module'
 	},
 	'plugins': [
-		'@typescript-eslint'
+		'@typescript-eslint',
+		'only-warn'
 	],
 	'rules': {
 		'indent': [
@@ -28,11 +29,15 @@ module.exports = {
 			'windows'
 		],
 		'quotes': [
-			'warm',
+			'warn',
 			'single'
 		],
 		'semi': [
-			'warm',
+			'warn',
+			'always'
+		],
+		'object-curly-spacing':[
+			'warn',
 			'always'
 		]
 	}
