@@ -41,7 +41,7 @@ export default defineConfig({
 	],
 	/* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
 	use: {
-		baseURL: 'https://coderbyte.com/sl',
+		baseURL: 'https://coderbyte.com/',
 		// Headless Mode: true by default
 		headless: true,
 		// Viewport Resolution

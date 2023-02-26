@@ -1,6 +1,5 @@
 import { test, expect } from '@playwright/test';
 import { LoginPageFranco } from '@pages/loginPageFranco';
-import { Debugger } from '@helper/debugger';
 const username = 'Playwright';
 const password = 'coderplaywright2023';
 //todo: Test Suite
