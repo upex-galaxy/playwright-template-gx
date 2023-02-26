@@ -1,4 +1,4 @@
-import { defineConfig, devices } from '@playwright/test'
+import { defineConfig, devices } from '@playwright/test';
 
 /**
  * Read environment variables from file.
@@ -34,13 +34,14 @@ export default defineConfig({
 	/* Reporter to use. See https://playwright.dev/docs/test-reporters */
 	reporter: [
 		['list'],
-		// ['allure-playwright'], 
-		['html', { outputFolder: 'playwright-report' }], 
+		// ['allure-playwright'],
+		['html', { outputFolder: 'playwright-report' }],
 		['json', { outputFolder: 'playwright-report', outputFile: 'playwright-report/report.json' }],
-		['junit', {outputFolder: 'playwright-report', outputFile: 'playwright-report/importer-report.xml'}]
+		['junit', { outputFolder: 'playwright-report', outputFile: 'playwright-report/importer-report.xml' }],
 	],
 	/* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
 	use: {
+		baseURL: 'https://coderbyte.com/sl',
 		// Headless Mode: true by default
 		headless: true,
 		// Viewport Resolution
@@ -100,4 +101,4 @@ export default defineConfig({
 	//   command: 'npm run start',
 	//   port: 3000,
 	// },
-})
+});
