@@ -32,8 +32,5 @@ class LoginPageFranco {
 	async clickLoginButton() {
 		await this.btnLogin.click();
 	}
-	async showErrorLoginMsg() {
-		await this.errorMsgLogin;
-	}
 }
 export { LoginPageFranco };
