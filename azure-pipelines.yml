@@ -1,0 +1,37 @@
+#todo: Nombrar el Pipeline Principal (opcional)
+name: CI Pipeline - Run Automated Tests by QA
+#todo: 1. Definir el TRIGGER del Pipeline (cuándo se ejecuta)
+trigger:
+    branches:
+        include:
+            - '*'
+
+#todo: OPCIONAL: Indicar el Proceso (?)
+
+#todo: 2. Indicar el Job (definir siempre el sistema operativo donde todo se ejecuta)
+# Node.js
+# Build a general Node.js project with npm.
+pool:
+    vmImage: ubuntu-latest
+
+#todo: 3. Especificar los Steps (instrucciones de qué hacer en el Proceso)
+steps:
+    - task: NodeTool@0
+      inputs:
+          versionSpec: '18.x'
+      displayName: '💿Install Node.js'
+
+    - script: |
+          npm install
+          npm run pw:browser
+      displayName: '💾install All Playwright Project Dependencies and Browsers'
+
+    - script: |
+          npm run plan
+          npm test tests/Account/*.ts
+          npm run report
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+          pathtoPublish: 'playwright-report/index.html'
+          artifactName: 'Playwright HTML Report'

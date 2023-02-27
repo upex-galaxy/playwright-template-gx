@@ -6,10 +6,10 @@
 	"scripts": {
 		"pw:browser": "npx playwright install chromium firefox webkit",
 		"plan": "npx playwright test --project=chromium --list",
-		"test": "npx playwright test --project=chromium --reporter=list",
+		"test": "npx playwright test --project=chromium",
+		"report": "npx playwright show-report",
 		"debug": "npx playwright test --project=chromium --headed --reporter=list",
 		"inspect": "npx playwright test --project=chromium --debug --reporter=list",
-		"headless": "npx playwright test --project=chromium",
 		"test:firefox": "npx playwright test --project=firefox --headed",
 		"test:webkit": "npx playwright test --project=webkit --headed",
 		"test:all": "npx playwright test",
