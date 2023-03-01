@@ -6,6 +6,12 @@ test.describe('UserStory:aquí se escribe el título de la User Story', () => {
 		await page.goto('https://demo.playwright.dev/todomvc');
 	});
 
+	test.only('[API]', async ({ request }) => {
+		const response = await request.get('https://api.trello.com/1/emoji');
+		expect(response.json()).toBeTruthy();
+		await console.log(response.json());
+	});
+
 	test('[testSuiteID] | TC#1: [Aquí puedes escribir un Caso de Prueba]', async ({ page }) => {
 		const todoInput = page.locator('.new-todo');
 		await todoInput.fill('Playwright Testing');
