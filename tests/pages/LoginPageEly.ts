@@ -19,7 +19,7 @@ class LoginPageEly {
 		this.usernameInput = this.page.locator(':has-text("Username")+input');
 		this.passwordInput = this.page.locator(':has-text("Password")+input');
 		this.loginBtn = this.page.getByRole('button', { name: 'login' });
-		this.errorMsgByNulls = this.page.getByText('The username or password were incorrect.');
+		this.errorMsgByNulls = this.page.locator('login-error');
 	}
 
 	async gotoLoginTab() {

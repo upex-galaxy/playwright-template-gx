@@ -1,19 +1,11 @@
 import { defineConfig, devices } from '@playwright/test';
-
-/**
- * Read environment variables from file.
- * https://github.com/motdotla/dotenv
- */
-// require('dotenv').config();
-
-/**
- * See https://playwright.dev/docs/test-configuration.
- */
+import * as dotenv from 'dotenv';
+// See https://github.com/motdotla/dotenv
+dotenv.config();
+// See https://playwright.dev/docs/test-configuration.
 export default defineConfig({
 	// Test Repo Directory:
 	testDir: './tests',
-	// Global Environment Variables:
-	globalSetup: './global-setup',
 	/* Maximum time one test can run for. */
 	timeout: 30 * 1000,
 	expect: {
@@ -23,6 +15,8 @@ export default defineConfig({
 		 */
 		timeout: 5000,
 	},
+	// Test Matched those suites which are test.ts or spec.ts
+	testMatch: /.*(test|spec)\.(ts)/,
 	/* Run tests in files in parallel */
 	fullyParallel: true,
 	/* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -34,25 +28,24 @@ export default defineConfig({
 	/* Reporter to use. See https://playwright.dev/docs/test-reporters */
 	reporter: [
 		['list'],
-		// ['allure-playwright'],
+		['allure-playwright', { outputFolder: 'allure-report' }],
 		['html', { outputFolder: 'playwright-report' }],
 		['json', { outputFolder: 'playwright-report', outputFile: 'playwright-report/report.json' }],
 		['junit', { outputFolder: 'playwright-report', outputFile: 'playwright-report/importer-report.xml' }],
 	],
 	/* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
 	use: {
-		baseURL: 'https://coderbyte.com/',
+		/* Base URL to use in actions like `await page.goto('/')`. */
+		baseURL: 'https://coderbyte.com',
 		// Headless Mode: true by default
 		headless: true,
 		// Viewport Resolution
 		viewport: { width: 1920, height: 1080 },
 		/* Maximum time each action such as `click()` can take. Defaults to 0 (no limit). */
 		actionTimeout: 0,
-		/* Base URL to use in actions like `await page.goto('/')`. */
-		// baseURL: 'http://localhost:3000',
-
 		/* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-		trace: 'on-first-retry',
+		trace: 'retain-on-failure',
+		screenshot: 'on',
 	},
 
 	/* Configure projects for major browsers */
