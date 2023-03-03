@@ -1,5 +1,7 @@
-node_modules/
-test-results/
-playwright-report/
+node_modules
+logs
+playwright-report
+allure-results
+test-results
 package-lock.json
 .pytest_cache

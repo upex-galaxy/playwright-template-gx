@@ -28,10 +28,10 @@ export default defineConfig({
 	/* Reporter to use. See https://playwright.dev/docs/test-reporters */
 	reporter: [
 		['list'],
-		['allure-playwright', { outputFolder: 'allure-report' }],
-		['html', { outputFolder: 'playwright-report' }],
-		['json', { outputFolder: 'playwright-report', outputFile: 'playwright-report/report.json' }],
 		['junit', { outputFolder: 'playwright-report', outputFile: 'playwright-report/importer-report.xml' }],
+		['json', { outputFolder: 'playwright-report', outputFile: 'playwright-report/report.json' }],
+		['html', { outputFolder: 'playwright-report' }],
+		['allure-playwright'],
 	],
 	/* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
 	use: {

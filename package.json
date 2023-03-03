@@ -7,14 +7,13 @@
 		"pw:browser": "npx playwright install chromium firefox webkit",
 		"plan": "npx playwright test --project=chromium --list",
 		"test": "npx playwright test --project=chromium",
+		"debug": "npx playwright test --project=chromium --debug --reporter=list",
 		"report": "npx playwright show-report",
-		"debug": "npx playwright test --project=chromium --headed --reporter=list",
-		"inspect": "npx playwright test --project=chromium --debug --reporter=list",
-		"test:firefox": "npx playwright test --project=firefox --headed",
-		"test:webkit": "npx playwright test --project=webkit --headed",
-		"test:all": "npx playwright test",
-		"test:report": "allure generate playwright-report/allure -o allure-report --clean",
-		"allure": "allure open allure-report"
+		"test:open": "npx playwright test --project=chromium --headed --reporter=list",
+		"test:firefox": "npx playwright test --project=firefox --headed --reporter=list",
+		"test:webkit": "npx playwright test --project=webkit --headed --reporter=list",
+		"test:all": "npx playwright test --headed --reporter=list",
+		"allure": "allure serve --host localhost --port 9090"
 	},
 	"keywords": [
 		"playwright"
@@ -26,8 +25,9 @@
 		"@playwright/test": "1.30.0",
 		"@typescript-eslint/eslint-plugin": "5.53.0",
 		"@typescript-eslint/parser": "5.53.0",
+		"allure-commandline": "2.21.0",
 		"allure-playwright": "2.0.0-beta.26",
-		"dotenv": "^16.0.3",
+		"dotenv": "16.0.3",
 		"eslint": "8.34.0",
 		"eslint-plugin-only-warn": "1.1.0",
 		"prettier": "2.8.4",
