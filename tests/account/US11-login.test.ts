@@ -1,17 +1,16 @@
 import { test, expect } from '@playwright/test';
-import { LoginPageEly } from '@pages/LoginPageEly';
-
-const get_completed = process.env.example_request;
-const epChallenges = process.env.example_endpoint_challenges;
-let login: LoginPageEly = <LoginPageEly>{};
+import { LoginPage } from '@pages/LoginPage';
+let login: LoginPage = <LoginPage>{};
 //todo: Test Suite
 test.describe('US11: Coderbyte | LOGIN | Iniciar y Cerrar sesión', () => {
+	const get_completed = process.env.example_request;
+	const epChallenges = process.env.example_endpoint_challenges;
 	//todo: beforeEach
 	test.beforeEach(async ({ page }) => {
-		login = new LoginPageEly(page);
+		login = new LoginPage(page);
 		await page.goto('/sl');
-		const url = await page.url();
-		await expect(url).toContain('/sl');
+		const url = page.url();
+		expect(url).toContain('/sl');
 
 		//* Move to Login Page.
 		await login.gotoLoginTab();
@@ -19,7 +18,7 @@ test.describe('US11: Coderbyte | LOGIN | Iniciar y Cerrar sesión', () => {
 	});
 
 	//	todo: Test Cases
-	test.only('11 | TC1: Validar iniciar sesión exitosamente.', async ({ page, baseURL }) => {
+	test('11 | TC1: Validar iniciar sesión exitosamente.', async ({ page, baseURL }) => {
 		//*1: Ingresar texto en Username:
 		await login.enterUsername(process.env.example_username);
 		//*2: Ingresar texto en Password:
@@ -30,7 +29,7 @@ test.describe('US11: Coderbyte | LOGIN | Iniciar y Cerrar sesión', () => {
 		await expect(login.errorMsgByNulls).not.toBeVisible();
 		//*5: Should be logged in.
 		await page.waitForRequest(baseURL + get_completed + '?**');
-		await expect(page.url()).toContain(epChallenges);
+		expect(page.url()).toContain(epChallenges);
 	});
 	test('11 | TC2: Validar no poder iniciar sesión con campos vacíos.', async () => {
 		//*1: Ingresar texto en Username:

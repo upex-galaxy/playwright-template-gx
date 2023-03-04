@@ -1,0 +1,58 @@
+#*🧙🏻‍♂️BIENVENIDO A LOS PIPELINES DE CONTINUOUS INTEGRATION DE "ARI - Hija de Aurora"!
+#*🤖Este Pipeline de CI se activa al PUSHEAR o MERGEAR en ramas de tareas que no sean QA ni Main, y consiste en ejecutar los tests de una US e importar los resultados a Jira!🚀
+#*👩🏻‍🔬Para utilizar este Pipeline de Ari, sigue los siguientes pasos:
+#todo:1ro: Modifica el script: "npm test" + tu archivo de Prueba Ejecutable (ver ejemplo en este archivo)
+#todo:2do: Modifica la propiedad: "testExecKey:" + tu ID del TX de Jira para importar automáticamente el resultado. Recuerda modificar el projectKey correspondiente.
+#todo:3ro: Guarda los cambios en el repositorio local (git add + git commit) y envíalos al Repo Remoto (git push)
+#*Resultado: Debería ejecutarse este Pipeline de GitHub Actions y correr cada uno de los Jobs declarados aquí.
+name: 🧪Playwright In-Sprint Testing
+run-name: ${{github.actor}}👨🏻‍🔬 ran TestSuite in ${{github.ref_name}}
+on:
+    push:
+        branches-ignore: [main, QA]
+
+jobs:
+    TestSuite:
+        timeout-minutes: 60
+        runs-on: ubuntu-latest
+        steps:
+            - name: 📘Checkout Repo
+              uses: actions/checkout@v3
+
+            - name: 💿Installing Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: 16
+
+            - name: 💾Installing Dependencies
+              run: npm ci
+
+            - name: 💻Installing Playwright Browsers
+              run: npm run pw:browsers
+
+            - name: ✅🧪Test Suite Execution
+              run: | #!Cambiar solamente el ID de la US (ej: */**/GX-9*.ts)
+                  npm test */**/US11*.ts
+
+            - name: 📊Generate Allure Report
+              run: |
+                  npm run allure
+
+            - name: 📡Upload Artifact - Allure Report
+              uses: actions/upload-artifact@v3
+              if: always()
+              with:
+                  name: test-report
+                  path: allure-report
+                  retention-days: 15
+
+            - name: ✅Import Test Results to Xray
+              if: always()
+              uses: mikepenz/xray-action@v2
+              with:
+                  username: ${{secrets.XRAY_CLIENT_ID}}
+                  password: ${{secrets.XRAY_CLIENT_SECRET}}
+                  testFormat: 'junit'
+                  testPaths: 'playwright-report/importer-report.xml'
+                  testExecKey: 'GX3-4' #!Cambiar a tu TX correspondiente.
+                  projectKey: 'GX3' #!Cambiar a tu Proyecto Level correspondiente.

@@ -1,6 +1,6 @@
 import { Page, Locator } from '@playwright/test';
 
-class LoginPageEly {
+class LoginPage {
 	readonly page: Page;
 	readonly url: string;
 	readonly LoginTab: Locator;
@@ -19,7 +19,7 @@ class LoginPageEly {
 		this.usernameInput = this.page.locator(':has-text("Username")+input');
 		this.passwordInput = this.page.locator(':has-text("Password")+input');
 		this.loginBtn = this.page.getByRole('button', { name: 'login' });
-		this.errorMsgByNulls = this.page.locator('login-error');
+		this.errorMsgByNulls = this.page.locator('.login-error');
 	}
 
 	async gotoLoginTab() {
@@ -39,4 +39,4 @@ class LoginPageEly {
 	}
 }
 
-export { LoginPageEly };
+export { LoginPage };
