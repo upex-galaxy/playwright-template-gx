@@ -29,8 +29,6 @@ export default defineConfig({
 	reporter: [
 		['list'],
 		['junit', { outputFolder: 'playwright-report', outputFile: 'playwright-report/importer-report.xml' }],
-		['json', { outputFolder: 'playwright-report', outputFile: 'playwright-report/report.json' }],
-		['html', { outputFolder: 'playwright-report' }],
 		['allure-playwright'],
 	],
 	/* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
@@ -59,12 +57,11 @@ export default defineConfig({
 			name: 'firefox',
 			use: { ...devices['Desktop Firefox'] },
 		},
-
+		/* Test against branded browsers. */
 		{
-			name: 'webkit',
-			use: { ...devices['Desktop Safari'] },
+			name: 'Microsoft Edge',
+			use: { channel: 'msedge' },
 		},
-
 		/* Test against mobile viewports. */
 		// {
 		//   name: 'Mobile Chrome',
@@ -73,16 +70,6 @@ export default defineConfig({
 		// {
 		//   name: 'Mobile Safari',
 		//   use: { ...devices['iPhone 12'] },
-		// },
-
-		/* Test against branded browsers. */
-		// {
-		//   name: 'Microsoft Edge',
-		//   use: { channel: 'msedge' },
-		// },
-		// {
-		//   name: 'Google Chrome',
-		//   use: { channel: 'chrome' },
 		// },
 	],
 

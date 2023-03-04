@@ -1,3 +1,4 @@
+#!No modificar Archivo. Este pipeline es para correr todos los tests como Regression.
 name: 🧪Playwright Regression Testing
 run-name: ${{github.actor}}👨🏻‍🔬 ran Regression in ${{github.ref_name}}
 on:

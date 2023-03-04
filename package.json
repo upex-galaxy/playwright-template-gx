@@ -4,15 +4,16 @@
 	"description": "playwright project with typescript and azure devops integration",
 	"main": "index.js",
 	"scripts": {
-		"pw:browsers": "npx playwright install chromium firefox webkit",
+		"pw:browsers": "npx playwright install --force chromium firefox msedge",
 		"plan": "npx playwright test --project=chromium --list",
 		"test": "npx playwright test --project=chromium",
 		"debug": "npx playwright test --project=chromium --debug --reporter=list",
 		"test:chrome": "npx playwright test --project=chromium --headed --reporter=list",
 		"test:firefox": "npx playwright test --project=firefox --headed --reporter=list",
-		"test:webkit": "npx playwright test --project=webkit --headed --reporter=list",
+		"test:edge": "npx playwright test --project=msedge --headed --reporter=list",
 		"regression": "npx playwright test",
-		"allure": "allure generate --clean && allure open --host localhost --port 9090"
+		"allure": "allure generate --clean",
+		"allure:open": "allure generate --clean && allure open --host localhost --port 9090"
 	},
 	"keywords": [
 		"playwright"
