@@ -11,7 +11,7 @@
 		"test:chrome": "npx playwright test --project=chromium --headed --reporter=list",
 		"test:firefox": "npx playwright test --project=firefox --headed --reporter=list",
 		"test:webkit": "npx playwright test --project=webkit --headed --reporter=list",
-		"regression": "npx playwright test --reporter=list",
+		"regression": "npx playwright test",
 		"allure": "allure generate --clean && allure open --host localhost --port 9090"
 	},
 	"keywords": [
