@@ -6,12 +6,13 @@
 	"scripts": {
 		"pw:browsers": "npx playwright install --force chromium firefox msedge",
 		"plan": "npx playwright test --project=chromium --list",
-		"test": "npx playwright test --project=chromium",
+		"test": "npx playwright test --project=chromium --headed",
+		"regression": "npx playwright test --project=chromium",
 		"debug": "npx playwright test --project=chromium --debug --reporter=list",
 		"test:chrome": "npx playwright test --project=chromium --headed --reporter=list",
 		"test:firefox": "npx playwright test --project=firefox --headed --reporter=list",
 		"test:edge": "npx playwright test --project=msedge --headed --reporter=list",
-		"regression": "npx playwright test",
+		"test:all": "npx playwright test --reporter=list",
 		"allure": "allure generate --clean",
 		"allure:open": "allure generate --clean && allure open --host localhost --port 9090"
 	},

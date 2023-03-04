@@ -68,12 +68,12 @@ jobs:
                       owner,
                       repo,
                       head: '${{ github.ref_name }}',
-                      base: 'cypex',
+                      base: 'main',
                       body: [
-                          'Update branch by Automation Pipeline',
+                          'Update branch by Automation Pipeline:',
                           '- (CI) Last Story Test Execution PASSED✅',
                           '- (CI) Regression Test Execution PASSED✅',
-                          '- No Conflicts in Repo Source Branch✅'
+                          '🆗No Conflicts in Repo Source Branch'
                       ].join('\n')
                       });
                       github.rest.issues.addLabels({
