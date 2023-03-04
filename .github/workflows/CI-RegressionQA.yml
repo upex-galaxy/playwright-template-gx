@@ -1,3 +1,4 @@
+#!No modificar Archivo. Este pipeline es para correr todos los tests como Regression.
 name: 🧪Playwright Regression Testing
 run-name: ${{github.actor}}👨🏻‍🔬 ran Regression in ${{github.ref_name}}
 on:
@@ -21,7 +22,9 @@ jobs:
               run: npm ci
 
             - name: 💻Installing Playwright Browsers
-              run: npm run pw:browsers
+              run: |
+                  npm run pw:browsers
+                  npx playwright install-deps
 
             - name: ✅🧪Regression Tests Execution
               run: |
@@ -65,12 +68,12 @@ jobs:
                       owner,
                       repo,
                       head: '${{ github.ref_name }}',
-                      base: 'cypex',
+                      base: 'main',
                       body: [
-                          'Update branch by Automation Pipeline',
+                          'Update branch by Automation Pipeline:',
                           '- (CI) Last Story Test Execution PASSED✅',
                           '- (CI) Regression Test Execution PASSED✅',
-                          '- No Conflicts in Repo Source Branch✅'
+                          '🆗No Conflicts in Repo Source Branch'
                       ].join('\n')
                       });
                       github.rest.issues.addLabels({

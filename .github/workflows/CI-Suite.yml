@@ -28,7 +28,9 @@ jobs:
               run: npm ci
 
             - name: 💻Installing Playwright Browsers
-              run: npm run pw:browsers
+              run: |
+                  npm run pw:browsers
+                  npx playwright install-deps
 
             - name: ✅🧪Test Suite Execution
               run: | #!Cambiar solamente el ID de la US (ej: */**/GX-9*.ts)
