@@ -21,7 +21,9 @@ jobs:
               run: npm ci
 
             - name: 💻Installing Playwright Browsers
-              run: npm run pw:browsers
+              run: |
+                  npm run pw:browsers
+                  npx playwright install-deps
 
             - name: ✅🧪Regression Tests Execution
               run: |
