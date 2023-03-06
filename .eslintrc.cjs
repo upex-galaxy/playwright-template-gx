@@ -13,7 +13,7 @@ module.exports = {
 	},
 	plugins: ['@typescript-eslint', 'only-warn'],
 	rules: {
-		indent: ['warn', 'tab'],
+		indent: ['warn', 'tab', { SwitchCase: 1 }],
 		'linebreak-style': ['warn', 'windows'],
 		quotes: ['warn', 'single'],
 		semi: ['warn', 'always'],
