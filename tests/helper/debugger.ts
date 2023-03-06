@@ -1,6 +1,6 @@
 import { Page, Locator } from '@playwright/test';
-class Debugger {
-	readonly page: Page;
+export class Debugger {
+	page: Page;
 
 	constructor(driver: Page) {
 		this.page = driver;
@@ -23,5 +23,3 @@ class Debugger {
 		}
 	}
 }
-
-export { Debugger };

@@ -1,13 +1,14 @@
 {
-    "compilerOptions": {
-        "target": "ES2022",
-        "moduleResolution": "Node",
-		"types": ["node","@playwright/test"],
+	"compilerOptions": {
+		"target": "ES2022",
+		"moduleResolution": "Node",
+		"types": ["node", "@playwright/test"],
 		"baseUrl": ".",
 		"paths": {
 			"@pages/*": ["./tests/pages/*"],
-			"@helper/*": ["./tests/helper/*"]
+			"@helper/*": ["./tests/helper/*"],
+			"@TestBase": ["./tests/pages/TestBase.ts"]
 		}
 	},
-    "exclude": ["node_modules"]
+	"exclude": ["node_modules"]
 }
