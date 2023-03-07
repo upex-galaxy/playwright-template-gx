@@ -17,8 +17,8 @@
 		"allure:open": "allure generate --clean && allure open --host localhost --port 9090",
 		"prettier:write": "npx prettier --write .",
 		"prettier:check": "npx prettier --check .",
-		"lint:check": "npx eslint apps/**/*.ts",
-		"lint:fix": "npx eslint --fix apps/**/*.ts"
+		"lint:check": "npx eslint tests/**/*.ts",
+		"lint:fix": "npx eslint --fix tests/**/*.ts"
 	},
 	"keywords": [
 		"playwright"
