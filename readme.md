@@ -6,6 +6,7 @@
 *** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
+[![🧪Playwright Regression Testing](https://github.com/upex-galaxy/playwright-typescript/actions/workflows/CI-RegressionQA.yml/badge.svg?branch=QA)](https://github.com/upex-galaxy/playwright-typescript/actions/workflows/CI-RegressionQA.yml)
 
 [![vscode-logo]][vscode-site] [![playwright-logo]][playwright-site] [![javascript-logo]][javascript-site] [![typescript-logo]][typescript-site]
 
