@@ -6,6 +6,7 @@
 *** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
+
 [![🧪Playwright Regression Testing](https://github.com/upex-galaxy/playwright-typescript/actions/workflows/CI-RegressionQA.yml/badge.svg?branch=QA)](https://github.com/upex-galaxy/playwright-typescript/actions/workflows/CI-RegressionQA.yml)
 
 [![vscode-logo]][vscode-site] [![playwright-logo]][playwright-site] [![javascript-logo]][javascript-site] [![typescript-logo]][typescript-site]
@@ -23,7 +24,7 @@
   <p align="center">
     <h3><strong>APRENDE Y GANA EXPERIENCIA TRABAJANDO EN UPEX GALAXY</strong></h3>
     <br />
-    <a href="https://github.com/upex-galaxy/playwright-cucumber"><strong>PLAYWRIGHT AL GRANO »</strong></a>
+    <a href="https://github.com/upex-galaxy/playwright-typescript"><strong>PLAYWRIGHT AL GRANO »</strong></a>
     <br />
     <br />
     <a href="https://playwright.dev/docs/getting-started-vscode">Getting Started Docs »</a>
@@ -46,17 +47,21 @@ Ahora el Directorio de UPEX Galaxy, será mucho más simple.
     ```
 2. **❗💿 Instala todas las Dependencias del Proyecto**:
     ```
-    npm ci
+    yarn
     ```
-3. **🧪 Corre toda la Regresión de Pruebas para Verificar**:
+3. **❗💿Instala todos los navegadores que usa el Proyecto**:
     ```
-    npm run regression
+    npx playwright install
     ```
-4. **📊 Puedes Generar siempre un Reporte de Pruebas con Allure**:
+4. **🧪 Corre toda la Regresión de Pruebas para Verificar**:
     ```
-    npm run allure
+    yarn regression
     ```
-5. **❗ Recuerda ACTUALIZAR tu Repo todos los días con**:
+5. **📊 Puedes Generar siempre un Reporte de Pruebas con Allure**:
+    ```
+    yarn allure
+    ```
+6. **❗ Recuerda ACTUALIZAR tu Repo todos los días con**:
 
     ```
     primero corre:
