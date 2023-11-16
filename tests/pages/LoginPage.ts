@@ -1,14 +1,14 @@
 import { Page, Locator, expect } from '@playwright/test';
 
 export class LoginPage {
-	readonly page: Page;
-	readonly url: string;
-	readonly LoginTab: Locator;
-	readonly LoginPageTitle: Locator;
-	readonly usernameInput: Locator;
-	readonly passwordInput: Locator;
-	readonly loginBtn: Locator;
-	readonly errorMsgByNulls: Locator;
+	page: Page;
+	url: string;
+	LoginTab: Locator;
+	LoginPageTitle: Locator;
+	usernameInput: Locator;
+	passwordInput: Locator;
+	loginBtn: Locator;
+	errorMsgByNulls: Locator;
 
 	constructor(driver: Page) {
 		this.page = driver;
