@@ -4,3 +4,6 @@ allure-report
 allure-results
 test-results
 .pytest_cache
+blob-report/
+playwright/.cache/
+package-lock.json

@@ -1,8 +1,8 @@
 {
 	"compilerOptions": {
-		"target": "ES2022",
+		"target": "esnext",
 		"moduleResolution": "Node",
-		"types": ["node", "@playwright/test"],
+		"types": ["node"],
 		"baseUrl": ".",
 		"paths": {
 			"@pages/*": ["./tests/pages/*"],
