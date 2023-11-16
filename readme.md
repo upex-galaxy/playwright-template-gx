@@ -49,10 +49,13 @@ Ahora el Directorio de UPEX Galaxy, será mucho más simple.
     ```
     yarn
     ```
-3. **❗💿Instala todos los navegadores que usa el Proyecto**:
+3. **❗💿 Instala Playwrgiht🎭️ y los Navegadores todas sus Dependencias usando Yarn**:
     ```
-    npx playwright install
+    yarn pw:install
     ```
+    - este script de yarn `pw:install` ejecuta => "npx playwright install --with-deps chromium firefox msedge"
+    - si estás usando un sistema operativo no soportado por Playwright, necesitarás realizar la instalación con la Extensión.
+
 4. **🧪 Corre toda la Regresión de Pruebas para Verificar**:
     ```
     yarn regression
