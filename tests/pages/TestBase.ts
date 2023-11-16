@@ -25,11 +25,11 @@ const test = driver.extend<{
 
 export { test };
 // Main utilities:
-export const suite = test.describe;
+export const story = test.describe;
 export const expect = test.expect;
 export const api = request;
 // Hooks:
-export const background = test.beforeAll;
-export const prc = test.beforeEach;
-export const post = test.afterEach;
-export const close = test.afterAll;
+export const beforeAll = test.beforeAll;
+export const precondition = test.beforeEach;
+export const afterEach = test.afterEach;
+export const afterAll = test.afterAll;

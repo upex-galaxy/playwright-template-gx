@@ -1,7 +1,7 @@
-import { test, suite, prc, expect } from '@TestBase';
+import { test, story, precondition, expect } from '@TestBase';
 
-suite('Challenge List', () => {
-	prc(async ({ login }) => {
+story('Challenge List', () => {
+	precondition(async ({ login }) => {
 		await login.LoginSession();
 	});
 	test('TC1: select free challenge', async ({ page, chalPage }) => {
