@@ -10,30 +10,31 @@ jobs:
         timeout-minutes: 60
         runs-on: ubuntu-latest
         steps:
-            - name: 📘Checkout Repo
+            - name: 📘 Checkout Repo
               uses: actions/checkout@v3
 
-            - name: 💿Installing Node.js
+            - name: 💿 Installing Node.js
               uses: actions/setup-node@v3
               with:
-                  node-version: 16
+                  node-version: 18
 
-            - name: 💾Installing Dependencies
-              run: npm ci
-
-            - name: 💻Installing Playwright Browsers
+            - name: 🧬 Install YARN and All Dependencies
               run: |
-                  npm run pw:browsers
-                  npx playwright install-deps
+                  npm install -g yarn
+                  yarn
+                  yarn list
 
-            - name: ✅🧪Regression Tests Execution
+            - name: 🎭️ Installing Playwright And Browsers
               run: |
-                  npm run plan
-                  npm run regression
+                  yarn pw:install
+
+            - name: ✅ 🧪Test Suite Execution
+              run: |
+                  yarn regression
 
             - name: 📊Generate Allure Report
               run: |
-                  npm run allure
+                  yarn allure
 
             - name: 📡Upload Artifact - Allure Report
               uses: actions/upload-artifact@v3
@@ -43,16 +44,16 @@ jobs:
                   path: allure-report
                   retention-days: 15
 
-#             - name: ✅Import Test Results to Xray
-#               if: always()
-#               uses: mikepenz/xray-action@v2
-#               with:
-#                   username: ${{secrets.XRAY_CLIENT_ID}}
-#                   password: ${{secrets.XRAY_CLIENT_SECRET}}
-#                   testFormat: 'junit'
-#                   testPaths: 'playwright-report/importer-report.xml'
-#                   testExecKey: 'GX3-4'
-#                   projectKey: 'GX3'
+            # - name: ✅Import Test Results to Xray
+            #   if: always()
+            #   uses: mikepenz/xray-action@v2
+            #   with:
+            #       username: ${{secrets.XRAY_CLIENT_ID}}
+            #       password: ${{secrets.XRAY_CLIENT_SECRET}}
+            #       testFormat: 'junit'
+            #       testPaths: 'playwright-report/importer-report.xml'
+            #       testExecKey: 'GX3-4' #* Este debería ser el TX predeterminado para este Pipeline de Regresión.
+            #       projectKey: 'GX3'
 
     Create-PullRequest:
         needs: [RegressionTesting]

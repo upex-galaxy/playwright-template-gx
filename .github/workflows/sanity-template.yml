@@ -1,46 +1,49 @@
-#*🧙🏻‍♂️BIENVENIDO A LOS PIPELINES DE CONTINUOUS INTEGRATION DE "ARI - Hija de Aurora"!
 #*🤖Este Pipeline de CI se activa al PUSHEAR o MERGEAR en ramas de tareas que no sean QA ni Main, y consiste en ejecutar los tests de una US e importar los resultados a Jira!🚀
 #*👩🏻‍🔬Para utilizar este Pipeline de Ari, sigue los siguientes pasos:
-#todo:1ro: Modifica el script: "npm test" + tu archivo de Prueba Ejecutable (ver ejemplo en este archivo)
-#todo:2do: Modifica la propiedad: "testExecKey:" + tu ID del TX de Jira para importar automáticamente el resultado. Recuerda modificar el projectKey correspondiente.
-#todo:3ro: Guarda los cambios en el repositorio local (git add + git commit) y envíalos al Repo Remoto (git push)
+#todo: 1 -> Crea tu propio archivo sanity.yml con tu username de GitHub, ejemplo sanity-saiotest.yml
+#todo: 2 -> Copia el contenido de este archivo yml y pégalo en tu nuevo archivo yml con de tu username.
+#todo: 3 -> Modifica la trigger del Push en donde dice "TuBranchAqui", coloca tu nombre tal cual de tu rama git.
+#todo: 4 -> Modifica el archivo de prueba a ejectuar en el script del "yarn test" (ver ejemplo en este archivo)
+#todo: 5 -> Modifica la propiedad: "testExecKey" con tu ID del TX de Jira para importar automáticamente el resultado.
+#todo: 6 -> Recuerda modificar el projectKey correspondiente, si estás en L3, debe ser GX3 y así...
+#todo: 7 -> Listo! Guarda los cambios (git add + git commit) y pushea (git push) para ejectutar este Pipeline!
 #*Resultado: Debería ejecutarse este Pipeline de GitHub Actions y correr cada uno de los Jobs declarados aquí.
-name: 🧪Playwright In-Sprint Testing
+name: 🧪Playwright Sanity Testing
 run-name: ${{github.actor}}👨🏻‍🔬 ran TestSuite in ${{github.ref_name}}
 on:
     push:
-        branches-ignore: [main, QA]
+        branches: ['TuBranchAqui'] #! Cambia "TuBranchAqui" por el nombre de tu rama de tarea.
 
 jobs:
     TestSuite:
         timeout-minutes: 60
         runs-on: ubuntu-latest
         steps:
-            - name: 📘Checkout Repo
+            - name: 📘 Checkout Repo
               uses: actions/checkout@v3
 
-            - name: 💿Installing Node.js
+            - name: 💿 Installing Node.js
               uses: actions/setup-node@v3
               with:
-                  node-version: 16
+                  node-version: 18
 
-            - name: 🧬Install YARN and All Dependencies
+            - name: 🧬 Install YARN and All Dependencies
               run: |
                   npm install -g yarn
                   yarn
                   yarn list
 
-            - name: 💻Installing Playwright And Browsers
+            - name: 🎭️ Installing Playwright And Browsers
               run: |
                   yarn pw:install
 
-            - name: ✅🧪Test Suite Execution
+            - name: ✅ 🧪Test Suite Execution
               run: | #!Cambiar solamente el ID de la US (ej: */**/GX-9*.ts)
-                  npm test */**/US11*.ts
+                  yarn test */**/US11*.ts
 
             - name: 📊Generate Allure Report
               run: |
-                  npm run allure
+                  yarn allure
 
             - name: 📡Upload Artifact - Allure Report
               uses: actions/upload-artifact@v3
