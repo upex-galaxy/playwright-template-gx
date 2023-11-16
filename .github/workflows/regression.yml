@@ -34,7 +34,7 @@ jobs:
 
             - name: 📊Generate Allure Report
               run: |
-                  yarn allure
+                  yarn allure:open
 
             - name: 📡Upload Artifact - Allure Report
               uses: actions/upload-artifact@v3
