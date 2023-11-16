@@ -24,13 +24,15 @@ jobs:
               with:
                   node-version: 16
 
-            - name: 💾Installing Dependencies
-              run: npm ci
-
-            - name: 💻Installing Playwright Browsers
+            - name: 🧬Install YARN and All Dependencies
               run: |
-                  npm run pw:browsers
-                  npx playwright install-deps
+                  npm install -g yarn
+                  yarn
+                  yarn list
+
+            - name: 💻Installing Playwright And Browsers
+              run: |
+                  yarn pw:install
 
             - name: ✅🧪Test Suite Execution
               run: | #!Cambiar solamente el ID de la US (ej: */**/GX-9*.ts)

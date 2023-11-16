@@ -18,13 +18,13 @@ export default defineConfig({
 	// Test Matched those suites which are test.ts or spec.ts
 	testMatch: /.*(test|spec)\.(ts)/,
 	/* Run tests in files in parallel */
-	fullyParallel: true,
+	fullyParallel: false,
 	/* Fail the build on CI if you accidentally left test.only in the source code. */
 	forbidOnly: !!process.env.CI,
 	/* Retry on CI only */
 	retries: process.env.CI ? 2 : 0,
-	/* Opt out of parallel tests on CI. */
-	workers: process.env.CI ? 1 : undefined,
+	/* Opt out of parallel tests on CI. Workers are kinda flaky! not prefer to use them */
+	workers: process.env.CI ? 1 : 1,
 	/* Reporter to use. See https://playwright.dev/docs/test-reporters */
 	reporter: [
 		['list'],
