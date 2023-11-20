@@ -13,7 +13,7 @@
 		"test:firefox": "npx playwright test --project=firefox --headed --reporter=list",
 		"test:edge": "npx playwright test --project=msedge --headed --reporter=list",
 		"allure:open": "allure generate --clean",
-		"allure:report": "allure generate --clean && allure open --host localhost --port 9090",
+		"allure:report": "allure generate --clean && allure open --host localhost --port 7070",
 		"prettier:write": "npx prettier --write tests/**/*.ts",
 		"prettier:check": "npx prettier --check tests/**/*.ts",
 		"lint:check": "npx eslint tests/**/*.ts",
