@@ -32,6 +32,7 @@
 		"CucumberOpen.cucumber-official",
 		"alexkrechik.cucumberautocomplete",
 		"ms-vscode.vscode-typescript-next",
+		"yoavbls.pretty-ts-errors",
 		"xabikos.JavaScriptSnippets",
 		//* Project main Framework:
 		"deepakkamboj0121.vscode-playwright-test-snippets",
