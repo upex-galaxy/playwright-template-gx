@@ -1,0 +1,17 @@
+{
+	"compilerOptions": {
+		"module": "ESNext",
+		"target": "ESNext",
+		"moduleResolution": "Node",
+		"resolveJsonModule": true,
+		"esModuleInterop": true,
+		"types": ["node"],
+		"baseUrl": ".",
+		"paths": {
+			"@pages/*": ["./tests/pages/*"],
+			"@helper/*": ["./tests/helper/*"],
+			"@TestBase": ["./tests/pages/TestBase.ts"]
+		}
+	},
+	"exclude": ["node_modules"]
+}
