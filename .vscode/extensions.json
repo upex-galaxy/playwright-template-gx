@@ -5,6 +5,7 @@
 		"PKief.material-icon-theme",
 		"sdras.night-owl",
 		"ahmadawais.shades-of-purple",
+		"johnpapa.winteriscoming",
 		//* Helper:
 		"leizongmin.node-module-intellisense",
 		"christian-kohler.npm-intellisense",
@@ -16,7 +17,7 @@
 		"rssowl.copy-relative-path-posix",
 		"usernamehw.errorlens",
 		"kisstkondoros.vscode-gutter-preview",
-		"mrrefactoring.polacode-fixed-edition",
+		"adpyke.codesnap",
 		//* Formatters:
 		"dbaeumer.vscode-eslint",
 		"esbenp.prettier-vscode",
