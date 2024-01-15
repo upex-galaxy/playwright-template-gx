@@ -27,7 +27,7 @@ export default defineConfig({
 	workers: process.env.CI ? 1 : 1,
 	/* Reporter to use. See https://playwright.dev/docs/test-reporters */
 	reporter: [
-		['list'],
+		['./tests/custom-reporter.ts'],
 		['html'],
 		['junit', { outputFolder: 'playwright-report', outputFile: 'playwright-report/importer-report.xml' }],
 		['allure-playwright'],
@@ -35,7 +35,7 @@ export default defineConfig({
 	/* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
 	use: {
 		/* Base URL to use in actions like `await page.goto('/')`. */
-		baseURL: 'https://coderbyte.com',
+		baseURL: 'https://demoqa.com',
 		// Headless Mode: true by default
 		headless: true,
 		// Viewport Resolution
