@@ -35,7 +35,7 @@ export default defineConfig({
 	/* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
 	use: {
 		/* Base URL to use in actions like `await page.goto('/')`. */
-		baseURL: 'https://coderbyte.com',
+		baseURL: 'https://demoqa.com',
 		// Headless Mode: true by default
 		headless: true,
 		// Viewport Resolution
