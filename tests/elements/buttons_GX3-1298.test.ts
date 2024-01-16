@@ -28,16 +28,15 @@ story('GX3-1298: Element Buttons', () => {
 		});
 	});
 
-	test('TC3: Should trigger when using simple click', async ({ page }) => {
-		const messageExpected = 'You have done a dynamic click';
-		const messageElement = page.locator('#2WTAN');
-		await page.getByText('Click Me', { exact: true }).click();
+	test('TC3: Should trigger when using Simple Click', async ({ page }) => {
+		const messageExpected = 'You have done dynamic click';
+		const messageElement = page.locator('#dynamicClickMessage');
 
-		await test.step('Click Right Button', async () => {
-			await page.locator('#rightClickBtn').click();
-			await expect(messageElement).toHaveText('messageExpected');
+		await test.step('Perform simple Click on Button', async () => {
+			await page.getByText('Click Me', { exact: true }).click();
 		});
-		await test.step('Verify the Message', async () => {
+		await test.step('Verify the message', async () => {
+			const messageElement = page.locator('#dynamicClickMessage');
 			await expect(messageElement).toHaveText(messageExpected);
 		});
 	});
