@@ -1,0 +1,26 @@
+[
+	{
+		"fullName": "John Doe",
+		"email": "johnDow@gmail.com",
+		"currentAddress": "123 Main St",
+		"permanentAddress": "123 Main St"
+	},
+	{
+		"fullName": "John Doe",
+		"email": "a@g.om",
+		"currentAddress": "123 Main St",
+		"permanentAddress": "123 Main St"
+	},
+	{
+		"fullName": "John Doe",
+		"email": "@g.com",
+		"currentAddress": "123 Main St",
+		"permanentAddress": "123 Main St"
+	},
+	{
+		"fullName": "John Doe",
+		"email": "johnDowgmail.com",
+		"currentAddress": "123 Main St",
+		"permanentAddress": "123 Main St"
+	}
+]
