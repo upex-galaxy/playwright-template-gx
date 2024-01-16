@@ -22,10 +22,9 @@ story('GX3-1298: Element Buttons', () => {
 
 		await test.step('Click Right Button', async () => {
 			await page.locator('#rightClickBtn').click({ button: 'right' });
-			await expect(messageElement).toHaveText('messageExpected');
 		});
 		await test.step('Verify the Message', async () => {
-			await expect(messageElement).toHaveText('messageExpected');
+			await expect(messageElement).toHaveText(messageExpected);
 		});
 	});
 
@@ -39,7 +38,7 @@ story('GX3-1298: Element Buttons', () => {
 			await expect(messageElement).toHaveText('messageExpected');
 		});
 		await test.step('Verify the Message', async () => {
-			await expect(messageElement).toHaveText('messageExpected');
+			await expect(messageElement).toHaveText(messageExpected);
 		});
 	});
 });
