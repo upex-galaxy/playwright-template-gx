@@ -29,7 +29,7 @@ story('GX3-1298: Element Buttons', () => {
 	});
 
 	test('TC3: Should trigger when using Simple Click', async ({ page }) => {
-		const messageExpected = 'You have done dynamic click';
+		const messageExpected = 'You have done a dynamic click';
 		const messageElement = page.locator('#dynamicClickMessage');
 
 		await test.step('Perform simple Click on Button', async () => {
