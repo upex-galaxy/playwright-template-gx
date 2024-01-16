@@ -10,6 +10,8 @@
 		"paths": {
 			"@pages/*": ["./tests/pages/*"],
 			"@helper/*": ["./tests/helper/*"],
+			"@data/*": ["./tests/data/*"],
+			"@type/*": ["./tests/interfaces/*"],
 			"@TestBase": ["./tests/pages/TestBase.ts"]
 		}
 	},
