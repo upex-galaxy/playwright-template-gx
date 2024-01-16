@@ -1,4 +1,4 @@
-import { story, test, precondition, expect } from '@pages/TestBase';
+import { story, test, precondition, expect } from '@TestBase';
 
 // Test Suite:
 story('GX3-1290: Element Buttons', () => {
