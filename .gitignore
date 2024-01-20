@@ -11,3 +11,4 @@ package-lock.json
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+tests/data/sampleFile.jpeg
