@@ -1,17 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import type { FullConfig, FullResult, Reporter, Suite, TestCase, TestError, TestResult, TestStep } from '@playwright/test/reporter';
-
-type testAttr = {
-	testID: string;
-	testNumber: number;
-	testName: string;
-	testStatus?: string;
-	testDuration?: number;
-};
 
 class MyReporter implements Reporter {
 	private startTime: number;
 	private endTime: number;
-	private testCount: number;
 	private testResults: testAttr[];
 	private retryCount: number;
 	private totalRetries: number;
@@ -39,9 +31,14 @@ class MyReporter implements Reporter {
 		const allTests = suite.allTests();
 		this.runningTests = allTests;
 		const usedWorkers = config.workers === 1 ? '1 worker' : `${config.workers} workers`;
-		const usedProject = config.projects[0].name;
 		console.log('\n', `🎬 Total Tests to Run: ${allTests.length} TC using ${usedWorkers}`);
-		console.log('\x1b[32m%s\x1b[0m', `🚀 Starting Test Execution in ${usedProject.toUpperCase()}...`);
+		if (suite.suites.length === 1) {
+			const usedProject = suite.suites[0].title;
+			console.log('\x1b[32m%s\x1b[0m', `🚀 Starting Test Execution in ${usedProject.toUpperCase()}...`);
+		} else {
+			const projectNames = suite.suites.map(({ title }) => title);
+			console.log('\x1b[32m%s\x1b[0m', `🚀 Starting Test Execution in ${projectNames.join(', ').toUpperCase()}...`);
+		}
 	}
 
 	onTestBegin(test: TestCase) {
@@ -82,7 +79,7 @@ class MyReporter implements Reporter {
 		result.status;
 		if (step.category === 'test.step') {
 			console.group();
-			console.log('\x1b[30m%s\x1b[0m', `✓ ${step.title}${testName}`);
+			console.log('\x1b[37m%s\x1b[0m', `---- ✓ ${step.title}${testName}`);
 		}
 	}
 
@@ -95,10 +92,12 @@ class MyReporter implements Reporter {
 			console.group();
 			if (step.error) {
 				console.log('\x1b[31m%s\x1b[0m', `---- step failed 🔴 [${step.duration}ms]${testName}`);
-				console.log('\x1b[31m%s\x1b[0m', '---- 🔎 Located in:', step.error?.location);
-				console.log('\x1b[31m%s\x1b[0m', '---- 🔴 Snippet:');
-				console.log(step.error?.snippet);
-				console.log('\x1b[31m%s\x1b[0m', '---- 🔴 Error:', step.error?.message);
+				if (step.error?.location) console.log('\x1b[31m%s\x1b[0m', '---- 🔎 Located in:', step.error?.location);
+				if (step.error?.snippet) {
+					console.log('\x1b[31m%s\x1b[0m', '---- 🔴 Snippet:');
+					console.log(step.error?.snippet);
+				}
+				if (step.error?.message) console.log('\x1b[31m%s\x1b[0m', '---- 🔴 Error:', step.error?.message);
 				console.log('\x1b[31m%s\x1b[0m', '---- ✔️ File:', step.titlePath()[2]);
 			} else {
 				console.log('\x1b[32m%s\x1b[0m', `---- step passed ✅ [${step.duration}ms]${testName}`);
@@ -114,45 +113,51 @@ class MyReporter implements Reporter {
 		const testName = this.parallelTests ? ` -- ${testRunNumber}${test.title}` : '';
 		console.group();
 		if (result.status === 'passed') {
-			console.log('\x1b[32m%s\x1b[0m', `---- 🔎 Output: ✅ PASSED${testName}`);
+			console.log('\x1b[32m%s\x1b[0m', `---- 🔎 Test Output: ✅ PASSED${testName}`);
 			this.retryCount = 0;
 		}
 		if (result.status === 'failed') {
-			console.log('\x1b[31m%s\x1b[0m', `---- 🔎 Output: ❌ FAILED${testName}`);
-			console.log('\x1b[31m%s\x1b[0m', '---- 🔴 Error:', result.error?.message);
-			console.log('\x1b[31m%s\x1b[0m', '---- 🔴 Value:', result.error?.value);
-			console.log('\x1b[31m%s\x1b[0m', '---- 🔴 Snippet:');
-			console.group();
-			console.log(result.error?.snippet);
-			console.groupEnd();
-			console.log('\x1b[31m%s\x1b[0m', '---- 🔎 Located in:', result.error?.location);
-			console.log('\x1b[31m%s\x1b[0m', '---- ✔️ File:', test.titlePath()[2]);
+			console.log('\x1b[31m%s\x1b[0m', `---- 🔎 Test Output: ❌ FAILED${testName}`);
+			if (result.error.message) console.log('\x1b[31m%s\x1b[0m', '---- 🔴 Error:', result.error?.message);
+			if (result.error?.value) console.log('\x1b[31m%s\x1b[0m', '---- 🔴 Value:', result.error?.value);
+			if (result.error?.snippet) {
+				console.log('\x1b[31m%s\x1b[0m', '---- 🔴 Snippet:');
+				console.group();
+				console.log(result.error?.snippet);
+				console.groupEnd();
+			}
+			if (result.error?.location) console.log('\x1b[31m%s\x1b[0m', '---- 🔎 Located in:', result.error?.location);
+			if (test.titlePath()[2]) console.log('\x1b[31m%s\x1b[0m', '---- ✔️ File:', test.titlePath()[2]);
 			this.retryCount = result.retry + 1;
 			if (this.retryCount > this.totalRetries) this.retryCount = 0; // maximum retries reached, reset retry count
 		}
 		if (result.status === 'timedOut') {
-			console.log('\x1b[31m%s\x1b[0m', `---- 🔎 Output: ⏱️ TimedOut${testName}`);
-			console.log('\x1b[31m%s\x1b[0m', '---- 🔴 Error:', result.error?.message);
-			console.log('\x1b[31m%s\x1b[0m', '---- 🔴 Value:', result.error?.value);
-			console.log('\x1b[31m%s\x1b[0m', '---- 🔴 Snippet:');
-			console.group();
-			console.log(result.error?.snippet);
-			console.groupEnd();
-			console.log('\x1b[31m%s\x1b[0m', '---- 🔎 Located in:', result.error?.location);
-			console.log('\x1b[31m%s\x1b[0m', '---- ✔️ File:', test.titlePath()[2]);
+			console.log('\x1b[31m%s\x1b[0m', `---- 🔎 Test Output: ⏱️ TimedOut${testName}`);
+			if (result.error.message) console.log('\x1b[31m%s\x1b[0m', '---- 🔴 Error:', result.error?.message);
+			if (result.error?.value) console.log('\x1b[31m%s\x1b[0m', '---- 🔴 Value:', result.error?.value);
+			if (result.error?.snippet) {
+				console.log('\x1b[31m%s\x1b[0m', '---- 🔴 Snippet:');
+				console.group();
+				console.log(result.error?.snippet);
+				console.groupEnd();
+			}
+			if (result.error?.location) console.log('\x1b[31m%s\x1b[0m', '---- 🔎 Located in:', result.error?.location);
+			if (test.titlePath()[2]) console.log('\x1b[31m%s\x1b[0m', '---- ✔️ File:', test.titlePath()[2]);
 			this.retryCount = result.retry + 1;
 			if (this.retryCount > this.totalRetries) this.retryCount = 0; // maximum retries reached, reset retry count
 		}
 		if (result.status === 'interrupted') {
-			console.log('\x1b[31m%s\x1b[0m', `---- 🔎 Output: ⏱⚠️ INTERRUPTED${testName}`);
-			console.log('\x1b[31m%s\x1b[0m', '---- 🔴 Error:', result.error?.message);
-			console.log('\x1b[31m%s\x1b[0m', '---- 🔴 Value:', result.error?.value);
-			console.log('\x1b[31m%s\x1b[0m', '---- 🔴 Snippet:');
-			console.group();
-			console.log(result.error?.snippet);
-			console.groupEnd();
-			console.log('\x1b[31m%s\x1b[0m', '---- 🔎 Located in:', result.error?.location);
-			console.log('\x1b[31m%s\x1b[0m', '---- ✔️ File:', test.titlePath()[2]);
+			console.log('\x1b[31m%s\x1b[0m', `---- 🔎 Test Output: ⏱⚠️ INTERRUPTED${testName}`);
+			if (result.error.message) console.log('\x1b[31m%s\x1b[0m', '---- 🔴 Error:', result.error?.message);
+			if (result.error?.value) console.log('\x1b[31m%s\x1b[0m', '---- 🔴 Value:', result.error?.value);
+			if (result.error?.snippet) {
+				console.log('\x1b[31m%s\x1b[0m', '---- 🔴 Snippet:');
+				console.group();
+				console.log(result.error?.snippet);
+				console.groupEnd();
+			}
+			if (result.error?.location) console.log('\x1b[31m%s\x1b[0m', '---- 🔎 Located in:', result.error?.location);
+			if (test.titlePath()[2]) console.log('\x1b[31m%s\x1b[0m', '---- ✔️ File:', test.titlePath()[2]);
 			this.retryCount = result.retry + 1;
 			if (this.retryCount > this.totalRetries) this.retryCount = 0; // maximum retries reached, reset retry count
 		}
@@ -163,7 +168,6 @@ class MyReporter implements Reporter {
 		this.testResults[index].testDuration = result.duration;
 	}
 
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	onStdOut(chunk: string | Buffer, test: void | TestCase, result: void | TestResult) {
 		console.group();
 		if (this.runningTests.length === 1) console.log(chunk);
@@ -171,7 +175,6 @@ class MyReporter implements Reporter {
 		console.groupEnd();
 	}
 
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	onStdErr(chunk: string | Buffer, test: void | TestCase, result: void | TestResult): void {
 		console.group();
 		console.log(chunk);
@@ -181,56 +184,67 @@ class MyReporter implements Reporter {
 
 	onError(error: TestError): void {
 		console.group();
-		console.log('\x1b[31m%s\x1b[0m', '---- 🔴 For Test:', error.message);
-		console.log('\x1b[31m%s\x1b[0m', '---- 🔴 Error Exception:', error.message);
-		console.log('\x1b[31m%s\x1b[0m', '---- 🔴 Error Location:', error.location);
-		console.log('\x1b[31m%s\x1b[0m', '---- 🔴 Error Value:', error.value);
-		console.log('\x1b[31m%s\x1b[0m', '---- 🔴 Error Snippet:', error.snippet);
+		if (error.message) console.log('\x1b[31m%s\x1b[0m', '---- 🔴 For Test:', error.message);
+		if (error.message) console.log('\x1b[31m%s\x1b[0m', '---- 🔴 Error Exception:', error.message);
+		if (error.location) console.log('\x1b[31m%s\x1b[0m', '---- 🔴 Error Location:', error.location);
+		if (error.value) console.log('\x1b[31m%s\x1b[0m', '---- 🔴 Error Value:', error.value);
+		if (error.message) console.log('\x1b[31m%s\x1b[0m', '---- 🔴 Error Snippet:', error.snippet);
 		console.groupEnd();
 	}
 
 	onEnd(result: FullResult) {
 		this.endTime = Date.now();
 		const duration = (this.endTime - this.startTime) / 1000;
+		const allTestsPassed = ' ALL TESTS PASSED ';
+		const executionFailed = ' EXECUTION FAILED - there is one or more failed tests ';
+		const timedOut = ' TIMEDOUT - execution run out of time ';
+		const interrupted = ' INTERRUPTED - execution was interrupted ';
 		const results = {
-			passed: '✅ ALL TESTS PASSED',
-			failed: '🔴 EXECUTION FAILED - there is one or more failed tests',
-			timedOut: '⏱️ TIMEDOUT - execution run out of time',
-			interrupted: '⚠️ INTERRUPTED - execution was interrupted',
+			passed: allTestsPassed,
+			failed: executionFailed,
+			timedOut: timedOut,
+			interrupted: interrupted,
 		};
 		console.log('\n\x1b[43m\x1b[30m%s\x1b[0m', '📊 TEST REPORT SUMMARY:', '\n');
 		console.group();
 		this.testResults.forEach((test) => {
 			const durationDecimal = (test.testDuration = test.testDuration / 1000);
-			if (test.testStatus === 'failed')
-				console.log('\x1b[31m%s\x1b[0m', test.testStatus, '❌', test.testNumber, '🧪', test.testName, durationDecimal, 's');
 			if (test.testStatus === 'passed')
 				console.log('\x1b[32m%s\x1b[0m', test.testStatus, '✅', test.testNumber, '🧪', test.testName, durationDecimal, 's');
+			if (test.testStatus === 'failed')
+				console.log('\x1b[31m%s\x1b[0m', test.testStatus, '❌', test.testNumber, '🧪', test.testName, durationDecimal, 's');
 			if (test.testStatus === 'timedOut')
 				console.log('\x1b[31m%s\x1b[0m', test.testStatus, '⌛', test.testNumber, '🧪', test.testName, durationDecimal, 's');
 			if (test.testStatus === 'interrupted')
 				console.log('\x1b[31m%s\x1b[0m', test.testStatus, '⚠️', test.testNumber, '🧪', test.testName, durationDecimal, 's');
 		});
 		console.groupEnd();
-		console.log('\n\x1b[1m%s\x1b[0m', '⏰ Test Execution Ended in', parseFloat(duration.toFixed(2)), 'seconds.');
+		console.log('\n\x1b[1m\x1b[0m', '⏰ Test Execution Ended in', parseFloat(duration.toFixed(2)), 'seconds.');
 		const allTestOutput = results[result.status];
-		if (allTestOutput === '✅ ALL TESTS PASSED') {
-			console.log('\x1b[1m%s\x1b[0m\x1b[42m\x1b[30m%s\x1b[0m', '🚀 Overall Output:', allTestOutput);
+		if (allTestOutput === allTestsPassed) {
+			console.log('\x1b[1m\x1b[37m%s\x1b[0m\x1b[30m\x1b[102m%s\x1b[0m', '🚀 Overall Output: ✅ ', allTestOutput);
 		}
-		if (allTestOutput === '🔴 EXECUTION FAILED - there is one or more failed tests') {
-			console.log('\x1b[1m%s\x1b[0m\x1b[43m\x1b[31m%s\x1b[0m', '🚀 Overall Output:', allTestOutput);
+		if (allTestOutput === executionFailed) {
+			console.log('\x1b[1m\x1b[37m%s\x1b[0m\x1b[1m\x1b[37m\x1b[41m%s\x1b[0m', '🚀 Overall Output: 🔴 ', allTestOutput);
 		}
-		if (allTestOutput === '⏱️ TIMEDOUT - execution run out of time') {
-			console.log('\x1b[1m%s\x1b[0m\x1b[43m\x1b[31m%s\x1b[0m', '🚀 Overall Output:', allTestOutput);
+		if (allTestOutput === timedOut) {
+			console.log('\x1b[1m\x1b[37m%s\x1b[0m\x1b[1m\x1b[37m\x1b[41m%s\x1b[0m', '🚀 Overall Output: ⏱️ ', allTestOutput);
 		}
-		if (allTestOutput === '⚠️ INTERRUPTED - execution was interrupted') {
-			console.log('\x1b[1m%s\x1b[0m\x1b[43m\x1b[31m%s\x1b[0m', '🚀 Overall Output:', allTestOutput);
+		if (allTestOutput === interrupted) {
+			console.log('\x1b[1m\x1b[37m%s\x1b[0m\x1b[1m\x1b[37m\x1b[41m%s\x1b[0m', '🚀 Overall Output: ⚠️ ', allTestOutput);
 		}
 		console.log('\x1b[0m');
 	}
 	// onExit(): Promise<void> {
-
 	// }
 }
 
 export default MyReporter;
+
+type testAttr = {
+	testID: string;
+	testNumber: number;
+	testName: string;
+	testStatus?: string;
+	testDuration?: number;
+};

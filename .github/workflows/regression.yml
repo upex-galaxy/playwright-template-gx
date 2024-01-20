@@ -2,96 +2,96 @@
 name: 🧪Playwright Regression Testing
 run-name: ${{github.actor}}👨🏻‍🔬 ran Regression in ${{github.ref_name}}
 on:
-    push:
-        branches: [QA]
+  push:
+    branches: [QA]
 
 jobs:
-    RegressionTesting:
-        timeout-minutes: 60
-        runs-on: ubuntu-latest
-        steps:
-            - name: 📘 Checkout Repo
-              uses: actions/checkout@v3
+  RegressionTesting:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+    - name: 📘 Checkout Repo
+      uses: actions/checkout@v3
 
-            - name: 💿 Installing Node.js
-              uses: actions/setup-node@v3
-              with:
-                  node-version: 18
+    - name: 💿 Installing Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
 
-            - name: 🧬 Install YARN and All Dependencies
-              run: |
-                  npm install -g yarn
-                  yarn
-                  yarn list
+    - name: 🧬 Install YARN and All Dependencies
+      run: |
+        npm install -g yarn
+        yarn
+        yarn list
 
-            - name: 🎭️ Installing Playwright And Browsers
-              run: |
-                  yarn pw:install
+    - name: 🎭️ Installing Playwright And Browsers
+      run: |
+        yarn pw:install
 
-            - name: ✅ 🧪Test Suite Execution
-              run: |
-                  yarn regression
+    - name: ✅ 🧪Test Suite Execution
+      run: |
+        yarn regression
 
-            - name: 📊Generate Allure Report
-              run: |
-                  yarn allure:open
+    - name: 📊Generate Allure Report
+      run: |
+        yarn allure:open
 
-            - name: 📡Upload Artifact - Allure Report
-              uses: actions/upload-artifact@v3
-              if: always()
-              with:
-                  name: test-report
-                  path: allure-report
-                  retention-days: 15
+    - name: 📡Upload Artifact - Allure Report
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: test-report
+        path: allure-report
+        retention-days: 15
 
-            # - name: ✅Import Test Results to Xray
-            #   if: always()
-            #   uses: mikepenz/xray-action@v2
-            #   with:
-            #       username: ${{secrets.XRAY_CLIENT_ID}}
-            #       password: ${{secrets.XRAY_CLIENT_SECRET}}
-            #       testFormat: 'junit'
-            #       testPaths: 'playwright-report/importer-report.xml'
-            #       testExecKey: 'GX3-4' #* Este debería ser el TX predeterminado para este Pipeline de Regresión.
-            #       projectKey: 'GX3'
+    - name: ✅Import Test Results to Xray
+      if: always()
+      uses: mikepenz/xray-action@v2
+      with:
+        username: ${{secrets.XRAY_CLIENT_ID}}
+        password: ${{secrets.XRAY_CLIENT_SECRET}}
+        testFormat: 'junit'
+        testPaths: 'playwright-report/importer-report.xml'
+        testExecKey: 'GX3-1533' #* Este debería ser el TX predeterminado para este Pipeline de Regresión.
+        projectKey: 'GX3'
 
-    Create-PullRequest:
-        needs: [RegressionTesting]
-        runs-on: ubuntu-latest
-        steps:
-            - name: 🚩Create Pull Request
-              uses: actions/github-script@v6
-              with:
-                  script: |
-                      const { repo, owner } = context.repo;
-                      const result = await github.rest.pulls.create({
-                      title: '✅[QA REGRESSION PASSED]: Ready to Merge into MAIN',
-                      owner,
-                      repo,
-                      head: '${{ github.ref_name }}',
-                      base: 'main',
-                      body: [
-                          'Update branch by Automation Pipeline:',
-                          '- (CI) Last Story Test Execution PASSED✅',
-                          '- (CI) Regression Test Execution PASSED✅',
-                          '🆗No Conflicts in Repo Source Branch'
-                      ].join('\n')
-                      });
-                      github.rest.issues.addLabels({
-                      owner,
-                      repo,
-                      issue_number: result.data.number,
-                      labels: ['autoPullRequest']
-                      });
+  Create-PullRequest:
+    needs: [RegressionTesting]
+    runs-on: ubuntu-latest
+    steps:
+    - name: 🚩Create Pull Request
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const { repo, owner } = context.repo;
+          const result = await github.rest.pulls.create({
+          title: '✅[QA REGRESSION PASSED]: Ready to Merge into MAIN',
+          owner,
+          repo,
+          head: '${{ github.ref_name }}',
+          base: 'main',
+          body: [
+              'Update branch by Automation Pipeline:',
+              '- (CI) Last Story Test Execution PASSED✅',
+              '- (CI) Regression Test Execution PASSED✅',
+              '🆗No Conflicts in Repo Source Branch'
+          ].join('\n')
+          });
+          github.rest.issues.addLabels({
+          owner,
+          repo,
+          issue_number: result.data.number,
+          labels: ['autoPullRequest']
+          });
 
-    AutoMerge-into-Main:
-        needs: [Create-PullRequest]
-        runs-on: ubuntu-latest
-        steps:
-            - name: 🧬Merge QA -> MAIN
-              uses: devmasx/merge-branch@master
-              with:
-                  type: now
-                  label_name: 'autoPullRequest'
-                  target_branch: 'main' #RAMA PRINCIPAL DEL REPOSITORIO PRESENTE
-                  github_token: ${{ github.token }}
+  AutoMerge-into-Main:
+    needs: [Create-PullRequest]
+    runs-on: ubuntu-latest
+    steps:
+    - name: 🧬Merge QA -> MAIN
+      uses: devmasx/merge-branch@master
+      with:
+        type: now
+        label_name: 'autoPullRequest'
+        target_branch: 'main' #RAMA PRINCIPAL DEL REPOSITORIO PRESENTE
+        github_token: ${{ github.token }}

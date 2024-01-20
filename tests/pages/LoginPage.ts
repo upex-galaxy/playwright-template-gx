@@ -1,9 +1,9 @@
-import { Page, Locator, expect } from '@playwright/test';
+import { type Page, type Locator, expect } from '@playwright/test';
 
 export class LoginPage {
 	page: Page;
 	url: string;
-	LoginTab: Locator;
+	LoginTab: () => Locator;
 	LoginPageTitle: Locator;
 	usernameInput: Locator;
 	passwordInput: Locator;
@@ -12,7 +12,7 @@ export class LoginPage {
 
 	constructor(driver: Page) {
 		this.page = driver;
-		this.LoginTab = this.page.getByText('LOGIN', { exact: true });
+		this.LoginTab = () => this.page.getByText('LOGIN', { exact: true });
 		this.LoginPageTitle = this.page.locator('h1');
 		// Selectors para PW:
 		// Obtener un Element HERMANO de otro Element.
@@ -23,7 +23,7 @@ export class LoginPage {
 	}
 
 	async gotoLoginTab() {
-		await this.LoginTab.click();
+		await this.LoginTab().click();
 	}
 
 	async enterUsername(text: string) {
