@@ -11,55 +11,55 @@
 name: 🧪Playwright Sanity Testing
 run-name: ${{github.actor}}👨🏻‍🔬 ran TestSuite in ${{github.ref_name}}
 on:
-    push:
-        branches: ['TuBranchAqui'] #! Cambia "TuBranchAqui" por el nombre de tu rama de tarea.
+  push:
+    branches: ['githubReporter'] #! Cambia "TuBranchAqui" por el nombre de tu rama de tarea.
 
 jobs:
-    TestSuite:
-        timeout-minutes: 60
-        runs-on: ubuntu-latest
-        steps:
-            - name: 📘 Checkout Repo
-              uses: actions/checkout@v3
+  TestSuite:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+    - name: 📘 Checkout Repo
+      uses: actions/checkout@v3
 
-            - name: 💿 Installing Node.js
-              uses: actions/setup-node@v3
-              with:
-                  node-version: 18
+    - name: 💿 Installing Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
 
-            - name: 🧬 Install YARN and All Dependencies
-              run: |
-                  npm install -g yarn
-                  yarn
-                  yarn list
+    - name: 🧬 Install YARN and All Dependencies
+      run: |
+        npm install -g yarn
+        yarn
+        yarn list
 
-            - name: 🎭️ Installing Playwright And Browsers
-              run: |
-                  yarn pw:install
+    - name: 🎭️ Installing Playwright And Browsers
+      run: |
+        yarn pw:install
 
-            - name: ✅ 🧪Test Suite Execution
-              run: | #!Cambiar solamente el ID de la US (ej: */**/GX-9*.ts)
-                  yarn test */**/US11*.ts
+    - name: ✅ 🧪Test Suite Execution
+      run: | #!Cambiar solamente el ID de la US (ej: */**/GX-9*.ts)
+        yarn regression tests/elements/uploadDownload_example.test.ts
 
-            - name: 📊Generate Allure Report
-              run: |
-                  yarn allure:open
+    - name: 📊Generate Allure Report
+      run: |
+        yarn allure:open
 
-            - name: 📡Upload Artifact - Allure Report
-              uses: actions/upload-artifact@v3
-              if: always()
-              with:
-                  name: test-report
-                  path: allure-report
-                  retention-days: 15
+    - name: 📡Upload Artifact - Allure Report
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: test-report
+        path: allure-report
+        retention-days: 15
 
-            - name: ✅Import Test Results to Xray
-              if: always()
-              uses: mikepenz/xray-action@v2
-              with:
-                  username: ${{secrets.XRAY_CLIENT_ID}}
-                  password: ${{secrets.XRAY_CLIENT_SECRET}}
-                  testFormat: 'junit'
-                  testPaths: 'playwright-report/importer-report.xml'
-                  testExecKey: 'GX3-4' #!Cambiar a tu TX correspondiente.
-                  projectKey: 'GX3' #!Cambiar a tu Proyecto Level correspondiente.
+    - name: ✅Import Test Results to Xray
+      if: always()
+      uses: mikepenz/xray-action@v2
+      with:
+        username: ${{secrets.XRAY_CLIENT_ID}}
+        password: ${{secrets.XRAY_CLIENT_SECRET}}
+        testFormat: 'junit'
+        testPaths: 'playwright-report/importer-report.xml'
+        testExecKey: 'GX3-4' #!Cambiar a tu TX correspondiente.
+        projectKey: 'GX3' #!Cambiar a tu Proyecto Level correspondiente.

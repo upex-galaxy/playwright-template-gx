@@ -3,6 +3,7 @@ import * as dotenv from 'dotenv';
 // See https://github.com/motdotla/dotenv
 dotenv.config();
 // See https://playwright.dev/docs/test-configuration.
+const reporter = process.env.CI ? 'github' : './tests/custom-reporter.ts';
 export default defineConfig({
 	// Test Repo Directory:
 	testDir: './tests',
@@ -27,7 +28,7 @@ export default defineConfig({
 	workers: process.env.CI ? 1 : 1,
 	/* Reporter to use. See https://playwright.dev/docs/test-reporters */
 	reporter: [
-		process.env.CI ? ['github'] : ['./tests/custom-reporter.ts'],
+		[reporter],
 		['html'],
 		['junit', { outputFolder: 'playwright-report', outputFile: 'playwright-report/importer-report.xml' }],
 		['allure-playwright'],
