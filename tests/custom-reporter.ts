@@ -4,7 +4,6 @@ import type { FullConfig, FullResult, Reporter, Suite, TestCase, TestError, Test
 class MyReporter implements Reporter {
 	private startTime: number;
 	private endTime: number;
-	private testCount: number;
 	private testResults: testAttr[];
 	private retryCount: number;
 	private totalRetries: number;
@@ -33,11 +32,11 @@ class MyReporter implements Reporter {
 		this.runningTests = allTests;
 		const usedWorkers = config.workers === 1 ? '1 worker' : `${config.workers} workers`;
 		console.log('\n', `🎬 Total Tests to Run: ${allTests.length} TC using ${usedWorkers}`);
-		if (config.projects.length === 1) {
-			const usedProject = config.projects[0].name;
+		if (suite.suites.length === 1) {
+			const usedProject = suite.suites[0].title;
 			console.log('\x1b[32m%s\x1b[0m', `🚀 Starting Test Execution in ${usedProject.toUpperCase()}...`);
 		} else {
-			const projectNames = config.projects.map(({ name }) => name);
+			const projectNames = suite.suites.map(({ title }) => title);
 			console.log('\x1b[32m%s\x1b[0m', `🚀 Starting Test Execution in ${projectNames.join(', ').toUpperCase()}...`);
 		}
 	}

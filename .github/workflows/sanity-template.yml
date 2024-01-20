@@ -12,7 +12,7 @@ name: 🧪Playwright Sanity Testing
 run-name: ${{github.actor}}👨🏻‍🔬 ran TestSuite in ${{github.ref_name}}
 on:
   push:
-    branches: ['githubReporter'] #! Cambia "TuBranchAqui" por el nombre de tu rama de tarea.
+    branches: ['TuBranchAqui'] #! Cambia "TuBranchAqui" por el nombre de tu rama de tarea.
 
 jobs:
   TestSuite:
@@ -39,7 +39,7 @@ jobs:
 
     - name: ✅ 🧪Test Suite Execution
       run: | #!Cambiar solamente el ID de la US (ej: */**/GX-9*.ts)
-        yarn regression tests/elements/uploadDownload_example.test.ts
+        yarn test */**/US11*.ts
 
     - name: 📊Generate Allure Report
       run: |
@@ -61,5 +61,5 @@ jobs:
         password: ${{secrets.XRAY_CLIENT_SECRET}}
         testFormat: 'junit'
         testPaths: 'playwright-report/importer-report.xml'
-        testExecKey: 'GX3-4' #!Cambiar a tu TX correspondiente.
+        testExecKey: 'GX3-1533' #!Cambiar a tu TX correspondiente.
         projectKey: 'GX3' #!Cambiar a tu Proyecto Level correspondiente.
