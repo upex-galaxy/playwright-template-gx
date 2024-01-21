@@ -8,7 +8,7 @@ story('GX3_1383: ToolsQA | Elements | Text Box: Fill form and Submit', () => {
 	precondition(async ({ page }) => {
 		await page.goto('/text-box', { waitUntil: 'domcontentloaded' });
 	});
-	test('TC1: Should fill the form and submit', async ({ page }) => {
+	test('GX3-1384 | TC1: Should fill the form and submit', async ({ page }) => {
 		const usernameInput = page.locator('#userName-wrapper input');
 		const emailInput = page.locator('#userEmail-wrapper input');
 		const currentAddressInput = page.locator('#currentAddress-wrapper textarea');
@@ -51,7 +51,7 @@ story('GX3_1383: ToolsQA | Elements | Text Box: Fill form and Submit', () => {
 			});
 		});
 	});
-	test('TC2: Fill valid form and Submit', async ({ page }) => {
+	test('GX3-1384 | TC2: Fill valid form and Submit', async ({ page }) => {
 		const usernameInput = page.locator('#userName-wrapper input');
 		const emailInput = page.locator('#userEmail-wrapper input');
 		const currentAddressInput = page.locator('#currentAddress-wrapper textarea');
