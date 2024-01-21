@@ -1,6 +1,6 @@
 import { story, precondition, test, expect } from '@pages/TestBase';
 import data from '@data/elyUserDetails.json' assert { type: 'json' };
-import { getRealValues } from '@helper/testUtils';
+import { getRealValues } from '@helper/belenTestUtils';
 import type { simpleForm } from '@type/inputTypes';
 import { getRandomValues } from 'crypto';
 
