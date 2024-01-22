@@ -7,7 +7,7 @@ story('GX3-1569: ToolsQA | Elements | Buttons', () => {
         await page.goto('/buttons', {waitUntil: "domcontentloaded"});
     })
 
-    test('TC01: Should trigger when using Double click', async ({ page}) => { 
+    test('TC01: Should trigger when using double click', async ({ page}) => { 
         const expectedDblClickMessage = await test.step('Perform bouble click on button', async () => {
             const expectedMessage = 'You have done a double click';
             await page.locator('#doubleClickBtn').dblclick();
@@ -20,7 +20,7 @@ story('GX3-1569: ToolsQA | Elements | Buttons', () => {
         });
     })
 
-    test('TC02: Should trigger when using Rigth click', async ({ page}) => { 
+    test('TC02: Should trigger when using right click', async ({ page}) => { 
         const expectedRigthClickMessage = await test.step('Perform right click on button', async () => {
             const expectedMessage = 'You have done a right click';
             await page.locator('#rightClickBtn').click({ button: 'right' });
@@ -33,7 +33,7 @@ story('GX3-1569: ToolsQA | Elements | Buttons', () => {
         });
     })
 
-    test('TC03: Should trigger when using Simple click', async ({ page}) => { 
+    test('TC03: Should trigger when using a simple click', async ({ page}) => { 
         const expectedClickMessage = await test.step('Perform simple click on button', async () => {
             const expectedMessage = 'You have done a dynamic click';
             await page.getByText('Click Me', { exact: true }).click({button: 'left'});
@@ -46,7 +46,7 @@ story('GX3-1569: ToolsQA | Elements | Buttons', () => {
         });
     })
 
-    test('TC4: Should trigger all corresponent messages by each button', async ({ page }) => {
+    test('TC04: Should trigger all correspondent messages by each button', async ({ page }) => {
 		const expectedDblClickMessage = await test.step('Perform Double Click on Button', async () => {
 			const expectedMessage = 'You have done a double click';
 			await page.locator('#doubleClickBtn').dblclick();
