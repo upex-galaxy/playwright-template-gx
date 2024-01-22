@@ -1,8 +1,8 @@
 #*🤖Este Pipeline de CI se activa al PUSHEAR o MERGEAR en ramas de tareas que no sean QA ni Main, y consiste en ejecutar los tests de una US e importar los resultados a Jira!🚀
 #*👩🏻‍🔬Para utilizar este Pipeline de Ari, sigue los siguientes pasos:
 #todo: 1 -> Crea tu propio archivo sanity.yml con tu username de GitHub, ejemplo sanity-saiotest.yml
-#todo: 2 -> Copia el contenido de este archivo yml y pégalo en tu nuevo archivo yml con de tu username.
-#todo: 3 -> Modifica la trigger del Push en donde dice "TuBranchAqui", coloca tu nombre tal cual de tu rama git.
+#todo: 2 -> Copia el contenido de este archivo yml y pégalo en tu nuevo archivo yml con tu username.
+#todo: 3 -> Modifica el trigger del Push en donde dice "TuBranchAqui", coloca tu nombre tal cual de tu rama git.
 #todo: 4 -> Modifica el archivo de prueba a ejectuar en el script del "yarn test" (ver ejemplo en este archivo)
 #todo: 5 -> Modifica la propiedad: "testExecKey" con tu ID del TX de Jira para importar automáticamente el resultado.
 #todo: 6 -> Recuerda modificar el projectKey correspondiente, si estás en L3, debe ser GX3 y así...
@@ -38,8 +38,8 @@ jobs:
         yarn pw:install
 
     - name: ✅ 🧪Test Suite Execution
-      run: | #!Cambiar solamente el ID de la US (ej: */**/GX-9*.ts)
-        yarn test */**/US11*.ts
+      run: | #todo: EDITAR AQUÍ EL ARCHIVO SUITE A EJECUTAR:
+        yarn test tests/elements/uploadDownload_example.test.ts
 
     - name: 📊Generate Allure Report
       run: |
