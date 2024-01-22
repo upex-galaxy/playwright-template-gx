@@ -59,7 +59,21 @@ jobs:
     needs: [RegressionTesting]
     runs-on: ubuntu-latest
     steps:
-    - name: 🚩Create Pull Request
+
+    - name: 💻Checkout
+      uses: actions/checkout@v3
+
+    - name: 🧬 Check for changes
+      id: changes
+      run: |
+        git fetch origin main
+        DIFF=$(git diff --name-only origin/main)
+        if [ "$DIFF" != "" ]; then
+          echo "::set-output name=changes::true"
+        fi
+
+    - name: 📦️ Create Pull Request
+      if: steps.changes.outputs.changes == 'true'
       uses: actions/github-script@v6
       with:
         script: |
