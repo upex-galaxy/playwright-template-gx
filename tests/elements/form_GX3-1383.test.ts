@@ -1,14 +1,14 @@
-import { story, precondition, test, expect } from '@TestBase';
+import { story, precondition, test, expect } from '@pages/TestBase';
 import data from '@data/elyUserDetails.json' assert { type: 'json' };
-import { getRealValues } from '@helper/testUtils';
+import { getRealValues } from '@helper/belenTestUtils';
 import type { simpleForm } from '@type/inputTypes';
+import { getRandomValues } from 'crypto';
 
-story('GX3-1337: ToolsQA | Elements | Text Box: Fill form and Submit', () => {
+story('GX3_1383: ToolsQA | Elements | Text Box: Fill form and Submit', () => {
 	precondition(async ({ page }) => {
 		await page.goto('/text-box', { waitUntil: 'domcontentloaded' });
 	});
-
-	test('GX3-1338 | TC1: Should fill the form and submit', async ({ page }) => {
+	test('GX3-1384 | TC1: Should fill the form and submit', async ({ page }) => {
 		const usernameInput = page.locator('#userName-wrapper input');
 		const emailInput = page.locator('#userEmail-wrapper input');
 		const currentAddressInput = page.locator('#currentAddress-wrapper textarea');
@@ -19,40 +19,39 @@ story('GX3-1337: ToolsQA | Elements | Text Box: Fill form and Submit', () => {
 			await usernameInput.fill(name);
 			return name;
 		});
-
 		const expectedEmail = await test.step('Fill the email', async () => {
 			const email = data[0].email;
 			await emailInput.fill(email);
 			return email;
 		});
-
 		const expectedCuAddress = await test.step('Fill the current address', async () => {
-			const address = data[0].currentAddress;
-			await currentAddressInput.fill(address);
-			return address;
+			const currentAddress = data[0].currentAddress;
+			await currentAddressInput.fill(currentAddress);
+			return currentAddress;
+		});
+		const expectedPeAddress = await test.step('Fill the permanent address', async () => {
+			const permanentAddress = data[0].permanentAddress;
+			await permanentAddressInput.fill(permanentAddress);
+			return permanentAddress;
 		});
 
-		const expectedPerAddress = await test.step('Fill the permanent address', async () => {
-			const address = data[0].permanentAddress;
-			await permanentAddressInput.fill(address);
-			return address;
-		});
-
-		await test.step('Submit the form', async () => {
+		await test.step('Submit the Form', async () => {
 			await page.locator('button', { hasText: 'Submit' }).click();
 			await expect(page.locator('#output')).toBeVisible();
-		});
 
-		await test.step('Verify the output', async () => {
-			const outputTexts = page.locator('#output p');
-			const displayedValues = await getRealValues(outputTexts);
-			const expectedValues = [expectedName, expectedEmail, expectedCuAddress, expectedPerAddress];
-			expect(displayedValues).toEqual(expectedValues);
-			console.log('🎭️ Displayed Values: ', displayedValues);
+			await test.step('Verify the Output', async () => {
+				const outputTexts = page.locator('#output p');
+				const displayedValues = await getRealValues(outputTexts);
+				const expectedValues = [expectedName, expectedEmail, expectedCuAddress, expectedPeAddress];
+				expect(displayedValues).toEqual(expectedValues);
+
+				//console.log(values);
+				//const fixedName = outputName.replace('Name:', '');
+				//expect(outputName).toContain(data[0].fullName);
+			});
 		});
 	});
-
-	test('GX3-1338 | TC2: Should re-fill forms with different data', async ({ page }) => {
+	test('GX3-1384 | TC2: Fill valid form and Submit', async ({ page }) => {
 		const usernameInput = page.locator('#userName-wrapper input');
 		const emailInput = page.locator('#userEmail-wrapper input');
 		const currentAddressInput = page.locator('#currentAddress-wrapper textarea');
@@ -65,8 +64,8 @@ story('GX3-1337: ToolsQA | Elements | Text Box: Fill form and Submit', () => {
 			await permanentAddressInput.fill(datos.permanentAddress);
 		}
 
-		for (const credencials of data) {
-			await fillForm(credencials);
+		for (const credentials of data) {
+			await fillForm(credentials);
 			await page.waitForTimeout(1000);
 			await page.locator('button', { hasText: 'Submit' }).click();
 		}
