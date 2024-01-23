@@ -3,7 +3,7 @@ import { expect } from "@playwright/test";
 
 story('GX3-1355:TollsQA | Elements | Buttons', () => {
     precondition(async ({ page }) => {
-        await page.goto('/buttons', { waitUntil: 'domcontentloaded' });
+        await page.goto('/buttons');
     });
     test('TC1:validar boton doble click', async ({ page }) => {
 
@@ -33,14 +33,13 @@ story('GX3-1355:TollsQA | Elements | Buttons', () => {
 
 
     test('TC3:validar boton simple', async ({ page }) => {
-        const simplebutton = page.getByText('Click Me', { exact: true });
+       await page.getByText('Click Me', { exact: true }).click();
         const expectedmessage = 'You have done a dynamic click';
 
-        test.step('presionar doble boton', async () => {
-            await simplebutton.click();
+ 
             const messageElemt = page.locator('#dynamicClickMessage');
             await expect(messageElemt).toHaveText(expectedmessage);
-        });
+       
     });
 
 });
