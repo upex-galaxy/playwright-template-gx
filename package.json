@@ -30,7 +30,10 @@
 
     "clean:reports": "rm -rf test-results && rm -rf test-junit-report && rm -rf test-html-report && rm -rf allure-results",
 
-    "allure:open": "allure generate --clean",
+    "allure:gen:chrome": "allure generate --clean -o allure-report/chrome",
+    "allure:gen:firefox": "allure generate --clean -o allure-report/firefox",
+    "allure:gen:edge": "allure generate --clean -o allure-report/edge",
+    "allure:gen:iphone": "allure generate --clean -o allure-report/iphone",
     "allure:report": "npm run allure:open && allure open --host localhost --port 7070",
 
     "prettier:write": "npx prettier --write tests/**/*.ts",
