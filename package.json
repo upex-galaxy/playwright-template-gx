@@ -5,15 +5,25 @@
   "main": "index.js",
   "scripts": {
     "pw:install": "npx playwright install --with-deps",
-    "test:plan": "npx playwright test --project=chromium --list",
-    "test": "npx playwright test --project=chromium",
+    "test:plan": "npx playwright test --reporter=list --project=chromium --list",
+
+    "test": "PLAYWRIGHT_JUNIT_OUTPUT_NAME=test-report/chromium-importer-report.xml npx playwright test --project=chromium --project=chromium",
+    "test:ui": "npx playwright test --ui",
+    "test:trace": "npx playwright show-trace",
     "debug": "npx playwright test --project=chromium --debug",
-    "regression": "npx playwright test",
-    "test:chrome": "npx playwright test --project=chromium --headed",
-    "test:firefox": "npx playwright test --project=firefox --headed",
-    "test:edge": "npx playwright test --project=msedge --headed",
+
+    "test:chrome": "PLAYWRIGHT_JUNIT_OUTPUT_NAME=test-report/chromium-importer-report.xml npx playwright test --project=chromium --headed",
+    "test:firefox": "PLAYWRIGHT_JUNIT_OUTPUT_NAME=test-report/firefox-importer-report.xml npx playwright test --project=firefox --headed",
+    "test:edge": "PLAYWRIGHT_JUNIT_OUTPUT_NAME=test-report/edge-importer-report.xml npx playwright test --project=edge --headed",
+    
+    "regression:all": "PLAYWRIGHT_JUNIT_OUTPUT_NAME=test-report/all-browser-report.xml npx playwright test",
+    "regression:chrome": "PLAYWRIGHT_JUNIT_OUTPUT_NAME=test-report/chromium-importer-report.xml npx playwright test --project=chromium",
+    "regression:firefox": "PLAYWRIGHT_JUNIT_OUTPUT_NAME=test-report/firefox-importer-report.xml npx playwright test --project=firefox",
+    "regression:edge": "PLAYWRIGHT_JUNIT_OUTPUT_NAME=test-report/edge-importer-report.xml npx playwright test --project=edge",
+
     "allure:open": "allure generate --clean",
-    "allure:report": "allure generate --clean && allure open --host localhost --port 7070",
+    "allure:report": "npm run allure:open && allure open --host localhost --port 7070",
+
     "prettier:write": "npx prettier --write tests/**/*.ts",
     "prettier:check": "npx prettier --check tests/**/*.ts",
     "lint:check": "npx eslint tests/**/*.ts",

@@ -29,7 +29,7 @@ export default defineConfig({
 	reporter: [
 		['./tests/custom-reporter.ts'],
 		['html'],
-		['junit', { outputFolder: 'playwright-report', outputFile: 'playwright-report/importer-report.xml' }],
+		['junit', { outputFolder: 'test-report' }],
 		['allure-playwright'],
 	],
 	/* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
@@ -60,7 +60,7 @@ export default defineConfig({
 		},
 		/* Test against branded browsers. */
 		{
-			name: 'Microsoft Edge',
+			name: 'edge',
 			use: { channel: 'msedge' },
 		},
 		/* Test against mobile viewports. */

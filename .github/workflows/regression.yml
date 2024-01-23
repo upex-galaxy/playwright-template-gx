@@ -22,7 +22,6 @@ jobs:
       run: |
         npm install -g yarn
         yarn
-        yarn list
 
     - name: 🎭️ Installing Playwright And Browsers
       run: |
@@ -30,7 +29,7 @@ jobs:
 
     - name: ✅ 🧪Test Suite Execution
       run: |
-        yarn regression
+        yarn regression:chrome
 
     - name: 📊Generate Allure Report
       run: |
@@ -51,7 +50,7 @@ jobs:
         username: ${{secrets.XRAY_CLIENT_ID}}
         password: ${{secrets.XRAY_CLIENT_SECRET}}
         testFormat: 'junit'
-        testPaths: 'playwright-report/importer-report.xml'
+        testPaths: 'playwright-report/chromium-importer-report.xml'
         testExecKey: 'GX3-1533' #* Este debería ser el TX predeterminado para este Pipeline de Regresión.
         projectKey: 'GX3'
 

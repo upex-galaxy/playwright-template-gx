@@ -1,5 +1,6 @@
 node_modules
 playwright-report
+test-report
 allure-report
 allure-results
 test-results
