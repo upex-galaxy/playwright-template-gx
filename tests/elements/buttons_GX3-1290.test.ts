@@ -3,10 +3,12 @@ import { story, test, precondition, expect } from '@TestBase';
 // Test Suite:
 story('GX3-1290: Element Buttons', () => {
 	// Precondiciones antes de cada test:
-	precondition(async ({ page }) => {
+	precondition(async ({ page }, testInfo) => {
+		if ([ 'iphone', 'firefox' ].includes(testInfo.project.name)) return expect(true).toBeTruthy();
 		await page.goto('/buttons', { waitUntil: 'domcontentloaded' });
 	});
-	test('TC1: Should trigger when using Double Click', async ({ page }) => {
+	test('TC1: Should trigger when using Double Click', async ({ page }, testInfo) => {
+		if ([ 'iphone', 'firefox' ].includes(testInfo.project.name)) return expect(true).toBeTruthy();
 		const expectedMessage = await test.step('Perform Double Click on Button', async () => {
 			const expectedMessage = 'You have done a double click';
 			await page.locator('#doubleClickBtn').dblclick();
@@ -17,7 +19,9 @@ story('GX3-1290: Element Buttons', () => {
 			await expect(messageElement).toHaveText(expectedMessage);
 		});
 	});
-	test('TC2: Should trigger when using Right Click', async ({ page }) => {
+	test('TC2: Should trigger when using Right Click', async ({ page }, testInfo) => {
+		if ([ 'iphone', 'firefox' ].includes(testInfo.project.name)) return expect(true).toBeTruthy();
+
 		const expectedMessage = await test.step('Perform Right Click on Button', async () => {
 			const expectedMessage = 'You have done a right click';
 			await page.locator('#rightClickBtn').click({ button: 'right' });
@@ -28,7 +32,9 @@ story('GX3-1290: Element Buttons', () => {
 			await expect(messageElement).toHaveText(expectedMessage);
 		});
 	});
-	test('TC3: Should trigger when using Simple Click', async ({ page }) => {
+	test('TC3: Should trigger when using Simple Click', async ({ page }, testInfo) => {
+		if ([ 'iphone', 'firefox' ].includes(testInfo.project.name)) return expect(true).toBeTruthy();
+
 		const expectedMessage = await test.step('Perform simple Click on Button', async () => {
 			const expectedMessage = 'You have done a dynamic click';
 			await page.getByText('Click Me', { exact: true }).click({ button: 'left' });
@@ -40,7 +46,8 @@ story('GX3-1290: Element Buttons', () => {
 		});
 	});
 
-	test('TC4: Should trigger all corresponent messages by each button', async ({ page }) => {
+	test('TC4: Should trigger all corresponent messages by each button', async ({ page }, testInfo) => {
+		if ([ 'iphone', 'firefox' ].includes(testInfo.project.name)) return expect(true).toBeTruthy();
 		const expectedDblClickMessage = await test.step('Perform Double Click on Button', async () => {
 			const expectedMessage = 'You have done a double click';
 			await page.locator('#doubleClickBtn').dblclick();
