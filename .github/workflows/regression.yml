@@ -9,7 +9,13 @@ jobs:
   RegressionTesting:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: ['chrome', 'firefox', 'edge', 'iphone'] #? Runs tests in 4 different browsers
+
     steps:
+
     - name: 📘 Checkout Repo
       uses: actions/checkout@v3
 
@@ -18,30 +24,56 @@ jobs:
       with:
         node-version: 18
 
-    - name: 🧬 Install YARN and All Dependencies
+    - name: 💿Yarn Setup
+      uses: DerYeger/yarn-setup-action@master
+      with:
+        node-version: 18
+
+    - name: 🧬 Install Project Dependencies
       run: |
-        npm install -g yarn
         yarn
 
     - name: 🎭️ Installing Playwright And Browsers
       run: |
         yarn pw:install
 
-    - name: ✅ 🧪Test Suite Execution
+    - name: ✅ 🧪Regression Tests Execution on ${{ matrix.browser }}
       run: |
-        yarn regression:chrome
+        yarn regression:${{ matrix.browser }}
 
-    - name: 📊Generate Allure Report
+    - name: 📊Generate Allure Report for ${{ matrix.browser }}
       run: |
         yarn allure:open
 
-    - name: 📡Upload Artifact - Allure Report
+    - name: 📡Upload Artifact - Allure Report for ${{ matrix.browser }}
       uses: actions/upload-artifact@v3
       if: always()
       with:
-        name: test-report
+        name: allure-${{ matrix.browser }}-report
         path: allure-report
         retention-days: 15
+
+    - name: 📡Upload Artifact - HTML Report for ${{ matrix.browser }}
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: html-${{ matrix.browser }}-report
+        path: test-html-report/${{ matrix.browser }}
+        retention-days: 15
+
+    - name: 📦️ Set testExecKey for Jira XRay
+      run: |
+        if [[ "${{ matrix.browser }}" == "chrome" ]]; then
+          echo "TXID=GX3-1533" >> $GITHUB_ENV
+        elif [[ "${{ matrix.browser }}" == "firefox" ]]; then
+          echo "TXID=GX3-1685" >> $GITHUB_ENV
+        elif [[ "${{ matrix.browser }}" == "edge" ]]; then
+          echo "TXID=GX3-1686" >> $GITHUB_ENV
+        elif [[ "${{ matrix.browser }}" == "iphone" ]]; then
+          echo "TXID=GX3-1687" >> $GITHUB_ENV
+        fi
+    - name: 📦️ Use testExecKey
+      run: echo "The testExecKey is ${{ env.TXID }}"
 
     - name: ✅Import Test Results to Xray
       if: always()
@@ -50,8 +82,8 @@ jobs:
         username: ${{secrets.XRAY_CLIENT_ID}}
         password: ${{secrets.XRAY_CLIENT_SECRET}}
         testFormat: 'junit'
-        testPaths: 'playwright-report/chromium-importer-report.xml'
-        testExecKey: 'GX3-1533' #* Este debería ser el TX predeterminado para este Pipeline de Regresión.
+        testPaths: 'test-junit-report/${{ matrix.browser }}-importer-report.xml'
+        testExecKey: ${{ env.TXID }} #* Este debería ser el TX predeterminado para este Pipeline de Regresión.
         projectKey: 'GX3'
 
   Create-PullRequest:

@@ -57,16 +57,21 @@
 		"tsconfig.json": "svgo",
 		"regression.yml": "test-ts",
 		"sanity-template.yml": "test-ts",
-		"cypress.reporter.chrome.json": "auto",
-		"cypress.reporter.firefox.json": "auto",
-		"cypress.reporter.edge.json": "auto",
-		"commands.js": "cypress",
-		"e2e.js": "cypress",
+		"playwright.chrome.config.ts": "playwright",
+		"playwright.firefox.config.ts": "playwright",
+		"playwright.edge.config.ts": "playwright",
+		"playwright.iphone.config.ts": "playwright",
 		"*.test.js": "test-tsx",
-		"*.Page.js": "3d"
+		"testUtils.ts": "3d",
+		"TestBase.ts": "3d"
 	},
 	"material-icon-theme.folders.associations": {
 		"workflows": "github",
+		"test-html-report": "resolver",
+		"test-junit-report": "resolver",
+		"test-results": "content",
+		"allure-results": "content",
+		"allure-report": "mjml",
 		"support": "tools"
 	},
 	"testing.alwaysRevealTestOnStateChange": true,

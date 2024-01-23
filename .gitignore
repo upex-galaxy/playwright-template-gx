@@ -4,6 +4,10 @@ test-report
 allure-report
 allure-results
 test-results
+tests/screenshots/
+tests/videos/
+test-html-report/
+test-junit-report/
 blob-report/
 playwright/.cache/
 package-lock.json
