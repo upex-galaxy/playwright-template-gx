@@ -2,7 +2,7 @@ name: 🧪Playwright Ely's Sanity Testing
 run-name: ${{github.actor}}👨🏻‍🔬 ran TestSuite in ${{github.ref_name}}
 on:
     push:
-        branches: ['test/GX3-1337/fillform-submit'] #! Cambia "TuBranchAqui" por el nombre de tu rama de tarea.
+        branches: ['GX3-1355-⚡️-tools-qa-elements-buttons'] #! Cambia "TuBranchAqui" por el nombre de tu rama de tarea.
 
 jobs:
     TestSuite:
