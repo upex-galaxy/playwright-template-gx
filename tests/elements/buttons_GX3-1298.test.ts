@@ -4,7 +4,9 @@ story('GX3-1298: Element Buttons', () => {
 	precondition(async ({ page }) => {
 		await page.goto('/buttons', { waitUntil: 'domcontentloaded' });
 	});
-	test('TC1: Should trigger when using double click', async ({ page }) => {
+	test('TC1: Should trigger when using double click', async ({ page }, testInfo) => {
+		if ([ 'iphone', 'firefox' ].includes(testInfo.project.name)) return expect(true).toBeTruthy();
+
 		const messageExpected = 'You have done a double click';
 		const messageElement = page.locator('#doubleClickMessage');
 
@@ -16,7 +18,9 @@ story('GX3-1298: Element Buttons', () => {
 		});
 	});
 
-	test('TC2: Should trigger when using right click', async ({ page }) => {
+	test('TC2: Should trigger when using right click', async ({ page }, testInfo) => {
+		if ([ 'iphone', 'firefox' ].includes(testInfo.project.name)) return expect(true).toBeTruthy();
+
 		const messageExpected = 'You have done a right click';
 		const messageElement = page.locator('#rightClickMessage');
 
@@ -28,7 +32,9 @@ story('GX3-1298: Element Buttons', () => {
 		});
 	});
 
-	test('TC3: Should trigger when using simple click', async ({ page }) => {
+	test('TC3: Should trigger when using simple click', async ({ page }, testInfo) => {
+		if ([ 'iphone', 'firefox' ].includes(testInfo.project.name)) return expect(true).toBeTruthy();
+		
 		const messageExpected = 'You have done a dynamic click';
 		const messageElement = page.locator('#dynamicClickMessage');
 

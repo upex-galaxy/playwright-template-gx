@@ -28,8 +28,8 @@ export default defineConfig({
 	/* Reporter to use. See https://playwright.dev/docs/test-reporters */
 	reporter: [
 		['./tests/custom-reporter.ts'],
-		['html'],
-		['junit', { outputFolder: 'test-report' }],
+		['html', { outputFolder: 'test-html-report/main', open: 'never' }],
+		['junit', { outputFolder: 'test-junit-report', outputFile: 'test-junit-report/main-importer-report.xml'}],
 		['allure-playwright'],
 	],
 	/* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
@@ -51,8 +51,9 @@ export default defineConfig({
 	projects: [
 		{
 			name: 'chromium',
-			use: { ...devices['Desktop Chrome'] },
+			use: { ...devices['Desktop Chrome'], channel: 'chrome' },
 		},
+<<<<<<< HEAD
 
 		/*{
 			name: 'firefox',
@@ -60,18 +61,22 @@ export default defineConfig({
 		//},
 		/* Test against branded browsers. */
 		/*{
-			name: 'edge',
-			use: { channel: 'msedge' },
+=======
+		{
+			name: 'firefox',
+			use: { ...devices['Desktop Firefox'] },
 		},
-		/* Test against mobile viewports. */
-		// {
-		//   name: 'Mobile Chrome',
-		//   use: { ...devices['Pixel 5'] },
-		// },
-		// {
-		//   name: 'Mobile Safari',
-		//   use: { ...devices['iPhone 12'] },
-		// },
+		//* Test against branded browsers:
+		{
+>>>>>>> a68445903f39bb76717f7955ac041d8aed426a84
+			name: 'edge',
+			use: { ...devices['Desktop Edge'], channel: 'msedge' },
+		},
+		//* Test against mobile Devices:
+		{
+		  name: 'iphone',
+		  use: { ...devices['iPhone 14 Pro'] },
+		},
 	],
 
 	/* Folder for test artifacts such as screenshots, videos, traces, etc. */

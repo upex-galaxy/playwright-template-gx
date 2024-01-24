@@ -27,11 +27,14 @@ jobs:
       with:
         node-version: 18
 
-    - name: 🧬 Install YARN and All Dependencies
+    - name: 💿Yarn Setup
+      uses: DerYeger/yarn-setup-action@master
+      with:
+        node-version: 18
+
+    - name: 🧬 Install Project Dependencies
       run: |
-        npm install -g yarn
         yarn
-        yarn list
 
     - name: 🎭️ Installing Playwright And Browsers
       run: |
@@ -39,7 +42,7 @@ jobs:
 
     - name: ✅ 🧪Test Suite Execution
       run: | #todo: EDITAR AQUÍ EL ARCHIVO SUITE A EJECUTAR:
-        yarn test tests/elements/uploadDownload_example.test.ts
+        yarn test:ci tests/elements/uploadDownload_example.test.ts
 
     - name: 📊Generate Allure Report
       run: |
@@ -52,24 +55,24 @@ jobs:
         name: test-report
         path: allure-report
         retention-days: 15
-        
+
     - name: ✅Import Test Results to Xray
       if: always()
       uses: mikepenz/xray-action@v2
       with:
-          username: ${{secrets.XRAY_CLIENT_ID}}
-          password: ${{secrets.XRAY_CLIENT_SECRET}}
-          testFormat: 'junit'
-          testPaths: 'playwright-report/importer-report.xml'
-          testExecKey: 'GX3-1533' #!Cambiar a tu TX correspondiente.
-          projectKey: 'GX3' #!Cambiar a tu Proyecto Level correspondiente.
+        username: ${{secrets.XRAY_CLIENT_ID}}
+        password: ${{secrets.XRAY_CLIENT_SECRET}}
+        testFormat: 'junit'
+        testPaths: 'test-junit-report/main-importer-report.xml'
+        testExecKey: 'GX3-1533' #!Cambiar a tu TX correspondiente.
+        projectKey: 'GX3' #!Cambiar a tu Proyecto Level correspondiente.
 
     - name: 🔔Slack Notification of Done
       if: always()
       uses: rtCamp/action-slack-notify@v2.2.0
       env:
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-          SLACK_USERNAME: Ari✨
-          SLACK_MESSAGE: ':test_tube: BLACKHOLE Playwright Project -- Test Execution is Done and updated in Jira :rocket:'
-          SLACK_COLOR: ${{ job.status }}
-          SLACK_ICON: https://i.imgur.com/q9kvQCp_d.webp?maxwidth=760&fidelity=grand
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_USERNAME: Ari✨
+        SLACK_MESSAGE: ':test_tube: BLACKHOLE Playwright Project -- Test Execution is Done and updated in Jira :rocket:'
+        SLACK_COLOR: ${{ job.status }}
+        SLACK_ICON: https://image.cdn2.seaart.ai/2023-12-06/clo9g0h4msbc73ac2sog/99e1abc36f32945cd4bacf5ee7448e96194545f7_high.webp
