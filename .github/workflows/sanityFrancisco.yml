@@ -1,4 +1,4 @@
-name: 🧪Playwright Ely's Sanity Testing
+name: 🧪Playwright Francisco_Layseca Sanity Testing
 run-name: ${{github.actor}}👨🏻‍🔬 ran TestSuite in ${{github.ref_name}}
 on:
     push:
