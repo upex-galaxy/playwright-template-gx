@@ -9,7 +9,7 @@ story('GX3-1740: Space Beyond - Book a destiny on Checkout', () => {
         await loginPage.login('Saitest', '12345abc')
     });
 
-    test('TC1: Should book a destiny on Checkout', async ({ page }) => {
+    test('GX3-1740 | TC1: Should book a destiny on Checkout', async ({ page }) => {
         const productPage = new SpaceProductPage(page)
         const { price } = await productPage.getProductDataByTitle('Madan')
         console.log('🎭️ ESTE ES EL PRECIO OBTENIDO DE MADAN:', price)
