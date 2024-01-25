@@ -53,7 +53,7 @@ jobs:
       if: always()
       with:
         name: test-report
-        path: allure-report
+        path: allure-report/main
         retention-days: 15
 
     - name: ✅Import Test Results to Xray
