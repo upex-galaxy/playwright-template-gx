@@ -26,6 +26,10 @@ export class SpaceLoginPage {
         await this.loginButton().click()
     }
 
+    //* Esto se conoce como un Shortcut o SharedSteps, como quieras decirle:
+    //* Esto NO se usaría en el Caso de Prueba de un Login, 
+    //* sino como PRECONDICION para otras Pruebas que no son de Login, ej: Checkout
+
     async login(usernameValue: string, passwordValue: string) {
         await this.page.goto('https://demo.testim.io/login')
         await this.enterUsername(usernameValue)
