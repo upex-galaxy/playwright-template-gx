@@ -1,4 +1,4 @@
-import { precondition, story, test } from "@pages/TestBase";
+import { story, precondition, test } from '@TestBase'
 import { expect } from "@playwright/test";
 
 story('GX3-1355:TollsQA | Elements | Buttons', () => {
