@@ -1,5 +1,4 @@
 import { test, expect } from '@playwright/test';
-import { Debugger } from '@helper/debugger';
 test.describe('UserStory:aquí se escribe el título de la User Story', () => {
 	// Precondición: Aquí empiezas escribiendo una Precondición o más
 	test.beforeEach(async ({ page }) => {
@@ -12,7 +11,6 @@ test.describe('UserStory:aquí se escribe el título de la User Story', () => {
 		await todoInput.press('Enter');
 	});
 	test('[testSuiteID] | TC#2: [otro Caso de Prueba]', async ({ page }) => {
-		const debug = new Debugger(page);
 		const firstItem = 'Playwright Testing';
 		const secondItem = 'Cypress Testing';
 		const todoInput = page.locator('.new-todo');
@@ -25,7 +23,6 @@ test.describe('UserStory:aquí se escribe el título de la User Story', () => {
 
 		const itemCheckbox = TodoItem.locator('xpath=..').getByRole('checkbox');
 
-		await debug.eachElement(itemCheckbox);
 		await itemCheckbox.check();
 		expect(itemCheckbox.isChecked).toBeTruthy();
 	});
