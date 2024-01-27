@@ -1,5 +1,7 @@
 import { type Locator, type Page, expect } from "@playwright/test";
 import { getByReactTool } from "@helper/testUtils";
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 export class SpaceLoginPage {
 
@@ -35,6 +37,12 @@ export class SpaceLoginPage {
         await this.enterUsername(usernameValue)
         await this.enterPassword(passwordValue)
         await this.submitLogin()
+    }
+
+    async loginSuccess() {
+        const username = process.env.EXAMPLE_SPACE_LOGIN_USERNAME
+        const password = process.env.EXAMPLE_SPACE_LOGIN_PASSWORD
+        await this.login(username, password)
         expect(this.page.url()).toBe('https://demo.testim.io/')
     }
 }

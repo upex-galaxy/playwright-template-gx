@@ -1,49 +1,68 @@
 import { Locator, Page } from "@playwright/test";
 import { getByReactTool } from "@helper/testUtils";
+import { ProductCardData } from "@type/spaceBeyongTypes";
 
 export class SpaceProductPage {
     page: Page;
-    productCard: ()=> Locator;
+    productCards: ()=> Locator;
     destinyTitle: ()=> Locator;
     destinyByTitle: (destinyTitle: string) => Locator;
     destinyPrice: () => Locator;
     destinyDesc: () => Locator;
+    destinyBookBtn: () => Locator;
 
     constructor(driver: Page) {
         this.page = driver
-        this.productCard = () => getByReactTool('card', this.page)
+        this.productCards = () => getByReactTool('card', this.page)
+        //* Estas son las propiedades de cada Card (puedes combinarlo con productCards()
         this.destinyTitle = () => this.page.locator('h5') //todo: combine with productCard
         this.destinyByTitle = (destinyTitle: string) => this.page.locator('h5', { hasText: destinyTitle })
         this.destinyPrice = ()=> this.page.locator('[class*=price-tag]')
-        this.destinyDesc = ()=> this.page.locator('p')
+        this.destinyDesc = () => this.page.locator('p')
+        this.destinyBookBtn = () => this.page.locator('button', { hasText: 'Book' })
     }
 
+    //* ESTRATEGIAS DE LOCALIZADOR por "GIVEN DATA" hay 2 opciones:
 
+    //* Option 1: Estrategia "DATA GENERADA"
+    // Cuando la data es generada por nuestras consecuencias (ejemplo: crear un producto con nombre 'Madan')
     getProductCardByTitle(destinyTitle: string) {
-        return this.productCard().filter({ has: this.destinyByTitle(destinyTitle) })
+        return this.productCards().filter({ has: this.destinyByTitle(destinyTitle) })
     }
+
+    // También puede ser por índice:
+    getProductCardByIndex(destinyIndex: number) {
+        return this.productCards().nth(destinyIndex)
+    }
+
+    //* Option 2: Estrategia "DATA MUESTRA" o (DATA RANDOM) 
+    // Cuando la data no es generada por nuestras consecuencias sino está ahí (y tiene propencia al cambio)
+    // Seleccionando todas las opciones y eligiendo una al azar:
 
     async getRandomProductCard() {
-        const displayedCount = await this.productCard().count()
+        const displayedCount = await this.productCards().count()
         const randomIndex = Math.floor(Math.random() * displayedCount)
-        return this.productCard().nth(randomIndex)
+        return this.getProductCardByIndex(randomIndex)
     }
 
-    async getProductDataByTitle(destinyTitle: string) {
-        const productCard = this.getProductCardByTitle(destinyTitle)
-        const givenPrice = await productCard.locator(this.destinyPrice()).innerText()
-        const givenDesc = await productCard.locator(this.destinyDesc()).innerText()
-
-        const destinyCardObj: ProductCardData = {
-            price: givenPrice,
-            desc: givenDesc
-        }
+    async getProductData(givenCard: Locator) {
+        const destinyCardObj = {} as ProductCardData
+        destinyCardObj.title = await givenCard.locator(this.destinyTitle()).innerText()
+        const priceString = await givenCard.locator(this.destinyPrice()).innerText()
+        destinyCardObj.price = parseFloat(priceString.replace('$','').replace(',',''))
+        destinyCardObj.desc = await givenCard.locator(this.destinyDesc()).innerText()
+        destinyCardObj.bookButton = givenCard.locator(this.destinyBookBtn())
         return destinyCardObj
     }
-}
 
-type ProductCardData = {
-    title?: string
-    price: string,
-    desc: string
+    async bookDestination(bookButton: Locator) {
+        await bookButton.click()
+    }
+
+    async bookRandomDestination() {
+        const randomCard = await this.getRandomProductCard()
+        const cardProps = await this.getProductData(randomCard)
+        await this.bookDestination(cardProps.bookButton)
+        return cardProps
+    }
 }

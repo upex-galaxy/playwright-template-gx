@@ -7,3 +7,10 @@ export type cardMapType = {
     price: string,
     bookButton: Locator
 }
+
+export type ProductCardData = {
+    title: string
+    price: number,
+    desc: string,
+    bookButton: Locator
+}
