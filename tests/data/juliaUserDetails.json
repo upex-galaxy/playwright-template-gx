@@ -1,0 +1,20 @@
+[
+	{
+		"fullName": "Adam Bird",
+		"email": "ABird@gmail.com",
+		"currentAddress": "11 Down St., London",
+		"permanentAddress": "22 Up St., Dublin"
+	},
+	{
+		"fullName": "Camila Dona",
+		"email": "CDona@hotmail.com",
+		"currentAddress": "33 Main St., Liverpool",
+		"permanentAddress": "44 Side St., York"
+	},
+	{
+		"fullName": "Ed Font",
+		"email": "EF@gmail.co",
+		"currentAddress": "Shire",
+		"permanentAddress": "Glow"
+	}
+]

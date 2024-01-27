@@ -1,66 +1,68 @@
-name: 🧪Playwright Ely's Sanity Testing
+name: 🧪Playwright Sanity Testing
 run-name: ${{github.actor}}👨🏻‍🔬 ran TestSuite in ${{github.ref_name}}
 on:
-    push:
-        branches: ['test/GX3-1337/fillform-submit'] #! Cambia "TuBranchAqui" por el nombre de tu rama de tarea.
+  push:
+    branches: ['test/GX3-1740/book-a-destination-in-checkout'] #! Cambia "TuBranchAqui" por el nombre de tu rama de tarea.
 
 jobs:
-    TestSuite:
-        timeout-minutes: 60
-        runs-on: ubuntu-latest
-        steps:
-            - name: 📘 Checkout Repo
-              uses: actions/checkout@v3
+  TestSuite:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+    - name: 📘 Checkout Repo
+      uses: actions/checkout@v3
 
-            - name: 💿 Installing Node.js
-              uses: actions/setup-node@v3
-              with:
-                  node-version: 18
+    - name: 💿 Installing Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
 
-            - name: 🧬 Install YARN and All Dependencies
-              run: |
-                  npm install -g yarn
-                  yarn
-                  yarn list
+    - name: 💿Yarn Setup
+      uses: DerYeger/yarn-setup-action@master
+      with:
+        node-version: 18
 
-            - name: 🎭️ Installing Playwright And Browsers
-              run: |
-                  yarn pw:install
+    - name: 🧬 Install Project Dependencies
+      run: |
+        yarn
 
-            - name: ✅ 🧪Test Suite Execution
-              run: | #!Cambiar el path del test a ejecutar
-                  yarn test tests/elements/form_GX3-1337.test.ts
+    - name: 🎭️ Installing Playwright And Browsers
+      run: |
+        yarn pw:install
 
-            - name: 📊Generate Allure Report
-              if: always()
-              run: |
-                  yarn allure:open
+    - name: ✅ 🧪Test Suite Execution
+      run: | #todo: EDITAR AQUÍ EL ARCHIVO SUITE A EJECUTAR:
+        yarn test:ci tests/specs/space_beyond/checkout.test.ts
 
-            - name: 📡Upload Artifact - Allure Report
-              uses: actions/upload-artifact@v3
-              if: always()
-              with:
-                  name: test-report-results
-                  path: allure-report
-                  retention-days: 15
+    - name: 📊Generate Allure Report
+      run: |
+        yarn allure:open
 
-            - name: ✅Import Test Results to Xray
-              if: always()
-              uses: mikepenz/xray-action@v2
-              with:
-                  username: ${{secrets.XRAY_CLIENT_ID}}
-                  password: ${{secrets.XRAY_CLIENT_SECRET}}
-                  testFormat: 'junit'
-                  testPaths: 'playwright-report/importer-report.xml'
-                  testExecKey: 'GX3-1344' #!Cambiar a tu TX correspondiente.
-                  projectKey: 'GX3' #!Cambiar a tu Proyecto Level correspondiente.
+    - name: 📡Upload Artifact - Allure Report
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: test-report
+        path: allure-report
+        retention-days: 15
 
-            - name: 🔔Slack Notification of Done
-              if: always()
-              uses: rtCamp/action-slack-notify@v2.2.0
-              env:
-                  SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-                  SLACK_USERNAME: Ari✨
-                  SLACK_MESSAGE: ':test_tube: BLACKHOLE Playwright Project -- Test Execution is Done and updated in Jira :rocket:'
-                  SLACK_COLOR: ${{ job.status }}
-                  SLACK_ICON: https://i.imgur.com/q9kvQCp_d.webp?maxwidth=760&fidelity=grand
+    - name: ✅Import Test Results to Xray
+      if: always()
+      uses: mikepenz/xray-action@v2
+      with:
+        username: ${{secrets.XRAY_CLIENT_ID}}
+        password: ${{secrets.XRAY_CLIENT_SECRET}}
+        testFormat: 'junit'
+        testPaths: 'test-junit-report/main-importer-report.xml'
+        testExecKey: 'GX3-1744' #!Cambiar a tu TX correspondiente.
+        projectKey: 'GX3' #!Cambiar a tu Proyecto Level correspondiente.
+
+    - name: 🔔Slack Notification of Done
+      if: always()
+      uses: rtCamp/action-slack-notify@v2.2.0
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_USERNAME: Ari✨
+        SLACK_MESSAGE: ':test_tube: BLACKHOLE Playwright Project -- Test Execution is Done and updated in Jira :rocket:'
+        SLACK_COLOR: ${{ job.status }}
+        SLACK_ICON: https://image.cdn2.seaart.ai/2023-12-06/clo9g0h4msbc73ac2sog/99e1abc36f32945cd4bacf5ee7448e96194545f7_high.webp
