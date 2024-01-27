@@ -1,20 +1,17 @@
-import { story, precondition, test } from '@TestBase'
-import { SpaceLoginPage } from '@pages/SpaceLoginPage';
-import { SpaceProductPage } from '@pages/SpaceProductPage';
+import { feature, precondition, test, expect} from '@pages/TestBaseEly'
 
-story('GX3-1740: Space Beyond - Book a destiny on Checkout', () => {
+feature('GX3-1740: Space Beyond - Book a destiny on Checkout', () => {
     
-    precondition(async ({ page }) => {
-        const loginPage = new SpaceLoginPage(page)
-        await loginPage.login('Saitest', '12345abc')
+    precondition(async ({ loginPage, productPage }) => {
+        await loginPage.loginSuccess()
+        const cards = await productPage.productCards().count()
+        expect(cards).toBeGreaterThan(5)
     });
 
-    test('GX3-1740 | TC1: Should book a destiny on Checkout', async ({ page }) => {
-        const productPage = new SpaceProductPage(page)
-        const { price } = await productPage.getProductDataByTitle('Madan')
-        console.log('🎭️ ESTE ES EL PRECIO OBTENIDO DE MADAN:', price)
-
-        // todo: Falta seleccionar el destino para ir al checkout y rellenar el formulario
+    test('GX3-1740 | TC1: Should book a destiny on Checkout', async ({ productPage, checkoutPage }) => {
+        const { price: expectedPrice } = await productPage.bookRandomDestination()
+        const checkoutPrice = await checkoutPage.getCheckoutPrice()
+        expect(checkoutPrice).toBe(expectedPrice)
      })
 
 })
