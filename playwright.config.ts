@@ -53,22 +53,12 @@ export default defineConfig({
 			name: 'chromium',
 			use: { ...devices['Desktop Chrome'], channel: 'chrome' },
 		},
-<<<<<<< HEAD
-
-		/*{
-			name: 'firefox',
-			use: { ...devices['Desktop Firefox'] },
-		//},
-		/* Test against branded browsers. */
-		/*{
-=======
 		{
 			name: 'firefox',
 			use: { ...devices['Desktop Firefox'] },
 		},
 		//* Test against branded browsers:
 		{
->>>>>>> a68445903f39bb76717f7955ac041d8aed426a84
 			name: 'edge',
 			use: { ...devices['Desktop Edge'], channel: 'msedge' },
 		},
