@@ -8,7 +8,7 @@ feature('GX3-1740: Space Beyond - Book a destiny on Checkout', () => {
         expect(cards).toBeGreaterThan(5)
     });
 
-    test('GX3-1740 | TC1: Should book a destiny on Checkout', async ({ productPage, checkoutPage }) => {
+    test('GX3-1740 | TC1: Should book a destiny on Checkout', async ({ checkoutPage, productPage }) => {
         const { price: expectedPrice } = await productPage.bookRandomDestination()
         const checkoutPrice = await checkoutPage.getCheckoutPrice()
         expect(checkoutPrice).toBe(expectedPrice)

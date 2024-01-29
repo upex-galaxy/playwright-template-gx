@@ -55,14 +55,14 @@ export class SpaceProductPage {
         return destinyCardObj
     }
 
-    async bookDestination(bookButton: Locator) {
-        await bookButton.click()
+    async bookDestination(givenCard: ProductCardData) {
+        await givenCard.bookButton.click()
     }
 
     async bookRandomDestination() {
         const randomCard = await this.getRandomProductCard()
         const cardProps = await this.getProductData(randomCard)
-        await this.bookDestination(cardProps.bookButton)
+        await this.bookDestination(cardProps)
         return cardProps
     }
 }
