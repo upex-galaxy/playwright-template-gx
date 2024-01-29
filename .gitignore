@@ -12,3 +12,4 @@ blob-report/
 playwright/.cache/
 package-lock.json
 tests/data/sampleFile.jpeg
+.env
