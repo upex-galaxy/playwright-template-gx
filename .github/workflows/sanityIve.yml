@@ -32,7 +32,7 @@ jobs:
 
     - name: ✅ 🧪Test Suite Execution
       run: | #todo: EDITAR AQUÍ EL ARCHIVO SUITE A EJECUTAR:
-        yarn test:ci tests/specs/elements/form_GX3-1921.test.ts
+        yarn test tests/specs/elements/form_GX3-1921.test.ts
 
     - name: 📊Generate Allure Report
       run: |
