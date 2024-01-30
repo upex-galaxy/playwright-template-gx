@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { story, precondition, test, expect } from '@TestBase';
 import { UploadPage } from '@pages/UploadPage';
 
@@ -6,14 +7,14 @@ story('Example Story: Upload and Download', () => {
 	precondition(async ({ page }, testInfo) => {
 		if ([ 'iphone', 'firefox' ].includes(testInfo.project.name)) return expect(true).toBeTruthy();
 		uploadPage = new UploadPage(page);
-		page.goto('/upload-download', { waitUntil: 'domcontentloaded' });
+		await page.goto('/upload-download', { waitUntil: 'domcontentloaded' });
 	});
 
 	test('TC1: Should download a file', async ({ page }, testInfo) => {
 		if ([ 'iphone', 'firefox' ].includes(testInfo.project.name)) return expect(true).toBeTruthy();
 
 		const { downloadedFiles, downloadedFile } = await uploadPage.downloadFile();
-		console.log('🎭️downloadedFiles:', downloadedFiles);
+		console.log('🎭️ downloadedFiles:', downloadedFiles);
 		expect(downloadedFiles.includes(downloadedFile)).toBeTruthy();
 	});
 
@@ -22,7 +23,7 @@ story('Example Story: Upload and Download', () => {
 
 		await uploadPage.uploadFile('guapucho.jpg');
 		const value = await uploadPage.uploadFileValue();
-		console.log('🎭️uploadedFile Value:', value);
+		console.log('🎭️ uploadedFile Value:', value);
 		expect(value).toContain('guapucho.jpg');
 	});
 });

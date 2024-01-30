@@ -24,11 +24,11 @@ story('GX-1347: Elements Buttons', () => {
 		await expect(messageElement).toHaveText(expectedMessage);
 	});
 
-	test('TC2: Deberia activarse al hacer click derecho', async ({ page }) => {
+	test('TC2: Deberia activarse al hacer click derecho', async () => {
 		expect(1).toBe(1);
 	});
 
-	test('TC3: Deberia activarse al hacer simple click ', async ({ page }) => {
+	test('TC3: Deberia activarse al hacer simple click ', async () => {
 		expect(1).toBe(1);
 	});
 });

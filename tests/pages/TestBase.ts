@@ -1,28 +1,27 @@
-
-import { test as driver , APIRequestContext} from '@playwright/test';
+import { test as driver } from '@playwright/test';
 import { SpaceLoginPage } from './SpaceLoginPage';
 import { SpaceProductPage } from './SpaceProductPage';
 import { SpaceCheckoutPage } from './SpaceCheckoutPage';
 import { TrelloBoards } from '@api/elyTrelloBoards';
 
 const test = driver.extend<{
-    loginPage: SpaceLoginPage;
-    productPage: SpaceProductPage;
+	loginPage: SpaceLoginPage;
+	productPage: SpaceProductPage;
 	checkoutPage: SpaceCheckoutPage;
-	apiBoards: TrelloBoards
+	apiBoards: TrelloBoards;
 }>({
-    loginPage: async ({ page }, use) => {
-        await use(new SpaceLoginPage(page));
-    },
-    productPage: async ({ page }, use) => {
-        await use(new SpaceProductPage(page));
-    },
-    checkoutPage: async ({ page }, use) => {
-        await use(new SpaceCheckoutPage(page));
+	loginPage: async ({ page }, use) => {
+		await use(new SpaceLoginPage(page));
+	},
+	productPage: async ({ page }, use) => {
+		await use(new SpaceProductPage(page));
+	},
+	checkoutPage: async ({ page }, use) => {
+		await use(new SpaceCheckoutPage(page));
 	},
 	apiBoards: async ({ page }, use) => {
 		await use(new TrelloBoards(page));
-	}
+	},
 });
 
 export { test };

@@ -1,0 +1,7 @@
+{
+  "extends": "./tsconfig.json",
+  "include": [
+    ".eslintrc.json", // ESLint's config must be included
+    "**/*.ts", // TypeScript files
+  ],
+}

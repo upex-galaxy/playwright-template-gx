@@ -29,7 +29,7 @@ export default defineConfig({
 	reporter: [
 		['./tests/custom-reporter.ts'],
 		['html', { outputFolder: 'test-html-report/main', open: 'never' }],
-		['junit', { outputFolder: 'test-junit-report', outputFile: 'test-junit-report/main-importer-report.xml'}],
+		['junit', { outputFolder: 'test-junit-report', outputFile: 'test-junit-report/main-importer-report.xml' }],
 		['allure-playwright'],
 	],
 	/* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
@@ -64,8 +64,8 @@ export default defineConfig({
 		},
 		//* Test against mobile Devices:
 		{
-		  name: 'iphone',
-		  use: { ...devices['iPhone 14 Pro'] },
+			name: 'iphone',
+			use: { ...devices['iPhone 14 Pro'] },
 		},
 	],
 

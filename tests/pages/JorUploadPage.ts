@@ -1,27 +1,26 @@
-import { getFiles } from "@helper/testUtils";
-import type { Page, Locator } from "@playwright/test";
+import { getFiles } from '@helper/testUtils';
+import type { Page, Locator } from '@playwright/test';
 
-export class JorUploadPage{
-    page: Page;
-    downloadBtn: () => Locator;
-    uploadFileBtn: () => Locator;
+export class JorUploadPage {
+	page: Page;
+	downloadBtn: () => Locator;
+	uploadFileBtn: () => Locator;
 
-    constructor(driver: Page) {
-        this.page = driver
-        this.downloadBtn = () => this.page.locator('#downloadButton');
-        this.uploadFileBtn = ()=> this.page.locator('#uploadFile')
+	constructor(driver: Page) {
+		this.page = driver;
+		this.downloadBtn = () => this.page.locator('#downloadButton');
+		this.uploadFileBtn = () => this.page.locator('#uploadFile');
+	}
 
-    }
+	// Methods
 
-    // Methods
+	async getUploadFileValue() {
+		const value = await this.uploadFileBtn().inputValue();
+		return value;
+	}
 
-    async getUploadFileValue() {
-        const value = await this.uploadFileBtn().inputValue()
-        return value
-    }
-
-    async downLoadFile() {
-      	const downloadPromise = this.page.waitForEvent('download');
+	async downLoadFile() {
+		const downloadPromise = this.page.waitForEvent('download');
 		await this.downloadBtn().click();
 		const download = await downloadPromise;
 
@@ -31,11 +30,9 @@ export class JorUploadPage{
 		const downloadedFiles = getFiles('tests/data');
 
 		return { downloadedFiles, downloadedFile };
-    }
+	}
 
-    async uploadFile(dataFileName: string) {
-		
+	async uploadFile(dataFileName: string) {
 		await this.uploadFileBtn().setInputFiles(`tests/data/images/${dataFileName}`);
-		
 	}
 }

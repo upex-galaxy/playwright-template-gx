@@ -1,6 +1,6 @@
 import { story, precondition, test, expect } from '@TestBase';
 import data from '@data/juliaUserDetails.json' assert { type: 'json' };
-import type { simpleForm } from '@type/inputTypes';
+import type { SimpleForm } from '@type/inputTypes';
 
 story('GX3-1452: ToolsQA | Elements | Text Box: Fill form and Submit', () => {
 	precondition(async ({ page }) => {
@@ -12,7 +12,7 @@ story('GX3-1452: ToolsQA | Elements | Text Box: Fill form and Submit', () => {
 		const emailField = page.locator('#userEmail-wrapper input');
 		const currAddressField = page.locator('#currentAddress-wrapper textarea');
 		const permAddressField = page.locator('#permanentAddress-wrapper textarea');
-		let n = 1;
+		const n = 1;
 		await test.step('Fill the fullname', async () => {
 			await nameField.fill(data[n].fullName);
 		});
@@ -48,7 +48,7 @@ story('GX3-1452: ToolsQA | Elements | Text Box: Fill form and Submit', () => {
 		const currAddressField = page.locator('#currentAddress-wrapper textarea');
 		const permAddressField = page.locator('#permanentAddress-wrapper textarea');
 
-		async function fillForm(datos: simpleForm) {
+		async function fillForm(datos: SimpleForm) {
 			await nameField.fill(datos.fullName);
 			await emailField.fill(datos.email);
 			await currAddressField.fill(datos.currentAddress);
@@ -56,7 +56,7 @@ story('GX3-1452: ToolsQA | Elements | Text Box: Fill form and Submit', () => {
 		}
 
 		for (const oneUser of data) {
-			fillForm(oneUser);
+			await fillForm(oneUser);
 			await page.waitForTimeout(1000);
 			await page.getByText('Submit', { exact: true }).click();
 			const outputLines = await page.locator('#output p').allInnerTexts();

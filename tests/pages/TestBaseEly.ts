@@ -4,19 +4,19 @@ import { SpaceProductPage } from '@pages/SpaceProductPage';
 import { SpaceCheckoutPage } from '@pages/SpaceCheckoutPage';
 
 const test = driver.extend<{
-    loginPage: SpaceLoginPage;
-    productPage: SpaceProductPage;
-    checkoutPage: SpaceCheckoutPage
+	loginPage: SpaceLoginPage;
+	productPage: SpaceProductPage;
+	checkoutPage: SpaceCheckoutPage;
 }>({
-    loginPage: async ({ page }, use) => {
-        await use(new SpaceLoginPage(page));
-    },
-    productPage: async ({ page }, use) => {
-        await use(new SpaceProductPage(page));
-    },
-    checkoutPage: async ({ page }, use) => {
-        await use(new SpaceCheckoutPage(page));
-    },
+	loginPage: async ({ page }, use) => {
+		await use(new SpaceLoginPage(page));
+	},
+	productPage: async ({ page }, use) => {
+		await use(new SpaceProductPage(page));
+	},
+	checkoutPage: async ({ page }, use) => {
+		await use(new SpaceCheckoutPage(page));
+	},
 });
 
 export { test };

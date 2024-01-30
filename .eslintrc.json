@@ -9,14 +9,20 @@
 	"parser": "@typescript-eslint/parser",
 	"parserOptions": {
 		"ecmaVersion": "latest",
-		"sourceType": "module"
+		"sourceType": "module",
+		"project": "tsconfig.eslint.json"
 	},
 	"plugins": ["@typescript-eslint", "only-warn", "prettier"],
 	"rules": {
 		"indent": ["warn", "tab", { "SwitchCase": 1 }],
-		"linebreak-style": ["warn", "windows"],
+		"linebreak-style": ["off"],
 		"quotes": ["warn", "single"],
 		"semi": ["warn", "always"],
-		"object-curly-spacing": ["warn", "always"]
+		"no-multi-spaces": ["warn"],
+		"object-curly-spacing": ["warn", "always"],
+		"@typescript-eslint/no-floating-promises": ["error"],
+		"@typescript-eslint/no-unsafe-assignment": ["warn"],
+		"@typescript-eslint/no-unsafe-argument": ["warn"],
+		"@typescript-eslint/naming-convention": ["warn"]
 	}
 }

@@ -1,4 +1,4 @@
-export type simpleForm = {
+export type SimpleForm = {
 	fullName: string;
 	email: string;
 	currentAddress: string;
