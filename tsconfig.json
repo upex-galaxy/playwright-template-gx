@@ -12,6 +12,7 @@
 			"@helper/*": ["./tests/helper/*"],
 			"@data/*": ["./tests/data/*"],
 			"@type/*": ["./tests/interfaces/*"],
+			"@api/*": ["./tests/apis/*"],
 			"@TestBase": ["./tests/pages/TestBase.ts"]
 		}
 	},

@@ -1,13 +1,15 @@
 
-import { test as driver, request } from '@playwright/test';
+import { test as driver , APIRequestContext} from '@playwright/test';
 import { SpaceLoginPage } from './SpaceLoginPage';
 import { SpaceProductPage } from './SpaceProductPage';
 import { SpaceCheckoutPage } from './SpaceCheckoutPage';
+import { TrelloBoards } from '@api/elyTrelloBoards';
 
 const test = driver.extend<{
     loginPage: SpaceLoginPage;
     productPage: SpaceProductPage;
-    checkoutPage: SpaceCheckoutPage
+	checkoutPage: SpaceCheckoutPage;
+	apiBoards: TrelloBoards
 }>({
     loginPage: async ({ page }, use) => {
         await use(new SpaceLoginPage(page));
@@ -17,14 +19,16 @@ const test = driver.extend<{
     },
     checkoutPage: async ({ page }, use) => {
         await use(new SpaceCheckoutPage(page));
-    },
+	},
+	apiBoards: async ({ page }, use) => {
+		await use(new TrelloBoards(page));
+	}
 });
 
 export { test };
 // Main utilities:
 export const story = test.describe;
 export const expect = test.expect;
-export const api = request;
 // Hooks:
 export const beforeAll = test.beforeAll;
 export const precondition = test.beforeEach;
