@@ -63,6 +63,8 @@
 	"material-icon-theme.folders.color": "#7cb342",
 	"material-icon-theme.files.associations": {
 		"tsconfig.json": "svgo",
+		"tsconfig.eslint.json": "eslint",
+		"modules.d.ts": "typescript",
 		"regression.yml": "test-ts",
 		"sanity-template.yml": "test-ts",
 		"playwright.chrome.config.ts": "playwright",
