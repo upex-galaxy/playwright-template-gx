@@ -2,7 +2,7 @@ name: 🧪Playwright Sanity Testing
 run-name: ${{github.actor}}👨🏻‍🔬 ran TestSuite in ${{github.ref_name}}
 on:
   push:
-    branches: ['test/GX3-1740/book-a-destination-in-checkout'] #! Cambia "TuBranchAqui" por el nombre de tu rama de tarea.
+    branches: ['test-env-data-test'] #! Cambia "TuBranchAqui" por el nombre de tu rama de tarea.
 
 jobs:
   TestSuite:
