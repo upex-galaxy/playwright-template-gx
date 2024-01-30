@@ -32,7 +32,7 @@ jobs:
 
     - name: ✅ 🧪Test Suite Execution
       run: | #todo: EDITAR AQUÍ EL ARCHIVO SUITE A EJECUTAR:
-        yarn test:ci tests/specs/trello/cards.test.ts
+        yarn test tests/specs/trello/cards.test.ts
 
     - name: 📊Generate Allure Report
       run: |

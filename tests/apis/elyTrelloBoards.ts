@@ -26,6 +26,9 @@ export class TrelloBoards {
     }
 
     async getBoard(givenBoardId: string) {
+        if (!this.baseUrl) throw new Error('🚨️ Base URL not found');
+        if (!this.apiKey) throw new Error('🚨️ API Key not found');
+        if (!this.apiToken) throw new Error('🚨️ API Token not found');
         const endpoint = this.baseUrl + this.getABoard(givenBoardId)
         console.log('🎭️ Endpoint:', endpoint)
         const response = await this.api.get(endpoint, { params: this.auth })
