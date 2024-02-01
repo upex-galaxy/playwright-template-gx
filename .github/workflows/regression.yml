@@ -15,8 +15,6 @@ jobs:
     name: regression
     timeout-minutes: 60
     runs-on: ubuntu-latest
-    container:
-      image: mcr.microsoft.com/playwright:v1.41.1-jammy
 
     strategy:
       fail-fast: false
@@ -42,11 +40,13 @@ jobs:
       run: |
         yarn
 
-    - name: 🎭️🐳 Playwright Regression Test with Docker on ${{ matrix.browser }}
+    - name: 🎭️ Installing Playwright And Browsers
+      run: |
+        yarn pw:install
+
+    - name: 🎭️ Playwright Regression Test on ${{ matrix.browser }}
       run: |
         yarn regression:${{ matrix.browser }}
-      env:
-        HOME: /root
 
     - name: 📊Generate Allure Report for ${{ matrix.browser }}
       if: always()
