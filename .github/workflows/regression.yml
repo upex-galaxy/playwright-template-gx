@@ -47,6 +47,10 @@ jobs:
     - name: 🎭️ Playwright Regression Test on ${{ matrix.browser }}
       run: |
         yarn regression:${{ matrix.browser }}
+      env:
+        TRELLO_ENV_CI_BASEURL: ${{secrets.TRELLO_ENV_CI_BASEURL}}
+        TRELLO_API_CI_KEY: ${{secrets.TRELLO_API_CI_KEY}}
+        TRELLO_API_CI_TOKEN: ${{secrets.TRELLO_API_CI_TOKEN}}
 
     - name: 📊Generate Allure Report for ${{ matrix.browser }}
       if: always()
