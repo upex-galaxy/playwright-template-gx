@@ -3,6 +3,9 @@ import { getByReactTool } from '@helper/testUtils';
 import * as dotenv from 'dotenv';
 dotenv.config();
 
+const actualUsername = process.env.CI ? 'User in CI' : process.env.SPACE_LOGIN_USERNAME;
+const actualPassword = process.env.CI ? 'Password in CI' : process.env.SPACE_LOGIN_PASSWORD;
+
 export class SpaceLoginPage {
 	page: Page;
 	usernameInput: () => Locator;
@@ -38,8 +41,8 @@ export class SpaceLoginPage {
 	}
 
 	async loginSuccess() {
-		const username = process.env.EXAMPLE_SPACE_LOGIN_USERNAME;
-		const password = process.env.EXAMPLE_SPACE_LOGIN_PASSWORD;
+		const username = actualUsername;
+		const password = actualPassword;
 		await this.login(username, password);
 		expect(this.page.url()).toBe('https://demo.testim.io/');
 	}

@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 declare namespace NodeJS {
 	export interface ProcessEnv {
-		EXAMPLE_SPACE_LOGIN_USERNAME: string
-		EXAMPLE_SPACE_LOGIN_PASSWORD: string
+		SPACE_LOGIN_USERNAME: string
+		SPACE_LOGIN_PASSWORD: string
 		TRELLO_API_TOKEN: string
 		TRELLO_API_CI_TOKEN: string
 		TRELLO_API_KEY: string
