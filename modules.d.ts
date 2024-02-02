@@ -9,5 +9,7 @@ declare namespace NodeJS {
 		TRELLO_API_CI_KEY: string
 		TRELLO_ENV_QA_BASEURL: string
 		TRELLO_ENV_CI_BASEURL: string
+		ORANGE_USERNAME: string
+		ORANGE_PASSWORD: string
 	}
 }

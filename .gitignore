@@ -13,3 +13,4 @@ playwright/.cache/
 package-lock.json
 tests/data/sampleFile.jpeg
 .env
+tests/helper/auth/user.json
