@@ -71,6 +71,7 @@
 		"playwright.firefox.config.ts": "playwright",
 		"playwright.edge.config.ts": "playwright",
 		"playwright.iphone.config.ts": "playwright",
+		"playwright.azure.config.ts": "azure",
 		"*.test.js": "test-tsx",
 		"testUtils.ts": "3d",
 		"TestBase.ts": "3d"

@@ -14,6 +14,7 @@
     "test:edge": "npx playwright test --project=edge",
     "test:iphone": "npx playwright test --project=iphone",
     "test:ci": "npx playwright test",
+    "test:azure": "npx playwright test -c playwright.azure.config.ts",
     "regression:chrome": "npx playwright test -c playwright.chrome.config.ts --project=chromium",
     "regression:firefox": "npx playwright test -c playwright.firefox.config.ts --project=firefox",
     "regression:edge": "npx playwright test -c playwright.edge.config.ts --project=edge",
@@ -43,6 +44,7 @@
   "license": "ISC",
   "type": "module",
   "devDependencies": {
+    "@alex_neo/playwright-azure-reporter": "^1.8.0",
     "@playwright/test": "^1.39.0",
     "@types/lodash": "^4.14.202",
     "@types/node": "20.9.0",

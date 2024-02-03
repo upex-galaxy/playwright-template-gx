@@ -11,5 +11,6 @@ declare namespace NodeJS {
 		TRELLO_ENV_CI_BASEURL: string
 		ORANGE_USERNAME: string
 		ORANGE_PASSWORD: string
+		AZURE_TOKEN: string
 	}
 }
