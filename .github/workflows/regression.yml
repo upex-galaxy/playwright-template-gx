@@ -112,7 +112,7 @@ jobs:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
         SLACK_USERNAME: Ari✨
         SLACK_MESSAGE: ':test_tube: PLAYWRIGHT-BLACKHOLE: REGRESSION REPORT IMPORTED TO JIRA :rocket:'
-        SLACK_COLOR: ${{ job.status }}
+        SLACK_COLOR: ${{ needs.RegressionTesting.result }}
         SLACK_ICON: https://image.cdn2.seaart.ai/2023-12-06/clo9g0h4msbc73ac2sog/99e1abc36f32945cd4bacf5ee7448e96194545f7_high.webp
 
   Create-PullRequest:
