@@ -7,19 +7,18 @@ const actualPassword = process.env.ORANGE_PASSWORD;
 
 export class OrangeLoginPage {
 	page: Page;
-	usernameInput: ()=> Locator;
-	passwordInput: ()=> Locator;
-	loginSubmitButton: ()=> Locator;
+	usernameInput: () => Locator;
+	passwordInput: () => Locator;
+	loginSubmitButton: () => Locator;
 
-	constructor(driver: Page){
-
+	constructor(driver: Page) {
 		this.page = driver;
-		this.usernameInput = ()=> this.page.locator('[name=username]');
-		this.passwordInput = ()=> this.page.locator('[name=password]');
-		this.loginSubmitButton = ()=> this.page.locator('button[type=submit]');
+		this.usernameInput = () => this.page.locator('[name=username]');
+		this.passwordInput = () => this.page.locator('[name=password]');
+		this.loginSubmitButton = () => this.page.locator('button[type=submit]');
 	}
 
-	async loginSuccess(){
+	async loginSuccess() {
 		await this.page.goto('https://opensource-demo.orangehrmlive.com/');
 		expect.soft(this.page.url()).toContain('auth/login');
 		await this.usernameInput().fill(actualUsername);

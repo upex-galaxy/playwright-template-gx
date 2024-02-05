@@ -32,8 +32,8 @@
     "allure:gen:edge": "allure generate --clean -o allure-report/edge",
     "allure:gen:iphone": "allure generate --clean -o allure-report/iphone",
     "allure:report": "npm run allure:open && allure open --host localhost --port 7070",
-    "prettier:write": "npx prettier --write tests/**/*.ts",
     "prettier:check": "npx prettier --check tests/**/*.ts",
+    "prettier:fix": "npx prettier --write tests/**/*.ts",
     "lint:check": "npx eslint tests/**/*.ts",
     "lint:fix": "npx eslint --fix tests/**/*.ts"
   },

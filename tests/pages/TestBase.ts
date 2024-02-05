@@ -13,7 +13,7 @@ const test = driver.extend<{
 	orangeLoginPage: OrangeLoginPage;
 }>({
 	loginPage: async ({ page }, use) => await use(new SpaceLoginPage(page)),
-	orangeLoginPage: async ({ page }, use)=> await use(new OrangeLoginPage(page)),
+	orangeLoginPage: async ({ page }, use) => await use(new OrangeLoginPage(page)),
 	productPage: async ({ page }, use) => await use(new SpaceProductPage(page)),
 	checkoutPage: async ({ page }, use) => await use(new SpaceCheckoutPage(page)),
 	apiBoards: async ({ page }, use) => await use(new TrelloBoards(page)),

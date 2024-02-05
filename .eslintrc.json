@@ -23,6 +23,7 @@
 		"@typescript-eslint/no-floating-promises": ["error"],
 		"@typescript-eslint/no-unsafe-assignment": ["warn"],
 		"@typescript-eslint/no-unsafe-argument": ["warn"],
-		"@typescript-eslint/naming-convention": ["warn"]
+		"@typescript-eslint/naming-convention": ["warn"],
+		"arrow-spacing": ["warn"]
 	}
 }
