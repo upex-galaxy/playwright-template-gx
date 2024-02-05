@@ -29,7 +29,7 @@ const overrides: PlaywrightTestConfig = {
 					// https://dev.azure.com/{organization}/{project}/_apis/test/configurations to get the ids of  your project.
 					// if multiple configuration ids are used in one run a testPointMapper should be used to pick the correct one,
 					// otherwise the results are pushed to all.
-					configurationIds: [1],
+					configurationIds: [1,3,4,5],
 				},
 				testPointMapper: async (testCase: TestCase, testPoints: TestPoint[]) => {
 					switch(testCase.parent.project()?.name) {
