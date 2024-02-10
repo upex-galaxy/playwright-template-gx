@@ -1,0 +1,96 @@
+#*🤖Este Pipeline de CI se activa al PUSHEAR o MERGEAR en ramas de tareas que no sean QA ni Main, y consiste en ejecutar los tests de una US e importar los resultados a Jira!🚀
+#*👩🏻‍🔬Para utilizar este Pipeline de Ari, sigue los siguientes pasos:
+#todo: 1 -> Crea tu propio archivo sanity.yml con tu username de GitHub, ejemplo sanity-saiotest.yml
+#todo: 2 -> Copia el contenido de este archivo yml y pégalo en tu nuevo archivo yml con tu username.
+#todo: 3 -> Modifica el trigger del Push en donde dice "TuBranchAqui", coloca tu nombre tal cual de tu rama git.
+#todo: 4 -> Modifica el archivo de prueba a ejectuar en el script del "yarn test" (ver ejemplo en este archivo)
+#todo: 5 -> Modifica la propiedad: "testExecKey" con tu ID del TX de Jira para importar automáticamente el resultado.
+#todo: 6 -> Recuerda modificar el projectKey correspondiente, si estás en L3, debe ser GX3 y así...
+#todo: 7 -> Listo! Guarda los cambios (git add + git commit) y pushea (git push) para ejectutar este Pipeline!
+#*Resultado: Debería ejecutarse este Pipeline de GitHub Actions y correr cada uno de los Jobs declarados aquí.
+name: 🧪Pipeline SanityTest Execution
+run-name: ${{github.actor}}👨🏻‍🔬 triggered SanityTest in ${{github.ref_name}}
+on:
+  push:
+    branches: ['TuBranchAqui'] #! Cambia "TuBranchAqui" por el nombre de tu rama de tarea.
+
+jobs:
+  TestSuite:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+    - name: 📘 Checkout Repo
+      uses: actions/checkout@v4
+
+    - name: 💿 Installing Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20
+
+    - name: 🍙 Bun Setup
+      uses: oven-sh/setup-bun@v1
+
+    - name: 🧬 Install Project Dependencies
+      run: |
+        bun install
+
+    - name: 🎭️ Installing Playwright And Browsers
+      run: |
+        bun run pw:install
+
+    - name: ✅ 🧪Test Suite Execution
+      run: | #todo: EDITAR AQUÍ EL ARCHIVO SUITE A EJECUTAR:
+        bun run test:ci tests/elements/uploadDownload_example.test.ts
+
+    - name: 📊Generate Allure Report
+      run: |
+        bun run allure:open
+
+    - name: ✅Check if XRAY_CLIENT is Defined
+      if: always()
+      run: |
+        if [[ -z "${{ secrets.XRAY_CLIENT_ID }}" ]]; then
+          echo "XRAY_CLIENT_ID is not set. Please set it in the repository secrets to enable Slack notifications."
+        fi
+        if [[ -z "${{ secrets.XRAY_CLIENT_SECRET }}" ]]; then
+          echo "XRAY_CLIENT_SECRET is not set. Please set it in the repository secrets to enable Slack notifications."
+        fi
+
+    - name: ✅Import Test Results to Xray
+      if: env.XRAY_CLIENT != '' && env.XRAY_SECRET != ''
+      uses: mikepenz/xray-action@v3
+      with:
+        username: ${{secrets.XRAY_CLIENT_ID}}
+        password: ${{secrets.XRAY_CLIENT_SECRET}}
+        testFormat: 'junit'
+        testPaths: 'test-junit-report/main-importer-report.xml'
+        testExecKey: 'GX3-2257' #!Cambiar a tu TX correspondiente.
+        projectKey: 'GX3' #!Cambiar a tu Proyecto Level correspondiente.
+      env:
+        XRAY_CLIENT: ${{ secrets.XRAY_CLIENT_SECRET }}
+        XRAY_SECRET: ${{ secrets.XRAY_CLIENT_SECRET }}
+
+    - name: 📡Upload Artifact - Allure Report
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: test-report
+        path: allure-report
+        retention-days: 15
+
+    - name: 🔔Check if SLACK_WEBHOOK is Defined
+      if: always()
+      run: |
+        if [[ -z "${{ secrets.SLACK_WEBHOOK }}" ]]; then
+          echo "SLACK_WEBHOOK is not set. Please set it in the repository secrets to enable Slack notifications."
+        fi
+
+    - name: 🔔Slack Notification of Done
+      if: env.SLACK_WEBHOOK != ''
+      uses: rtCamp/action-slack-notify@v2
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_USERNAME: Ari✨
+        SLACK_MESSAGE: ':test_tube: Playwright: Test Execution is Done and updated in Jira :rocket:'
+        SLACK_COLOR: ${{ job.status }}
+        SLACK_ICON: https://image.cdn2.seaart.ai/2023-12-06/clo9g0h4msbc73ac2sog/99e1abc36f32945cd4bacf5ee7448e96194545f7_high.webp
