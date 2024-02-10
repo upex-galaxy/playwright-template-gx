@@ -40,7 +40,7 @@ jobs:
 
     - name: ✅ 🧪Test Suite Execution
       run: | #todo: EDITAR AQUÍ EL ARCHIVO SUITE A EJECUTAR:
-        bun run test:ci tests/elements/uploadDownload_example.test.ts
+        bun run test:ci tests/specs/elements/uploadDownload_GX3-2251.test.ts
 
     - name: 📊Generate Allure Report
       run: |
