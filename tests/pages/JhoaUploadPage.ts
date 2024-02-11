@@ -1,7 +1,7 @@
 import { getFiles } from '@helper/testUtils';
 import type { Page, Locator } from '@playwright/test';
 
-export class UploadPage {
+export class UploadPageJhoa {
 	page: Page;
 	downloadButton: ()=> Locator;
 	uploadButton: () => Locator;
