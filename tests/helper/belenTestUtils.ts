@@ -1,4 +1,4 @@
-import { Locator } from '@playwright/test';
+import type { Locator } from '@playwright/test';
 export { getRealValues };
 
 async function getRealValues(elementos: Locator) {

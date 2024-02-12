@@ -1,6 +1,6 @@
-import { Locator, Page } from '@playwright/test';
+import type { Locator, Page } from '@playwright/test';
 import { getByReactTool } from '@helper/testUtils';
-import { ProductCardData } from '@type/spaceBeyongTypes';
+import type { ProductCardData } from '@type/spaceBeyongTypes';
 
 export class SpaceProductPage {
 	page: Page;
