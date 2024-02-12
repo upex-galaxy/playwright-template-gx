@@ -12,7 +12,7 @@ const test = driver.extend<{
 	checkoutPage: SpaceCheckoutPage;
 	apiBoards: TrelloBoards;
 	orangeLoginPage: OrangeLoginPage;
-	searchPage: SpaceSearchPage
+	searchPage: SpaceSearchPage;
 }>({
 	loginPage: async ({ page }, use) => await use(new SpaceLoginPage(page)),
 	searchPage: async ({ page }, use) => await use(new SpaceSearchPage(page)),

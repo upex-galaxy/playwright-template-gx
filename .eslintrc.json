@@ -16,6 +16,8 @@
 	"rules": {
 		"indent": ["warn", "tab", { "SwitchCase": 1 }],
 		"linebreak-style": ["off"],
+		"space-before-blocks": ["warn"],
+		"arrow-spacing": "warn",
 		"quotes": ["warn", "single"],
 		"semi": ["warn", "always"],
 		"no-multi-spaces": ["warn"],
@@ -24,6 +26,6 @@
 		"@typescript-eslint/no-unsafe-assignment": ["warn"],
 		"@typescript-eslint/no-unsafe-argument": ["warn"],
 		"@typescript-eslint/naming-convention": ["warn"],
-		"arrow-spacing": ["warn"]
+		"@typescript-eslint/consistent-type-imports": ["error"]
 	}
 }
