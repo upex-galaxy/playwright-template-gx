@@ -5,7 +5,6 @@ dotenv.config();
 // Example using Setup/TearDown Precondition: https://playwright.dev/docs/test-global-setup-teardown
 export const STORAGE_STATE = 'tests/helper/auth/user.json';
 
-
 // See https://playwright.dev/docs/test-configuration.
 export default defineConfig({
 	// Test Repo Directory:

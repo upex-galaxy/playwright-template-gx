@@ -1,8 +1,8 @@
 import { type PlaywrightTestConfig } from '@playwright/test';
 import config from './playwright.config';
-import { AzureReporterOptions } from '@alex_neo/playwright-azure-reporter/dist/playwright-azure-reporter';
-import { TestPoint } from 'azure-devops-node-api/interfaces/TestInterfaces';
-import { TestCase } from '@playwright/test/reporter';
+import type { AzureReporterOptions } from '@alex_neo/playwright-azure-reporter/dist/playwright-azure-reporter';
+import type { TestPoint } from 'azure-devops-node-api/interfaces/TestInterfaces';
+import type { TestCase } from '@playwright/test/reporter';
 // eslint-disable-next-line @typescript-eslint/naming-convention
 import _ from 'lodash';
 

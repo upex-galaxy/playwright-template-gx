@@ -3,8 +3,8 @@ import * as dotenv from 'dotenv';
 import { ReactPage } from './ReactPage';
 dotenv.config();
 
-const actualUsername = process.env.CI ? 'User in CI' : process.env.SPACE_LOGIN_USERNAME;
-const actualPassword = process.env.CI ? 'Password in CI' : process.env.SPACE_LOGIN_PASSWORD;
+const actualUsername = 'Saitest'; //? habilita esto si usas CI: process.env.CI ? 'User in CI' : process.env.SPACE_LOGIN_USERNAME;
+const actualPassword = 'Sai123'; //? habilita esto si usas CI: process.env.CI ? 'Password in CI' : process.env.SPACE_LOGIN_PASSWORD;
 
 export class SpaceLoginPage extends ReactPage {
 	usernameInput: () => Locator;

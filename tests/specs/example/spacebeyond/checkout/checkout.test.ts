@@ -1,6 +1,6 @@
-import { feature, precondition, test, expect } from '@pages/TestBaseEly';
+import { story, precondition, test, expect } from '@pages/TestBase';
 
-feature('GX3-1740: Space Beyond - Book a destiny on Checkout', () => {
+story('GX3-1740: Space Beyond - Book a destiny on Checkout', () => {
 	
 	precondition(async ({ loginPage, productPage }) => {
 		await loginPage.loginSuccess();
