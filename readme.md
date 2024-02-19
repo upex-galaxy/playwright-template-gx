@@ -7,7 +7,7 @@
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
 
-[![🧪Playwright Regression Testing](https://github.com/upex-galaxy/playwright-ts/actions/workflows/regression.yml/badge.svg?branch=QA)](https://github.com/upex-galaxy/playwright-ts/actions/workflows/regression.yml)
+[![🧪Playwright Regression Testing](https://github.com/upex-galaxy/playwright-typescript-gx/actions/workflows/regression.yml/badge.svg?branch=QA)](https://github.com/upex-galaxy/playwright-typescript-gx/actions/workflows/regression.yml)
 
 [![vscode-logo]][vscode-site] [![playwright-logo]][playwright-site] [![javascript-logo]][javascript-site] [![typescript-logo]][typescript-site]
 
@@ -43,7 +43,7 @@ Ahora el Directorio de UPEX Galaxy, será mucho más simple.
 
 1. **📡 Clona el Repositorio del Proyecto**:
     ```
-    git clone https://github.com/upex-galaxy/playwright-blackhole.git
+    git clone https://github.com/upex-galaxy/playwright-typescript-gx.git
     ```
 2. **❗💿 Instala todas las Dependencias del Proyecto**:
     ```
