@@ -16,6 +16,7 @@
 	"rules": {
 		"@typescript-eslint/consistent-type-imports": ["error"],
 		"@typescript-eslint/naming-convention": ["warn"],
+		"@typescript-eslint/no-unnecessary-condition": "warn",
 		"@typescript-eslint/no-floating-promises": ["error"],
 		"@typescript-eslint/no-unsafe-argument": ["warn"],
 		"@typescript-eslint/no-unsafe-assignment": ["warn"],
