@@ -8,7 +8,7 @@ export class UploadPageJhoa {
 	uploadFileValue: () => Promise<string>;
 
 	constructor(driver: Page) {
-		this.page = driver; 
+		this.page = driver;
 		this.downloadButton = () => this.page.locator('#downloadButton');
 		this.uploadButton = () => this.page.locator('#uploadFile');
 		this.uploadFileValue = async () => await this.uploadButton().inputValue();
@@ -22,7 +22,7 @@ export class UploadPageJhoa {
 		const filename = download.suggestedFilename();
 		await download.saveAs('tests/data/' + filename);
 		const downloadedFiles = getFiles('tests/data');
-		return { downloadedFiles , filename };
+		return { downloadedFiles, filename };
 	}
 
 	async pressUploadFile(dataFileName: string) {

@@ -17,6 +17,7 @@
 		"indent": ["warn", "tab", { "SwitchCase": 1 }],
 		"linebreak-style": ["off"],
 		"space-before-blocks": ["warn"],
+		"eol-last": ["warn", "never"],
 		"space-before-function-paren": ["error", { "anonymous": "never", "named": "never", "asyncArrow": "always" }],
 		"arrow-spacing": ["warn", { "before": true, "after": true }],
 		"quotes": ["warn", "single"],
