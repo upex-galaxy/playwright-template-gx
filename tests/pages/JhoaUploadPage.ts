@@ -3,11 +3,11 @@ import type { Page, Locator } from '@playwright/test';
 
 export class UploadPageJhoa {
 	page: Page;
-	downloadButton: ()=> Locator;
+	downloadButton: () => Locator;
 	uploadButton: () => Locator;
 	uploadFileValue: () => Promise<string>;
 
-	constructor (driver: Page) {
+	constructor(driver: Page) {
 		this.page = driver; 
 		this.downloadButton = () => this.page.locator('#downloadButton');
 		this.uploadButton = () => this.page.locator('#uploadFile');

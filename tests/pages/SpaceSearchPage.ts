@@ -97,16 +97,16 @@ export class SpaceSearchPage {
 		}
 	}
 
-	async selectDay(day?: string) {
-		if (day) {
-		} else {
-		}
-	}
+	// async selectDay(day?: string) {
+	// 	if (day) {
+	// 	} else {
+	// 	}
+	// }
 
-	async selectDepartingDate(arg?: { day: string; month: string }) {
-		await this.openDatePicker('Departing');
-		if (arg) {
-		} else {
-		}
-	}
+	// async selectDepartingDate(arg?: { day: string; month: string }) {
+	// 	await this.openDatePicker('Departing');
+	// 	if (arg) {
+	// 	} else {
+	// 	}
+	// }
 }
