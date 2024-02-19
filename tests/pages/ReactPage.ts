@@ -8,10 +8,7 @@ export class ReactPage {
 	}
 
 	getByReactTool(dataId: string, page: Page, options?: { hasText: string }) {
-		if (options) {
-			return this.page.locator(`[data-react-toolbox=${dataId}]`, { hasText: options.hasText });
-		} else {
-			return this.page.locator(`[data-react-toolbox=${dataId}]`);
-		}
+		if (options) return this.page.locator(`[data-react-toolbox=${dataId}]`, { hasText: options.hasText });
+		else return this.page.locator(`[data-react-toolbox=${dataId}]`);
 	}
 }
