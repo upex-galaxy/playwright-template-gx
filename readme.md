@@ -40,6 +40,9 @@
 Ahora el Directorio de UPEX Galaxy, será mucho más simple.
 
 # CÓMO EMPEZAR:
+**Precondición**:
+- Asegúrate de usar el Gestor de Paquete "YARN" en este proyecto en lugar de npm; para un mejor rendimiento de control de dependencias.
+- Si aún no tienes instalado `yarn` en tu maquina, puedes hacerlo simplemente corriendo en la terminal: `npm i -g yarn` 
 
 1. **📡 Clona el Repositorio del Proyecto**:
     ```
