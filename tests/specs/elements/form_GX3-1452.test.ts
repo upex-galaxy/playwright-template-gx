@@ -3,7 +3,8 @@ import data from '@data/juliaUserDetails.json' assert { type: 'json' };
 import type { SimpleForm } from '@type/inputTypes';
 
 story('GX3-1452: ToolsQA | Elements | Text Box: Fill form and Submit', () => {
-	precondition(async ({ page }) => {
+	precondition(async ({ page }, testInfo) => {
+		test.skip(testInfo.project.name === 'iphone', 'This test is not supported on iOS');
 		await page.goto('/text-box', { waitUntil: 'domcontentloaded' });
 	});
 

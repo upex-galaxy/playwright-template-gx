@@ -12,7 +12,7 @@ name: 🧪Pipeline SanityTest Execution
 run-name: ${{github.actor}}👨🏻‍🔬 triggered SanityTest in ${{github.ref_name}}
 on:
   push:
-    branches: ['TuBranchAqui'] #! Cambia "TuBranchAqui" por el nombre de tu rama de tarea.
+    branches: ['GX3-2250elements-upload-and-download'] #! Cambia "TuBranchAqui" por el nombre de tu rama de tarea.
 
 jobs:
   TestSuite:
@@ -40,7 +40,7 @@ jobs:
 
     - name: ✅ 🧪Test Suite Execution
       run: | #todo: EDITAR AQUÍ EL ARCHIVO SUITE A EJECUTAR:
-        bun run test:ci tests/elements/uploadDownload_example.test.ts
+        bun run test:ci tests/specs/elements/uploadDownload_GX3-2251.test.ts
 
     - name: 📊Generate Allure Report
       run: |
@@ -64,7 +64,7 @@ jobs:
         password: ${{secrets.XRAY_CLIENT_SECRET}}
         testFormat: 'junit'
         testPaths: 'test-junit-report/main-importer-report.xml'
-        testExecKey: 'GX3-1533' #!Cambiar a tu TX correspondiente.
+        testExecKey: 'GX3-2257' #!Cambiar a tu TX correspondiente.
         projectKey: 'GX3' #!Cambiar a tu Proyecto Level correspondiente.
       env:
         XRAY_CLIENT: ${{ secrets.XRAY_CLIENT_SECRET }}

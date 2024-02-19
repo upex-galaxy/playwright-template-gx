@@ -43,7 +43,7 @@ Ahora el Directorio de UPEX Galaxy, será mucho más simple.
 
 1. **📡 Clona el Repositorio del Proyecto**:
     ```
-    git clone https://github.com/upex-galaxy/playwright-typescript.git
+    git clone https://github.com/upex-galaxy/playwright-blackhole.git
     ```
 2. **❗💿 Instala todas las Dependencias del Proyecto**:
     ```

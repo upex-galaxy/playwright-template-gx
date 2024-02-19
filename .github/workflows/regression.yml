@@ -1,12 +1,18 @@
-#!No modificar Archivo. Este pipeline es para correr todos los tests como Regression.
-name: 🧪Playwright Regression Testing
-run-name: ${{github.actor}}👨🏻‍🔬 ran Regression in ${{github.ref_name}}
+#* 🧙🏻‍♂️BIENVENIDO A LOS PIPELINES DE CONTINUOUS INTEGRATION DE "ARI - Hija de Aurora"!
+#? 🤖Este Pipeline de CI se activa al hacer MERGE a la rama "QA" o "MAIN",
+#? 🧪Consiste en ejecutar TODOS los tests del Repo e importar los resultados a Jira!🚀
+#! 👩🏻‍🔬Este Pipeline de CI NO DEBE EDITARSE sin permiso del QA Lead.
+name: 🧪Pipeline Regression in QA
+run-name: ${{github.actor}}👨🏻‍🔬 triggered Regression in ${{github.ref_name}}
+
 on:
   push:
-    branches: [QA]
+    branches:
+    - QA
 
 jobs:
   RegressionTesting:
+    name: regression
     timeout-minutes: 60
     runs-on: ubuntu-latest
     strategy:
@@ -17,37 +23,39 @@ jobs:
     steps:
 
     - name: 📘 Checkout Repo
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: 💿 Installing Node.js
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
-        node-version: 18
+        node-version: 20
 
-    - name: 💿Yarn Setup
-      uses: DerYeger/yarn-setup-action@master
-      with:
-        node-version: 18
+    - name: 🍙 Bun Setup
+      uses: oven-sh/setup-bun@v1
 
     - name: 🧬 Install Project Dependencies
       run: |
-        yarn
+        bun install
 
     - name: 🎭️ Installing Playwright And Browsers
       run: |
-        yarn pw:install
+        bun run pw:install
 
-    - name: ✅ 🧪Regression Tests Execution on ${{ matrix.browser }}
+    - name: 🎭️ Playwright Regression Test on ${{ matrix.browser }}
       run: |
-        yarn regression:${{ matrix.browser }}
+        bun run regression:${{ matrix.browser }}
+      env:
+        TRELLO_ENV_CI_BASEURL: ${{secrets.TRELLO_ENV_CI_BASEURL}}
+        TRELLO_API_CI_KEY: ${{secrets.TRELLO_API_CI_KEY}}
+        TRELLO_API_CI_TOKEN: ${{secrets.TRELLO_API_CI_TOKEN}}
 
     - name: 📊Generate Allure Report for ${{ matrix.browser }}
       if: always()
       run: |
-        yarn allure:gen:${{ matrix.browser }}
+        bun run allure:gen:${{ matrix.browser }}
 
     - name: 📡Upload Artifact - Allure Report for ${{ matrix.browser }}
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       if: always()
       with:
         name: allure-${{ matrix.browser }}-report
@@ -55,7 +63,7 @@ jobs:
         retention-days: 15
 
     - name: 📡Upload Artifact - Test Reports for ${{ matrix.browser }}
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       if: always()
       with:
         name: html-${{ matrix.browser }}-report
@@ -64,22 +72,31 @@ jobs:
 
     - name: 📦️ Set testExecKey for Jira XRay
       if: always()
+      id: setTestExecKey
       run: |
         if [[ "${{ matrix.browser }}" == "chrome" ]]; then
-          echo "TXID=GX3-1533" >> $GITHUB_ENV
+          echo "TXID=GX3-1533" >> $GITHUB_OUTPUT
         elif [[ "${{ matrix.browser }}" == "firefox" ]]; then
-          echo "TXID=GX3-1685" >> $GITHUB_ENV
+          echo "TXID=GX3-1685" >> $GITHUB_OUTPUT
         elif [[ "${{ matrix.browser }}" == "edge" ]]; then
-          echo "TXID=GX3-1686" >> $GITHUB_ENV
+          echo "TXID=GX3-1686" >> $GITHUB_OUTPUT
         elif [[ "${{ matrix.browser }}" == "iphone" ]]; then
-          echo "TXID=GX3-1687" >> $GITHUB_ENV
+          echo "TXID=GX3-1687" >> $GITHUB_OUTPUT
         fi
-    - name: 📦️ Use testExecKey
-      run: echo "The testExecKey is ${{ env.TXID }}"
 
-    - name: ✅Import Test Results to Xray
+    - name: ✅Check if XRAY_CLIENT is Defined
       if: always()
-      uses: mikepenz/xray-action@v2
+      run: |
+        if [[ -z "${{ secrets.XRAY_CLIENT_ID }}" ]]; then
+          echo "XRAY_CLIENT_ID is not set. Please set it in the repository secrets to enable Slack notifications."
+        fi
+        if [[ -z "${{ secrets.XRAY_CLIENT_SECRET }}" ]]; then
+          echo "XRAY_CLIENT_SECRET is not set. Please set it in the repository secrets to enable Slack notifications."
+        fi
+
+    - name: ✅Import Test Results to Xray TX -- ${{ env.TXID }} (${{ matrix.browser }})
+      if: env.XRAY_CLIENT != '' && env.XRAY_SECRET != ''
+      uses: mikepenz/xray-action@v3
       with:
         username: ${{secrets.XRAY_CLIENT_ID}}
         password: ${{secrets.XRAY_CLIENT_SECRET}}
@@ -87,41 +104,52 @@ jobs:
         testPaths: 'test-junit-report/${{ matrix.browser }}-importer-report.xml'
         testExecKey: ${{ env.TXID }} #* Este debería ser el TX predeterminado para este Pipeline de Regresión.
         projectKey: 'GX3'
+      env:
+        TXID: ${{ steps.setTestExecKey.outputs.TXID }}
+        XRAY_CLIENT: ${{ secrets.XRAY_CLIENT_SECRET }}
+        XRAY_SECRET: ${{ secrets.XRAY_CLIENT_SECRET }}
 
-  AriSlackNotification:
+  Ari-Slack-Notification:
     needs: [RegressionTesting]
+    if: always()
     runs-on: ubuntu-latest
     steps:
+    - name: 🔔Check if SLACK_WEBHOOK is Defined
+      run: |
+        if [[ -z "${{ secrets.SLACK_WEBHOOK }}" ]]; then
+          echo "SLACK_WEBHOOK is not set. Please set it in the repository secrets to enable Slack notifications."
+        fi
+
     - name: 🔔Slack Notification of Done
       if: always()
-      uses: rtCamp/action-slack-notify@v2.2.0
+      uses: rtCamp/action-slack-notify@v2
       env:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
         SLACK_USERNAME: Ari✨
-        SLACK_MESSAGE: ':test_tube: PLAYWRIGHT-BLACKHOLE: REGRESSION REPORT IMPORTED TO JIRA :rocket:'
-        SLACK_COLOR: ${{ job.status }}
+        SLACK_MESSAGE: ':test_tube: PLAYWRIGHT: REGRESSION RESULTS IMPORTED TO JIRA :rocket:'
+        SLACK_COLOR: ${{ needs.RegressionTesting.result }}
         SLACK_ICON: https://image.cdn2.seaart.ai/2023-12-06/clo9g0h4msbc73ac2sog/99e1abc36f32945cd4bacf5ee7448e96194545f7_high.webp
 
   Create-PullRequest:
-    needs: [RegressionTesting]
+    needs: [RegressionTesting, Ari-Slack-Notification]
     runs-on: ubuntu-latest
     steps:
 
     - name: 💻Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
-    - name: 🧬 Check for changes
-      id: changes
+    - name: 🧬 Check for changes (git diff main)
+      id: gitDiff
       run: |
         git fetch origin main
         DIFF=$(git diff --name-only origin/main)
         if [ "$DIFF" != "" ]; then
-          echo "::set-output name=changes::true"
+          echo "changes=true" >> $GITHUB_OUTPUT
         fi
 
     - name: 📦️ Create Pull Request
-      if: steps.changes.outputs.changes == 'true'
-      uses: actions/github-script@v6
+      if: steps.gitDiff.outputs.changes == 'true'
+      uses: actions/github-script@v7
       with:
         script: |
           const { repo, owner } = context.repo;

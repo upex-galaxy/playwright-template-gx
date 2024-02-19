@@ -2,12 +2,16 @@ import { defineConfig, devices } from '@playwright/test';
 import * as dotenv from 'dotenv';
 // See https://github.com/motdotla/dotenv
 dotenv.config();
+// Example using Setup/TearDown Precondition: https://playwright.dev/docs/test-global-setup-teardown
+export const STORAGE_STATE = 'tests/helper/auth/user.json';
+
+
 // See https://playwright.dev/docs/test-configuration.
 export default defineConfig({
 	// Test Repo Directory:
 	testDir: './tests',
 	/* Maximum time one test can run for. */
-	timeout: 20 * 1000,
+	timeout: 40 * 1000,
 	expect: {
 		/**
 		 * Maximum time expect() should wait for the condition to be met.
@@ -24,7 +28,7 @@ export default defineConfig({
 	/* Retry on CI only */
 	retries: process.env.CI ? 2 : 0,
 	/* Opt out of parallel tests on CI. Workers are kinda flaky! not prefer to use them */
-	workers: process.env.CI ? 1 : 1,
+	workers: process.env.CI ? 4 : 1,
 	/* Reporter to use. See https://playwright.dev/docs/test-reporters */
 	reporter: [
 		['./tests/custom-reporter.ts'],
@@ -50,6 +54,10 @@ export default defineConfig({
 	/* Configure projects for major browsers */
 	projects: [
 		{
+			name: 'setup',
+			testMatch: /.*\.(test)\.(setup)\.(js|ts)/,
+		},
+		{
 			name: 'chromium',
 			use: { ...devices['Desktop Chrome'], channel: 'chrome' },
 		},
@@ -66,6 +74,16 @@ export default defineConfig({
 		{
 			name: 'iphone',
 			use: { ...devices['iPhone 14 Pro'] },
+		},
+		{
+			name: 'super-precondition-example',
+			testMatch: /.*\.(test)\.(prc)\.(js|ts)/,
+			use: { 
+				...devices['Desktop Chrome'], 
+				channel: 'chrome', 
+				storageState: STORAGE_STATE,
+			},
+			dependencies: ['setup'],
 		},
 	],
 

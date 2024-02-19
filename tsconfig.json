@@ -5,6 +5,7 @@
 		"moduleResolution": "Node",
 		"resolveJsonModule": true,
 		"esModuleInterop": true,
+		"strict": true,
 		"types": ["node"],
 		"baseUrl": ".",
 		"paths": {
@@ -13,7 +14,8 @@
 			"@data/*": ["./tests/data/*"],
 			"@type/*": ["./tests/interfaces/*"],
 			"@api/*": ["./tests/apis/*"],
-			"@TestBase": ["./tests/pages/TestBase.ts"]
+			"@TestBase": ["./tests/pages/TestBase.ts"],
+			"@playwrightConfig": ["./playwright.config.ts"]
 		}
 	},
 	"exclude": ["node_modules"]
