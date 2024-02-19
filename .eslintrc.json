@@ -14,20 +14,21 @@
 	},
 	"plugins": ["@typescript-eslint", "only-warn", "prettier"],
 	"rules": {
+		"@typescript-eslint/consistent-type-imports": ["error"],
+		"@typescript-eslint/naming-convention": ["warn"],
+		"@typescript-eslint/no-floating-promises": ["error"],
+		"@typescript-eslint/no-unsafe-argument": ["warn"],
+		"@typescript-eslint/no-unsafe-assignment": ["warn"],
+		"arrow-spacing": ["warn", { "before": true, "after": true }],
+		"curly": ["error", "all"],
 		"indent": ["warn", "tab", { "SwitchCase": 1 }],
 		"linebreak-style": ["off"],
-		"space-before-blocks": ["warn"],
-		"eol-last": ["warn", "never"],
-		"space-before-function-paren": ["error", { "anonymous": "never", "named": "never", "asyncArrow": "always" }],
-		"arrow-spacing": ["warn", { "before": true, "after": true }],
+		"no-multi-spaces": ["warn"],
+		"no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 0 }],
+		"object-curly-spacing": ["warn", "always"],
 		"quotes": ["warn", "single"],
 		"semi": ["warn", "always"],
-		"no-multi-spaces": ["warn"],
-		"object-curly-spacing": ["warn", "always"],
-		"@typescript-eslint/no-floating-promises": ["error"],
-		"@typescript-eslint/no-unsafe-assignment": ["warn"],
-		"@typescript-eslint/no-unsafe-argument": ["warn"],
-		"@typescript-eslint/naming-convention": ["warn"],
-		"@typescript-eslint/consistent-type-imports": ["error"]
+		"space-before-blocks": ["warn"],
+		"space-before-function-paren": ["error", { "anonymous": "never", "named": "never", "asyncArrow": "always" }]
 	}
 }
