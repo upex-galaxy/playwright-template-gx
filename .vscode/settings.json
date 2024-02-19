@@ -56,6 +56,7 @@
 	"eslint.format.enable": true,
 	"eslint.validate": ["typescript", "javascript", "ts", "js"],
 	"explorer.fileNesting.enabled": true,
+	"explorer.compactFolders": false,
 	"files.autoSave": "onFocusChange",
 	"git.enableSmartCommit": true,
 	"javascript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets": true,

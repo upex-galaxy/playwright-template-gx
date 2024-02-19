@@ -2,24 +2,18 @@ import { test as driver } from '@playwright/test';
 import { SpaceLoginPage } from './SpaceLoginPage';
 import { SpaceProductPage } from './SpaceProductPage';
 import { SpaceCheckoutPage } from './SpaceCheckoutPage';
-import { TrelloBoards } from '@api/elyTrelloBoards';
 import { OrangeLoginPage } from './OrangeLoginPage';
-import { SpaceSearchPage } from './SpaceSearchPage';
 
 const test = driver.extend<{
+	orangeLoginPage: OrangeLoginPage; //? Esto Page es para un ejemplo usando el superPrecondition.
 	loginPage: SpaceLoginPage;
 	productPage: SpaceProductPage;
 	checkoutPage: SpaceCheckoutPage;
-	apiBoards: TrelloBoards;
-	orangeLoginPage: OrangeLoginPage;
-	searchPage: SpaceSearchPage;
 }>({
-	loginPage: async ({ page }, use) => await use(new SpaceLoginPage(page)),
-	searchPage: async ({ page }, use) => await use(new SpaceSearchPage(page)),
 	orangeLoginPage: async ({ page }, use) => await use(new OrangeLoginPage(page)),
+	loginPage: async ({ page }, use) => await use(new SpaceLoginPage(page)),
 	productPage: async ({ page }, use) => await use(new SpaceProductPage(page)),
 	checkoutPage: async ({ page }, use) => await use(new SpaceCheckoutPage(page)),
-	apiBoards: async ({ page }, use) => await use(new TrelloBoards(page)),
 });
 
 export { test };

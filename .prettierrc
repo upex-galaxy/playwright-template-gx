@@ -8,6 +8,6 @@
 	"trailingComma": "es5",
 	"bracketSameLine": true,
 	"proseWrap": "preserve",
-	"printWidth": 150,
+	"printWidth": 200,
 	"parser": "typescript"
 }

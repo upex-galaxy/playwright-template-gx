@@ -20,7 +20,7 @@
 		"@typescript-eslint/no-unsafe-argument": ["warn"],
 		"@typescript-eslint/no-unsafe-assignment": ["warn"],
 		"arrow-spacing": ["warn", { "before": true, "after": true }],
-		"curly": ["error", "all"],
+		"curly": ["error", "multi"],
 		"indent": ["warn", "tab", { "SwitchCase": 1 }],
 		"linebreak-style": ["off"],
 		"no-multi-spaces": ["warn"],
