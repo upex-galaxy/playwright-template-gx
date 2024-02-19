@@ -1,21 +1,20 @@
 import { type Locator, type Page, expect } from '@playwright/test';
-import { getByReactTool } from '@helper/testUtils';
 import * as dotenv from 'dotenv';
+import { ReactPage } from './ReactPage';
 dotenv.config();
 
 const actualUsername = process.env.CI ? 'User in CI' : process.env.SPACE_LOGIN_USERNAME;
 const actualPassword = process.env.CI ? 'Password in CI' : process.env.SPACE_LOGIN_PASSWORD;
 
-export class SpaceLoginPage {
-	page: Page;
+export class SpaceLoginPage extends ReactPage {
 	usernameInput: () => Locator;
 	passwordInput: () => Locator;
 	loginButton: () => Locator;
 
 	constructor(driver: Page) {
-		this.page = driver;
-		this.usernameInput = () => getByReactTool('input', this.page, { hasText: 'Username' }).locator('[role=input]');
-		this.passwordInput = () => getByReactTool('input', this.page, { hasText: 'Password' }).locator('[role=input]');
+		super(driver);
+		this.usernameInput = () => this.getByReactTool('input', this.page, { hasText: 'Username' }).locator('[role=input]');
+		this.passwordInput = () => this.getByReactTool('input', this.page, { hasText: 'Password' }).locator('[role=input]');
 		this.loginButton = () => this.page.locator('[form="login"]');
 	}
 

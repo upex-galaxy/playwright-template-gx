@@ -1,5 +1,5 @@
-import { Page, APIRequestContext, expect } from '@playwright/test';
-import { BoardsResponse } from '@type/elyTrelloApi';
+import { type Page, type APIRequestContext, expect } from '@playwright/test';
+import type { BoardsResponse } from '@type/elyTrelloApi';
 import * as dotenv from 'dotenv';
 dotenv.config();
 

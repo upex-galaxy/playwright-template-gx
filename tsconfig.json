@@ -1,11 +1,12 @@
 {
 	"compilerOptions": {
+		"esModuleInterop": true,
 		"module": "ESNext",
-		"target": "ESNext",
 		"moduleResolution": "Node",
 		"resolveJsonModule": true,
-		"esModuleInterop": true,
 		"strict": true,
+		"target": "ESNext",
+		"verbatimModuleSyntax": true,
 		"types": ["node"],
 		"baseUrl": ".",
 		"paths": {

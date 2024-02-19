@@ -4,6 +4,7 @@ import { SpaceProductPage } from './SpaceProductPage';
 import { SpaceCheckoutPage } from './SpaceCheckoutPage';
 import { TrelloBoards } from '@api/elyTrelloBoards';
 import { OrangeLoginPage } from './OrangeLoginPage';
+import { SpaceSearchPage } from './SpaceSearchPage';
 
 const test = driver.extend<{
 	loginPage: SpaceLoginPage;
@@ -11,8 +12,10 @@ const test = driver.extend<{
 	checkoutPage: SpaceCheckoutPage;
 	apiBoards: TrelloBoards;
 	orangeLoginPage: OrangeLoginPage;
+	searchPage: SpaceSearchPage;
 }>({
 	loginPage: async ({ page }, use) => await use(new SpaceLoginPage(page)),
+	searchPage: async ({ page }, use) => await use(new SpaceSearchPage(page)),
 	orangeLoginPage: async ({ page }, use) => await use(new OrangeLoginPage(page)),
 	productPage: async ({ page }, use) => await use(new SpaceProductPage(page)),
 	checkoutPage: async ({ page }, use) => await use(new SpaceCheckoutPage(page)),
