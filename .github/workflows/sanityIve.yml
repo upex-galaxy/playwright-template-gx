@@ -1,0 +1,68 @@
+name: 🧪Playwright Ive Sanity Testing
+run-name: ${{github.actor}}👨🏻‍🔬 ran TestSuite in ${{github.ref_name}}
+on:
+  push:
+    branches: ['test/GX3-1921/fillform-submit'] #! Cambia "TuBranchAqui" por el nombre de tu rama de tarea.
+
+jobs:
+  TestSuite:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+    - name: 📘 Checkout Repo
+      uses: actions/checkout@v3
+
+    - name: 💿 Installing Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
+
+    - name: 💿Yarn Setup
+      uses: DerYeger/yarn-setup-action@master
+      with:
+        node-version: 18
+
+    - name: 🧬 Install Project Dependencies
+      run: |
+        yarn
+
+    - name: 🎭️ Installing Playwright And Browsers
+      run: |
+        yarn pw:install
+
+    - name: ✅ 🧪Test Suite Execution
+      run: | #todo: EDITAR AQUÍ EL ARCHIVO SUITE A EJECUTAR:
+        yarn test tests/specs/elements/form_GX3-1921.test.ts
+
+    - name: 📊Generate Allure Report
+      run: |
+        yarn allure:open
+
+    - name: 📡Upload Artifact - Allure Report
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: test-report
+        path: allure-report
+        retention-days: 15
+
+    - name: ✅Import Test Results to Xray
+      if: always()
+      uses: mikepenz/xray-action@v2
+      with:
+        username: ${{secrets.XRAY_CLIENT_ID}}
+        password: ${{secrets.XRAY_CLIENT_SECRET}}
+        testFormat: 'junit'
+        testPaths: 'test-junit-report/main-importer-report.xml'
+        testExecKey: 'GX3-1928' #!Cambiar a tu TX correspondiente.
+        projectKey: 'GX3' #!Cambiar a tu Proyecto Level correspondiente.
+
+    - name: 🔔Slack Notification of Done
+      if: always()
+      uses: rtCamp/action-slack-notify@v2.2.0
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_USERNAME: Ari✨
+        SLACK_MESSAGE: ':test_tube: BLACKHOLE Playwright Project -- Test Execution is Done and updated in Jira :rocket:'
+        SLACK_COLOR: ${{ job.status }}
+        SLACK_ICON: https://image.cdn2.seaart.ai/2023-12-06/clo9g0h4msbc73ac2sog/99e1abc36f32945cd4bacf5ee7448e96194545f7_high.webp
