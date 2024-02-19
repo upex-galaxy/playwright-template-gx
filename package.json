@@ -45,7 +45,7 @@
   "type": "module",
   "devDependencies": {
     "@alex_neo/playwright-azure-reporter": "^1.8.0",
-    "@playwright/test": "^1.39.0",
+    "@playwright/test": "^1.41.2",
     "@types/lodash": "^4.14.202",
     "@types/node": "20.9.0",
     "@typescript-eslint/eslint-plugin": "6.11.0",

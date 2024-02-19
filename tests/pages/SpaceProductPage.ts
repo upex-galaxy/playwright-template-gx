@@ -1,8 +1,8 @@
 import type { Locator, Page } from '@playwright/test';
-import { getByReactTool } from '@helper/testUtils';
 import type { ProductCardData } from '@type/spaceBeyongTypes';
+import { ReactPage } from './ReactPage';
 
-export class SpaceProductPage {
+export class SpaceProductPage extends ReactPage {
 	page: Page;
 	productCards: () => Locator;
 	destinyTitle: () => Locator;
@@ -12,8 +12,9 @@ export class SpaceProductPage {
 	destinyBookBtn: () => Locator;
 
 	constructor(driver: Page) {
+		super(driver);
 		this.page = driver;
-		this.productCards = () => getByReactTool('card', this.page);
+		this.productCards = () => this.getByReactTool('card', this.page);
 		//* Estas son las propiedades de cada Card (puedes combinarlo con productCards()
 		this.destinyTitle = () => this.page.locator('h5'); //todo: combine with productCard
 		this.destinyByTitle = (destinyTitle: string) => this.page.locator('h5', { hasText: destinyTitle });
