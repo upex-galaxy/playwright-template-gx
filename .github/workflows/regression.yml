@@ -98,15 +98,15 @@ jobs:
       if: env.XRAY_CLIENT != '' && env.XRAY_SECRET != ''
       uses: mikepenz/xray-action@v3
       with:
-        username: ${{secrets.XRAY_CLIENT_ID}}
-        password: ${{secrets.XRAY_CLIENT_SECRET}}
+        username: ${{ env.XRAY_CLIENT }}
+        password: ${{ env.XRAY_SECRET }}
         testFormat: 'junit'
         testPaths: 'test-junit-report/${{ matrix.browser }}-importer-report.xml'
         testExecKey: ${{ env.TXID }} #* Este debería ser el TX predeterminado para este Pipeline de Regresión.
         projectKey: 'GX3'
       env:
         TXID: ${{ steps.setTestExecKey.outputs.TXID }}
-        XRAY_CLIENT: ${{ secrets.XRAY_CLIENT_SECRET }}
+        XRAY_CLIENT: ${{ secrets.XRAY_CLIENT_ID }}
         XRAY_SECRET: ${{ secrets.XRAY_CLIENT_SECRET }}
 
   Ari-Slack-Notification:
