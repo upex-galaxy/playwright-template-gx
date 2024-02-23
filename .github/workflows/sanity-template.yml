@@ -41,33 +41,25 @@ jobs:
     - name: ✅ 🧪Test Suite Execution
       run: | #todo: EDITAR AQUÍ EL ARCHIVO SUITE A EJECUTAR:
         bun run test:ci tests/elements/uploadDownload_example.test.ts
+      #? Si usas el script del repo "test:ci" vas a correr tus tests en 4 diferentes navegadores.
+      #? Si usas el script del repo "test" vas a correr tus tests en 1 solo navegador (chromium).
 
     - name: 📊Generate Allure Report
       run: |
         bun run allure:open
 
-    - name: ✅Check if XRAY_CLIENT is Defined
-      if: always()
-      run: |
-        if [[ -z "${{ secrets.XRAY_CLIENT_ID }}" ]]; then
-          echo "XRAY_CLIENT_ID is not set. Please set it in the repository secrets to enable Slack notifications."
-        fi
-        if [[ -z "${{ secrets.XRAY_CLIENT_SECRET }}" ]]; then
-          echo "XRAY_CLIENT_SECRET is not set. Please set it in the repository secrets to enable Slack notifications."
-        fi
-
     - name: ✅Import Test Results to Xray
       if: env.XRAY_CLIENT != '' && env.XRAY_SECRET != ''
       uses: mikepenz/xray-action@v3
       with:
-        username: ${{secrets.XRAY_CLIENT_ID}}
-        password: ${{secrets.XRAY_CLIENT_SECRET}}
+        username: ${{ env.XRAY_CLIENT }}
+        password: ${{ env.XRAY_SECRET }}
         testFormat: 'junit'
         testPaths: 'test-junit-report/main-importer-report.xml'
         testExecKey: 'GX3-1533' #!Cambiar a tu TX correspondiente.
         projectKey: 'GX3' #!Cambiar a tu Proyecto Level correspondiente.
       env:
-        XRAY_CLIENT: ${{ secrets.XRAY_CLIENT_SECRET }}
+        XRAY_CLIENT: ${{ secrets.XRAY_CLIENT_ID }}
         XRAY_SECRET: ${{ secrets.XRAY_CLIENT_SECRET }}
 
     - name: 📡Upload Artifact - Allure Report
@@ -77,13 +69,6 @@ jobs:
         name: test-report
         path: allure-report
         retention-days: 15
-
-    - name: 🔔Check if SLACK_WEBHOOK is Defined
-      if: always()
-      run: |
-        if [[ -z "${{ secrets.SLACK_WEBHOOK }}" ]]; then
-          echo "SLACK_WEBHOOK is not set. Please set it in the repository secrets to enable Slack notifications."
-        fi
 
     - name: 🔔Slack Notification of Done
       if: env.SLACK_WEBHOOK != ''

@@ -53,10 +53,6 @@ export default defineConfig({
 	/* Configure projects for major browsers */
 	projects: [
 		{
-			name: 'setup',
-			testMatch: /.*\.(test)\.(setup)\.(js|ts)/,
-		},
-		{
 			name: 'chromium',
 			use: { ...devices['Desktop Chrome'], channel: 'chrome' },
 		},
@@ -74,16 +70,21 @@ export default defineConfig({
 			name: 'iphone',
 			use: { ...devices['iPhone 14 Pro'] },
 		},
-		{
-			name: 'super-precondition-example',
-			testMatch: /.*\.(test)\.(prc)\.(js|ts)/,
-			use: { 
-				...devices['Desktop Chrome'], 
-				channel: 'chrome', 
-				storageState: STORAGE_STATE,
-			},
-			dependencies: ['setup'],
-		},
+		//? Si quieres aplicar una "Global Setup"...
+		//? para que, por ejemplo, puedas usar 1 solo Login para el resto de las pruebas que corran, puedes hacerlo así:
+		// {
+		// 	name: 'setup',
+		// 	testMatch: /.*\.(test)\.(setup)\.(js|ts)/,
+		// },
+		// {
+		// 	name: 'nombre-del-browser',
+		// 	use: { 
+		// 		...devices['Desktop Chrome'], 
+		// 		channel: 'chrome', 
+		// 		storageState: STORAGE_STATE, // Requerido para guarde la sesión del setup test y lo use en el resto de los tests
+		// 	},
+		// 	dependencies: ['setup'], // Simplemente agregando esta opción a cualquier project, lo aplicas.
+		// },
 	],
 
 	/* Folder for test artifacts such as screenshots, videos, traces, etc. */
