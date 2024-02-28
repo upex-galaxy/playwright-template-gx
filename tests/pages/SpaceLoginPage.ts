@@ -13,8 +13,8 @@ export class SpaceLoginPage extends ReactPage {
 
 	constructor(driver: Page) {
 		super(driver);
-		this.usernameInput = () => this.getByReactTool('input', this.page, { hasText: 'Username' }).locator('[role=input]');
-		this.passwordInput = () => this.getByReactTool('input', this.page, { hasText: 'Password' }).locator('[role=input]');
+		this.usernameInput = () => this.getByReactTool('input', { hasText: 'Username' }).locator('[role=input]');
+		this.passwordInput = () => this.getByReactTool('input', { hasText: 'Password' }).locator('[role=input]');
 		this.loginButton = () => this.page.locator('[form="login"]');
 	}
 

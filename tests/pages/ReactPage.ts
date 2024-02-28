@@ -7,8 +7,8 @@ export class ReactPage {
 		this.page = driver;
 	}
 
-	getByReactTool(dataId: string, page: Page, options?: { hasText: string }) {
-		if (options) return this.page.locator(`[data-react-toolbox=${dataId}]`, { hasText: options.hasText });
+	getByReactTool(dataId: string, options?: { hasText: string }) {
+		if (options) return this.page.locator(`[data-react-toolbox=${dataId}]`, options);
 		else return this.page.locator(`[data-react-toolbox=${dataId}]`);
 	}
 }
