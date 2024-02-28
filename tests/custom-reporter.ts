@@ -4,14 +4,12 @@ import type { FullConfig, FullResult, Reporter, Suite, TestCase, TestError, Test
 class MyReporter implements Reporter {
 	private startTime: number;
 	private endTime: number;
-	private testResults: testAttr[];
+	private testResults: TestAttr[];
 	private retryCount: number;
 	private totalRetries: number;
 	private runningTests: TestCase[];
 	private parallelTests: boolean;
 	private totalTests: number;
-	private runningTestCase: TestCase;
-	private testNumber: number;
 
 	constructor() {
 		this.startTime = 0;
@@ -43,26 +41,28 @@ class MyReporter implements Reporter {
 
 	onTestBegin(test: TestCase) {
 		this.totalRetries = test.retries; // 2
-		this.runningTestCase = this.runningTests.find(({ id }) => id === test.id);
-		const testNumber = this.runningTests.indexOf(this.runningTestCase) + 1;
+		const runningTestFound = this.runningTests.find(({ id }) => id === test.id);
+		if(!runningTestFound) throw new Error('Test not found in runningTests');
+		const runningTestCase = runningTestFound;
+		const testNumber = this.runningTests.indexOf(runningTestCase) + 1;
 		let testWorker = '';
 		if (this.parallelTests) testWorker = ` (worker: ${test.results[0].workerIndex + 1})`;
-		if (test.expectedStatus === 'skipped') {
-			console.log('\n\x1b[90m%s\x1b[0m', `🔧${testWorker} Skipped Test [${testNumber}/${this.totalTests}] => ${this.runningTestCase.title}`);
-		} else {
-			const testRetry = this.runningTestCase.results[0].retry;
+		if (test.expectedStatus === 'skipped') 
+			console.log('\n\x1b[90m%s\x1b[0m', `🔧${testWorker} Skipped Test [${testNumber}/${this.totalTests}] => ${runningTestCase.title}`);
+		else {
+			const testRetry = runningTestCase.results[0].retry;
 			if (testRetry === 0)
 				console.log(
 					'\n\x1b[34m%s\x1b[0m',
-					`🧪${testWorker} Running Test [${testNumber}/${this.totalTests}] => ${this.runningTestCase.title}`
+					`🧪${testWorker} Running Test [${testNumber}/${this.totalTests}] => ${runningTestCase.title}`
 				);
-			if (testRetry >= 1) {
+			if (testRetry >= 1) 
 				console.log(
 					'\n\x1b[34m%s\x1b[0m',
-					`🧪${testWorker} Running Test [${testNumber}/${this.totalTests}] => ${this.runningTestCase.title}`,
+					`🧪${testWorker} Running Test [${testNumber}/${this.totalTests}] => ${runningTestCase.title}`,
 					`💫 Retry #${testRetry}`
 				);
-			}
+			
 		}
 		const testData = {
 			testID: test.id,
@@ -85,6 +85,7 @@ class MyReporter implements Reporter {
 
 	onStepEnd(test: TestCase, result: TestResult, step: TestStep) {
 		const testRun = this.testResults.find(({ testID }) => testID === test.id);
+		if(!testRun) throw new Error('Test not found in testResults');
 		const testRunNumber = `[${testRun.testNumber}/${this.totalTests}]`;
 		const testName = this.parallelTests ? ` -- ${testRunNumber}${test.title}` : '';
 		test.expectedStatus;
@@ -92,16 +93,16 @@ class MyReporter implements Reporter {
 			console.group();
 			if (step.error) {
 				console.log('\x1b[31m%s\x1b[0m', `---- step failed 🔴 [${step.duration}ms]${testName}`);
-				if (step.error?.location) console.log('\x1b[31m%s\x1b[0m', '---- 🔎 Located in:', step.error?.location);
-				if (step.error?.snippet) {
+				if (step.error.location) console.log('\x1b[31m%s\x1b[0m', '---- 🔎 Located in:', step.error.location);
+				if (step.error.snippet) {
 					console.log('\x1b[31m%s\x1b[0m', '---- 🔴 Snippet:');
-					console.log(step.error?.snippet);
+					console.log(step.error.snippet);
 				}
-				if (step.error?.message) console.log('\x1b[31m%s\x1b[0m', '---- 🔴 Error:', step.error?.message);
+				if (step.error.message) console.log('\x1b[31m%s\x1b[0m', '---- 🔴 Error:', step.error.message);
 				console.log('\x1b[31m%s\x1b[0m', '---- ✔️ File:', step.titlePath()[2]);
-			} else {
+			} else 
 				console.log('\x1b[32m%s\x1b[0m', `---- step passed ✅ [${step.duration}ms]${testName}`);
-			}
+			
 			console.groupEnd();
 			console.groupEnd();
 		}
@@ -109,8 +110,9 @@ class MyReporter implements Reporter {
 
 	onTestEnd(test: TestCase, result: TestResult) {
 		const testRun = this.testResults.find(({ testID }) => testID === test.id);
+		if(!testRun) throw new Error('Test not found in testResults');
 		const testRunNumber = `[${testRun.testNumber}/${this.totalTests}]`;
-		const testName = this.parallelTests ? ` -- ${testRunNumber}${test.title}` : '';
+		const testName = this.parallelTests ? ` -- ${testRunNumber} ${test.title}` : '';
 		console.group();
 		if (result.status === 'passed') {
 			console.log('\x1b[32m%s\x1b[0m', `---- 🔎 Test Output: ✅ PASSED${testName}`);
@@ -118,45 +120,45 @@ class MyReporter implements Reporter {
 		}
 		if (result.status === 'failed') {
 			console.log('\x1b[31m%s\x1b[0m', `---- 🔎 Test Output: ❌ FAILED${testName}`);
-			if (result.error.message) console.log('\x1b[31m%s\x1b[0m', '---- 🔴 Error:', result.error?.message);
-			if (result.error?.value) console.log('\x1b[31m%s\x1b[0m', '---- 🔴 Value:', result.error?.value);
+			if (result.error?.message) console.log('\x1b[31m%s\x1b[0m', '---- 🔴 Error:', result.error.message);
+			if (result.error?.value) console.log('\x1b[31m%s\x1b[0m', '---- 🔴 Value:', result.error.value);
 			if (result.error?.snippet) {
 				console.log('\x1b[31m%s\x1b[0m', '---- 🔴 Snippet:');
 				console.group();
-				console.log(result.error?.snippet);
+				console.log(result.error.snippet);
 				console.groupEnd();
 			}
-			if (result.error?.location) console.log('\x1b[31m%s\x1b[0m', '---- 🔎 Located in:', result.error?.location);
+			if (result.error?.location) console.log('\x1b[31m%s\x1b[0m', '---- 🔎 Located in:', result.error.location);
 			if (test.titlePath()[2]) console.log('\x1b[31m%s\x1b[0m', '---- ✔️ File:', test.titlePath()[2]);
 			this.retryCount = result.retry + 1;
 			if (this.retryCount > this.totalRetries) this.retryCount = 0; // maximum retries reached, reset retry count
 		}
 		if (result.status === 'timedOut') {
 			console.log('\x1b[31m%s\x1b[0m', `---- 🔎 Test Output: ⏱️ TimedOut${testName}`);
-			if (result.error.message) console.log('\x1b[31m%s\x1b[0m', '---- 🔴 Error:', result.error?.message);
-			if (result.error?.value) console.log('\x1b[31m%s\x1b[0m', '---- 🔴 Value:', result.error?.value);
+			if (result.error?.message) console.log('\x1b[31m%s\x1b[0m', '---- 🔴 Error:', result.error.message);
+			if (result.error?.value) console.log('\x1b[31m%s\x1b[0m', '---- 🔴 Value:', result.error.value);
 			if (result.error?.snippet) {
 				console.log('\x1b[31m%s\x1b[0m', '---- 🔴 Snippet:');
 				console.group();
-				console.log(result.error?.snippet);
+				console.log(result.error.snippet);
 				console.groupEnd();
 			}
-			if (result.error?.location) console.log('\x1b[31m%s\x1b[0m', '---- 🔎 Located in:', result.error?.location);
+			if (result.error?.location) console.log('\x1b[31m%s\x1b[0m', '---- 🔎 Located in:', result.error.location);
 			if (test.titlePath()[2]) console.log('\x1b[31m%s\x1b[0m', '---- ✔️ File:', test.titlePath()[2]);
 			this.retryCount = result.retry + 1;
 			if (this.retryCount > this.totalRetries) this.retryCount = 0; // maximum retries reached, reset retry count
 		}
 		if (result.status === 'interrupted') {
 			console.log('\x1b[31m%s\x1b[0m', `---- 🔎 Test Output: ⏱⚠️ INTERRUPTED${testName}`);
-			if (result.error.message) console.log('\x1b[31m%s\x1b[0m', '---- 🔴 Error:', result.error?.message);
-			if (result.error?.value) console.log('\x1b[31m%s\x1b[0m', '---- 🔴 Value:', result.error?.value);
+			if (result.error?.message) console.log('\x1b[31m%s\x1b[0m', '---- 🔴 Error:', result.error.message);
+			if (result.error?.value) console.log('\x1b[31m%s\x1b[0m', '---- 🔴 Value:', result.error.value);
 			if (result.error?.snippet) {
 				console.log('\x1b[31m%s\x1b[0m', '---- 🔴 Snippet:');
 				console.group();
-				console.log(result.error?.snippet);
+				console.log(result.error.snippet);
 				console.groupEnd();
 			}
-			if (result.error?.location) console.log('\x1b[31m%s\x1b[0m', '---- 🔎 Located in:', result.error?.location);
+			if (result.error?.location) console.log('\x1b[31m%s\x1b[0m', '---- 🔎 Located in:', result.error.location);
 			if (test.titlePath()[2]) console.log('\x1b[31m%s\x1b[0m', '---- ✔️ File:', test.titlePath()[2]);
 			this.retryCount = result.retry + 1;
 			if (this.retryCount > this.totalRetries) this.retryCount = 0; // maximum retries reached, reset retry count
@@ -171,14 +173,14 @@ class MyReporter implements Reporter {
 	onStdOut(chunk: string | Buffer, test: void | TestCase, result: void | TestResult) {
 		console.group();
 		if (this.runningTests.length === 1) console.log(chunk);
-		if (result && result.errors?.length > 0) console.log(result.errors);
+		if (result && result.errors.length > 0) console.log(result.errors);
 		console.groupEnd();
 	}
 
 	onStdErr(chunk: string | Buffer, test: void | TestCase, result: void | TestResult): void {
 		console.group();
 		console.log(chunk);
-		if (result && result.errors?.length > 0) console.log(result.errors);
+		if (result && result.errors.length > 0) console.log(result.errors);
 		console.groupEnd();
 	}
 
@@ -202,13 +204,15 @@ class MyReporter implements Reporter {
 		const results = {
 			passed: allTestsPassed,
 			failed: executionFailed,
-			timedOut: timedOut,
+			timedout: timedOut,
 			interrupted: interrupted,
 		};
 		console.log('\n\x1b[43m\x1b[30m%s\x1b[0m', '📊 TEST REPORT SUMMARY:', '\n');
 		console.group();
 		this.testResults.forEach((test) => {
-			const durationDecimal = (test.testDuration = test.testDuration / 1000);
+			const duration = test.testDuration;
+			if(!duration) throw new Error('Test Duration is not defined');
+			const durationDecimal = (test.testDuration = duration / 1000);
 			if (test.testStatus === 'passed')
 				console.log('\x1b[32m%s\x1b[0m', test.testStatus, '✅', test.testNumber, '🧪', test.testName, durationDecimal, 's');
 			if (test.testStatus === 'failed')
@@ -220,19 +224,20 @@ class MyReporter implements Reporter {
 		});
 		console.groupEnd();
 		console.log('\n\x1b[1m\x1b[0m', '⏰ Test Execution Ended in', parseFloat(duration.toFixed(2)), 'seconds.');
-		const allTestOutput = results[result.status];
-		if (allTestOutput === allTestsPassed) {
+		const resultStatus = result.status;
+		const allTestOutput = results[resultStatus];
+		if (allTestOutput === allTestsPassed) 
 			console.log('\x1b[1m\x1b[37m%s\x1b[0m\x1b[30m\x1b[102m%s\x1b[0m', '🚀 Overall Output: ✅ ', allTestOutput);
-		}
-		if (allTestOutput === executionFailed) {
+		
+		if (allTestOutput === executionFailed) 
 			console.log('\x1b[1m\x1b[37m%s\x1b[0m\x1b[1m\x1b[37m\x1b[41m%s\x1b[0m', '🚀 Overall Output: 🔴 ', allTestOutput);
-		}
-		if (allTestOutput === timedOut) {
+		
+		if (allTestOutput === timedOut) 
 			console.log('\x1b[1m\x1b[37m%s\x1b[0m\x1b[1m\x1b[37m\x1b[41m%s\x1b[0m', '🚀 Overall Output: ⏱️ ', allTestOutput);
-		}
-		if (allTestOutput === interrupted) {
+		
+		if (allTestOutput === interrupted) 
 			console.log('\x1b[1m\x1b[37m%s\x1b[0m\x1b[1m\x1b[37m\x1b[41m%s\x1b[0m', '🚀 Overall Output: ⚠️ ', allTestOutput);
-		}
+		
 		console.log('\x1b[0m');
 	}
 	// onExit(): Promise<void> {
@@ -241,7 +246,7 @@ class MyReporter implements Reporter {
 
 export default MyReporter;
 
-type testAttr = {
+type TestAttr = {
 	testID: string;
 	testNumber: number;
 	testName: string;

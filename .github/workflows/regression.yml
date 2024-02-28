@@ -44,10 +44,6 @@ jobs:
     - name: 🎭️ Playwright Regression Test on ${{ matrix.browser }}
       run: |
         bun run regression:${{ matrix.browser }}
-      env:
-        TRELLO_ENV_CI_BASEURL: ${{secrets.TRELLO_ENV_CI_BASEURL}}
-        TRELLO_API_CI_KEY: ${{secrets.TRELLO_API_CI_KEY}}
-        TRELLO_API_CI_TOKEN: ${{secrets.TRELLO_API_CI_TOKEN}}
 
     - name: 📊Generate Allure Report for ${{ matrix.browser }}
       if: always()
@@ -84,29 +80,19 @@ jobs:
           echo "TXID=GX3-1687" >> $GITHUB_OUTPUT
         fi
 
-    - name: ✅Check if XRAY_CLIENT is Defined
-      if: always()
-      run: |
-        if [[ -z "${{ secrets.XRAY_CLIENT_ID }}" ]]; then
-          echo "XRAY_CLIENT_ID is not set. Please set it in the repository secrets to enable Slack notifications."
-        fi
-        if [[ -z "${{ secrets.XRAY_CLIENT_SECRET }}" ]]; then
-          echo "XRAY_CLIENT_SECRET is not set. Please set it in the repository secrets to enable Slack notifications."
-        fi
-
     - name: ✅Import Test Results to Xray TX -- ${{ env.TXID }} (${{ matrix.browser }})
       if: env.XRAY_CLIENT != '' && env.XRAY_SECRET != ''
       uses: mikepenz/xray-action@v3
       with:
-        username: ${{secrets.XRAY_CLIENT_ID}}
-        password: ${{secrets.XRAY_CLIENT_SECRET}}
+        username: ${{ env.XRAY_CLIENT }}
+        password: ${{ env.XRAY_SECRET }}
         testFormat: 'junit'
         testPaths: 'test-junit-report/${{ matrix.browser }}-importer-report.xml'
         testExecKey: ${{ env.TXID }} #* Este debería ser el TX predeterminado para este Pipeline de Regresión.
         projectKey: 'GX3'
       env:
         TXID: ${{ steps.setTestExecKey.outputs.TXID }}
-        XRAY_CLIENT: ${{ secrets.XRAY_CLIENT_SECRET }}
+        XRAY_CLIENT: ${{ secrets.XRAY_CLIENT_ID }}
         XRAY_SECRET: ${{ secrets.XRAY_CLIENT_SECRET }}
 
   Ari-Slack-Notification:
@@ -114,14 +100,9 @@ jobs:
     if: always()
     runs-on: ubuntu-latest
     steps:
-    - name: 🔔Check if SLACK_WEBHOOK is Defined
-      run: |
-        if [[ -z "${{ secrets.SLACK_WEBHOOK }}" ]]; then
-          echo "SLACK_WEBHOOK is not set. Please set it in the repository secrets to enable Slack notifications."
-        fi
 
     - name: 🔔Slack Notification of Done
-      if: always()
+      if: env.SLACK_WEBHOOK != ''
       uses: rtCamp/action-slack-notify@v2
       env:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
