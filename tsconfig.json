@@ -9,7 +9,6 @@
 		"strictPropertyInitialization": true,
 		"noUnusedLocals": true,
 		"verbatimModuleSyntax": true,
-		"lib": ["ESNext", "DOM"]
 		"types": ["node"],
 		"baseUrl": ".",
 		"paths": {
