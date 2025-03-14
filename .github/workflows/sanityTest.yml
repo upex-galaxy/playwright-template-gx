@@ -1,4 +1,3 @@
-#*🧙🏻‍♂️ Ahora puedes usar este PIPELINE directamente desde GitHub Actions!
 #! NO NECESITAS MODIFICAR NADA de este archivo...
 #*🚀 Solo necesitas configurar las variables de entorno, keys de Jira y tu ruta de archivo de prueba a ejecutar en el Panel "Run workflow" de GitHub Actions
 #? 🧪 Este PIPELINE ejecutará tus pruebas y subirá los resultados a Jira XRay
@@ -9,22 +8,13 @@ on:
   #* manual trigger:
   workflow_dispatch:
     inputs:
-      system:
-        description: 🚀Select the OS
-        required: true
-        default: 'ubuntu-latest'
-        type: choice
-        options:
-        - ubuntu-latest
-        - ubuntu-22.04
-        - macos-latest
-        - windows-latest
       environment:
         description: 🚀Select the Test Environment
         required: true
         default: 'QA'
         type: choice
-        options: #? Orden de Deployments...
+        options:
+        #? Orden de Deployments...
         - DEV #? donde los developers work
         - SANDBOX #? donde los QA realizan smoke y exploratory testing.
         - QA #? donde los QA realizan smoke, sanity y regression testing.
@@ -32,30 +22,15 @@ on:
         - UAT #? donde los beta testers realizan acceptance testing.
         - PROD #? donde los usuarios finales usan la App.
       test_run:
-        description: 🚀Select the Test Suite to Run
+        description: 🚀Enter the Test Suite to Run
         required: true
-        default: '<ingresa aquí el path Posix de tu test>' #! No modificar, esto es solo un ejemplo.
+        default: 'ejemplo: **/checkout.test.ts' #! No modificar, esto es solo un ejemplo.
         type: string
-      xray_tx:
-        description: 🚀Enter the Test Execution ID
-        required: true
-        default: 'GX3-4773' #! No modificar, esto es solo un ejemplo.
-        type: string
-      xray_project:
-        description: 🚀Select the Project Key
-        required: true
-        default: 'GX3' #! No modificar, esto es solo un ejemplo.
-        type: choice
-        options:
-        - GX1
-        - GX2
-        - GX3
-        - GX4
 
 jobs:
   SanityTest:
     #? El Pipeline "Sanity" es una estrategia de prueba perfecta para verificar que un Módulo entero de la App o una funcionalidad específica funcionen como se espera. Se puede realizar pruebas de cualquier nivel (Unit, Integration, E2E) para esta estrategia de pruebas. También se usa como "Story Testing" para ejecuciones de pruebas de cobertura de US (importar resultados a Jira XRay).
-    runs-on: ${{ github.event.inputs.system }}
+    runs-on: ubuntu-latest
     environment:
       name: ${{ github.event.inputs.environment }}
     env:
@@ -94,18 +69,6 @@ jobs:
         path: test-results
         retention-days: 15
 
-    - name: ✅ Import Test Results to Xray
-      if: always()
-      uses: mikepenz/xray-action@v3
-      with: #OPCIONES PARA IMPORTAR LOS RESULTADOS DE PRUEBA A JIRA XRAY:
-        username: ${{ secrets.XRAY_CLIENT_ID}}
-        password: ${{ secrets.XRAY_CLIENT_SECRET}}
-        testFormat: 'junit' #! NO CAMBIAR
-        testPaths: 'test-junit-report/chrome-importer-report.xml' #! NO CAMBIAR
-        testExecKey: ${{ github.event.inputs.xray_tx }} #! NO CAMBIAR
-        projectKey: ${{ github.event.inputs.xray_project }} #! NO CAMBIAR
-        testEnvironments: ${{ github.event.inputs.environment }}
-
     #* ------- Allure Report Build -------
     - name: 📊 Get Allure Report History
       uses: actions/checkout@v4
@@ -119,30 +82,34 @@ jobs:
       uses: simple-elf/allure-report-action@master
       if: always()
       with:
-        gh_pages: gh-pages #? the directory of checkout branch (gh-pages) where the previous allure data will be copied.
-        #? this copied data will be combined with the actual allure-report data and generate the allure-history data.
-        subfolder: sanity/${{ github.event.inputs.xray_tx }} #? the subfolder where the deployed data (allure-history) will be placed. 
-        #? If destination_dir is not specified, this subfolder will be saved to the root of the branch. 
-        #? Note: About the subfolder: Use this if you want to split the reports as different types (i.g smoke, regression, smoke, etc) 
+        gh_pages: gh-pages #? the directory name to which the previous data was downloaded. Must be the same as the path value from the previous step.
+        #? this copied data will be combined with the actual allure-report data to generate a new allure-history data to override the "Allure Dir".
+        subfolder: ${{ env.TEST_ENV }}/sanity #* IMPORTANT FIELD! Doing This, it will create a the "NEW github pages url" i.g /beta/sanity
+        #? Note -> This subfolder is where "Allure Dir" data (allure-history) will be located. This is the path to be deployed to the gh-pages branch.
+        #? Note -> Use this subfolder if you want to split the reports as different test execution plans (i.g sanity, regression, smoke, etc)
+        #? Note -> If destination_dir is not specified in th next Step (Deploy Github Pages), this subfolder will be saved to the root of the branch!!
         allure_results: reports/allure-results #? path of the actual allure-results generated by the tests.
         allure_report: allure-report #? path of the allure-report generated by the tests to be combined with the previous data.
-        allure_history: allure-history #? path of the allure-history to be generated by the action.
-        keep_reports: 15 #? the number of reports to keep in the allure-history.
+        allure_history: allure-history #* This folder in the Repo root will be combined with given "subfolder" path in order to place the new truly "Allure Report" data!
+        keep_reports: 15
 
     - name: 🚀 Deploy Allure Report to GitHub Pages
       if: always()
       uses: peaceiris/actions-gh-pages@v4
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_branch: gh-pages #? the branch used for the GitHub Pages content.
-        # destination_dir: ${{ github.event.inputs.environment }} #? this is the directory inside the gh-pages branch where the allure-history will be saved.
-        #? Note: If you use a destination_dir i.g 'staging' AND provide a subfolder i.g 'smoke' in the Build Allure Report step, the allure-history will be published on the 'staging/smoke' directory.
-        publish_dir: allure-history #? the directory to be published. Must be the same as the allure_history value from the Build Allure Report step
-        keep_files: true #? this is required to work properly with the subfolder option in the Build Allure Report step.
+        publish_branch: gh-pages #? the branch used for the GitHub Pages content. Where to deploy the publish_dir.
+        publish_dir: allure-history/${{ env.TEST_ENV }}/sanity #* IMPORTANT: The NEW "Allure Report" path to be taken for Deployment. Should be {allure_history + subfolder}.
+        destination_dir: ${{ env.TEST_ENV }}/sanity #* IMPORTANT: Dir inside the gh-pages branch where the Deployment will be placed. Should be {subfolder}.
+        #? the allure-history will be located in the deploy destination_dir "./staging/sanity/" and inside it the file structure: '[{run}, last-history, index.html]'.
+        #? where '{run}' is the number of the last allure generated... i.g 1, 2, 3, 4, 5, etc.
+        #? And inside it, the structure: ['data', 'export', 'history', 'plugin', 'widgets', 'app.js', 'favicon.ico', 'index.html', 'styles.css']. The actual allure-report.
+        #* When user navigates to the specified URL (i.g. /beta/sanity/) it will automatically open the last allure report generated as /beta/sanity/1/index.html.
+        keep_files: true #? REQUIRED to work properly. it will keep the files from the previous deployments. ! DON'T SET TO FALSE, it will crash the folder.
         #* ------- ---- -------
 
   Ari-Slack-Notification:
-    needs: [SanityTest]
+    needs: [ SanityTest ]
     if: always() #? correrá después de que el SmokeTest y RegressionTesting hayan terminado.
     runs-on: ubuntu-latest
     steps:
@@ -154,4 +121,3 @@ jobs:
         SLACK_MESSAGE: '🧪(${{ github.repository }}): ${{ github.actor }} triggered SanityTest🚀'
         SLACK_COLOR: ${{ needs.SanityTest.result }}
         SLACK_ICON: ${{ secrets.ARI_PROFILE }}
-

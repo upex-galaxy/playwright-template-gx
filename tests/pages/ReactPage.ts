@@ -1,5 +1,6 @@
 import type { Page } from '@playwright/test';
 
+//* Este es un ejemplo de una clase SuperPage, que tiene elementos comunes y luego se hereda en cada POM.
 export class ReactPage {
 	page: Page;
 

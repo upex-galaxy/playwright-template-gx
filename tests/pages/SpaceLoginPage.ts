@@ -28,7 +28,7 @@ export class SpaceLoginPage extends ReactPage {
 		await this.loginButton().click();
 	}
 
-	//* Esto se conoce como un Shortcut o SharedSteps, como quieras decirle:
+	//* Esto se conoce como un Shortcut o SharedSteps o Util Functions, como quieras decirle:
 	//* Esto NO se usaría en el Caso de Prueba de un Login,
 	//* sino como PRECONDICION para otras Pruebas que no son de Login, ej: Checkout
 

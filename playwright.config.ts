@@ -27,16 +27,11 @@ export default defineConfig({
 	/* Opt out of parallel tests on CI. Workers are kinda flaky! not prefer to use them */
 	workers: process.env.CI ? 4 : 1,
 	/* Reporter to use. See https://playwright.dev/docs/test-reporters */
-	reporter: [
-		['./tests/custom-reporter.ts'],
-		['html', { outputFolder: 'test-html-report/main', open: 'never' }],
-		['junit', { outputFolder: 'test-junit-report', outputFile: 'test-junit-report/main-importer-report.xml' }],
-		['allure-playwright']
-	],
+	reporter: [['./tests/custom-reporter.ts'], ['html', { outputFolder: 'test-html-report/main', open: 'never' }], ['junit', { outputFolder: 'test-junit-report', outputFile: 'test-junit-report/main-importer-report.xml' }], ['allure-playwright']],
 	/* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
 	use: {
 		/* Base URL to use in actions like `await page.goto('/')`. */
-		baseURL: 'https://demoqa.com',
+		baseURL: 'https://dojo.upexgalaxy.com',
 		// Headless Mode: true by default
 		headless: true,
 		// Viewport Resolution
