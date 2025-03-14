@@ -64,7 +64,7 @@ Pasos generales para comenzar a trabajar con el repositorio:
 1. **Clona este repositorio**:
 
    ```bash
-   git clone {{REPO_URL}}
+   git clone {{REPO_URL}} --depth=1
    ```
 
 2. **Navega hasta el directorio del proyecto**:
