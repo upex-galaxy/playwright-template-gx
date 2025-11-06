@@ -506,3 +506,7 @@ Para mantener la consistencia y claridad en los repositorios de UPEX, sigue esta
 [allure]: https://img.shields.io/badge/allure_report-black?style=for-the-badge
 
 <!-- more badges here https://github.com/Ileriayo/markdown-badges -->
+
+### Notas personales
+Este archivo fue editado desde mi rama de práctica feature/update-readme.
+
